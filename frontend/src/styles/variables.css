@@ -1,0 +1,81 @@
+/* =========================================
+   COLOR VARIABLES
+========================================= */
+:root {
+
+  /* Primary Colors */
+  --primary-color: #22c55e;
+  --primary-dark: #16a34a;
+  --primary-light: #86efac;
+
+  /* Secondary Colors */
+  --secondary-color: #0f172a;
+  --secondary-light: #1e293b;
+
+  /* Background Colors */
+  --background-color: #f8fafc;
+  --card-background: #ffffff;
+
+  /* Text Colors */
+  --text-color: #1e293b;
+  --text-light: #64748b;
+  --text-white: #ffffff;
+
+  /* Border */
+  --border-color: #e2e8f0;
+
+  /* Status Colors */
+  --success-color: #22c55e;
+  --warning-color: #f59e0b;
+  --danger-color: #ef4444;
+  --info-color: #3b82f6;
+
+  /* Shadows */
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.08);
+
+  --shadow-md:
+    0 4px 16px rgba(0, 0, 0, 0.12);
+
+  --shadow-lg:
+    0 8px 24px rgba(0, 0, 0, 0.16);
+
+  /* Border Radius */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Typography */
+  --font-family: "Poppins", sans-serif;
+
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 20px;
+  --font-xl: 28px;
+  --font-xxl: 40px;
+
+  /* Font Weight */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 40px;
+
+  /* Transition */
+  --transition:
+    all 0.3s ease;
+
+  /* Navbar Height */
+  --navbar-height: 80px;
+
+  /* Sidebar Width */
+  --sidebar-width: 260px;
+
+}

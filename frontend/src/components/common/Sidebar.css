@@ -1,0 +1,343 @@
+/* =========================================
+   SIDEBAR
+========================================= */
+.sidebar {
+
+  width: 280px;
+
+  min-height: 100vh;
+
+  background: #060b08;
+
+  color: white;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+  border-right: none;
+
+  position: sticky;
+
+  top: 0;
+
+  padding: 24px 0;
+
+  overflow: hidden;
+
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+.sidebar-top {
+
+  padding: 0 20px;
+
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+.sidebar-brand {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding-bottom: 24px;
+
+  border-bottom:
+    1px solid rgba(255,255,255,0.06);
+
+}
+
+
+/* =========================================
+   BRAND CIRCLE
+========================================= */
+.brand-circle {
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+
+  background: #00c853;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+
+  color: white;
+
+  font-size: 18px;
+
+}
+
+
+/* =========================================
+   BRAND TEXT
+========================================= */
+.sidebar-brand h2 {
+
+  font-size: 20px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.5px;
+
+  margin: 0;
+
+}
+
+.sidebar-brand p {
+
+  font-size: 9px;
+
+  color: rgba(255,255,255,0.4);
+
+  letter-spacing: 1.5px;
+
+  margin-top: 3px;
+
+  text-transform: uppercase;
+
+}
+
+
+/* =========================================
+   LINKS WRAPPER
+========================================= */
+.sidebar-links {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+
+  margin-top: 30px;
+
+  padding: 0 16px;
+
+}
+
+
+/* =========================================
+   SIDEBAR LINK
+========================================= */
+.sidebar-link {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px 20px;
+
+  border-radius: 9999px;
+
+  color: #88929b;
+
+  font-weight: 600;
+
+  font-size: 15px;
+
+  transition: all 0.2s ease;
+
+  position: relative;
+
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+.sidebar-link:hover {
+
+  background: rgba(255,255,255,0.04);
+
+  color: white;
+
+}
+
+
+/* =========================================
+   ACTIVE LINK
+========================================= */
+.sidebar-link.active {
+
+  background: #00c853;
+
+  color: #060b08;
+
+  font-weight: 700;
+
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+.sidebar-icon {
+
+  font-size: 16px;
+
+  width: 20px;
+
+  display: flex;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+.sidebar-footer {
+
+  padding: 20px;
+
+  border-top:
+    1px solid rgba(255,255,255,0.06);
+
+}
+
+
+/* =========================================
+   PROFILE
+========================================= */
+.sidebar-profile {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+}
+
+
+/* =========================================
+   PROFILE AVATAR
+========================================= */
+.profile-avatar {
+
+  width: 44px;
+  height: 44px;
+
+  border-radius: 50%;
+
+  background: #00c853;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+
+  color: #060b08;
+
+  font-size: 16px;
+
+}
+
+
+/* =========================================
+   PROFILE TEXT
+========================================= */
+.sidebar-profile h4 {
+
+  font-size: 15px;
+
+  margin-bottom: 2px;
+
+  font-weight: 600;
+
+  color: white;
+
+}
+
+.sidebar-profile p {
+
+  font-size: 12px;
+
+  color: rgba(255,255,255,0.4);
+
+  transition: color 0.2s ease;
+
+  cursor: pointer;
+
+  margin: 0;
+
+}
+
+.sidebar-profile p:hover {
+
+  color: white;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+
+  .sidebar {
+
+    width: 92px;
+
+  }
+
+  .sidebar-brand div:last-child,
+  .sidebar-profile div:last-child {
+
+    display: none;
+
+  }
+
+  .sidebar-link {
+
+    justify-content: center;
+
+    padding: 16px;
+
+    font-size: 0;
+
+  }
+
+  .sidebar-icon {
+
+    font-size: 20px;
+
+  }
+
+  .sidebar-brand {
+
+    justify-content: center;
+
+  }
+
+  .sidebar-profile {
+
+    justify-content: center;
+
+  }
+
+}

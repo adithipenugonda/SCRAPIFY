@@ -1,0 +1,120 @@
+/* =========================================
+   FOOTER
+========================================= */
+.footer {
+  background:
+    linear-gradient(
+      to right,
+      #0f172a,
+      #1e293b
+    );
+
+  color: white;
+
+  padding-top: 70px;
+
+  margin-top: 80px;
+}
+
+
+/* =========================================
+   FOOTER CONTAINER
+========================================= */
+.footer-container {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 50px;
+
+  padding-bottom: 50px;
+}
+
+
+/* =========================================
+   BRAND
+========================================= */
+.footer-brand h2 {
+  color: var(--primary-color);
+
+  margin-bottom: 20px;
+
+  font-size: 32px;
+}
+
+.footer-brand p {
+  color: #cbd5e1;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+.footer-links h3,
+.footer-contact h3 {
+  margin-bottom: 20px;
+
+  font-size: 22px;
+}
+
+.footer-links {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 14px;
+}
+
+.footer-links a {
+  color: #cbd5e1;
+
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+
+  transform: translateX(5px);
+}
+
+
+/* =========================================
+   CONTACT
+========================================= */
+.footer-contact p {
+  color: #cbd5e1;
+
+  margin-bottom: 12px;
+}
+
+
+/* =========================================
+   FOOTER BOTTOM
+========================================= */
+.footer-bottom {
+  border-top: 1px solid
+    rgba(255, 255, 255, 0.1);
+
+  padding: 20px 0;
+
+  text-align: center;
+}
+
+.footer-bottom p {
+  color: #94a3b8;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .footer {
+    text-align: center;
+  }
+
+}

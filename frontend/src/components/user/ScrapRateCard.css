@@ -1,0 +1,137 @@
+/* =========================================
+   SCRAP RATE CARD
+========================================= */
+.scrap-rate-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.scrap-rate-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+.scrap-rate-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+.scrap-icon {
+  width: 60px;
+  height: 60px;
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      to right,
+      #22c55e,
+      #16a34a
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 28px;
+
+  color: white;
+}
+
+.scrap-rate-top h3 {
+  font-size: 22px;
+
+  margin-bottom: 5px;
+}
+
+.scrap-rate-top p {
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+.scrap-rate-price {
+  font-size: 38px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+
+  margin-bottom: 20px;
+}
+
+.scrap-rate-price span {
+  font-size: 18px;
+
+  color: var(--text-light);
+}
+
+
+/* =========================================
+   TREND
+========================================= */
+.scrap-trend {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 10px 16px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.scrap-trend.up {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.scrap-trend.down {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .scrap-rate-price {
+    font-size: 30px;
+  }
+
+}

@@ -1,0 +1,124 @@
+/* =========================================
+   CARD
+========================================= */
+.analytics-card-component {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 26px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.analytics-card-component:hover {
+  transform: translateY(-5px);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+.analytics-card-top {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+.analytics-icon {
+  width: 65px;
+  height: 65px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      to right,
+      #22c55e,
+      #16a34a
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 30px;
+
+  color: white;
+}
+
+
+/* =========================================
+   TREND
+========================================= */
+.analytics-trend {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 10px 16px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.trend-up {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.trend-down {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+.analytics-content h3 {
+  color: var(--text-light);
+
+  margin-bottom: 12px;
+
+  font-size: 16px;
+}
+
+.analytics-content h2 {
+  color: var(--primary-color);
+
+  font-size: 36px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .analytics-content h2 {
+    font-size: 30px;
+  }
+
+}

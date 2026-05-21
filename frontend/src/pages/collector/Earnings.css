@@ -1,0 +1,200 @@
+/* =========================================
+   EARNINGS CONTAINER
+========================================= */
+.earnings-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+/* =========================================
+   HEADER SECTION
+========================================= */
+.earnings-header {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.earnings-header h1 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #060b08;
+  margin: 0;
+}
+
+.header-date {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #88929b;
+  text-transform: uppercase;
+}
+
+.header-subtext {
+  font-size: 15px;
+  color: #6b7280;
+  margin: 0;
+  margin-top: 2px;
+}
+
+/* =========================================
+   STATS CARDS GRID (3 Columns)
+========================================= */
+.earnings-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  width: 100%;
+}
+
+.highlight-green {
+  color: #00c853 !important;
+  font-weight: 700;
+}
+
+/* =========================================
+   DAILY EARNINGS CARD & CHART
+========================================= */
+.earnings-chart-section {
+  width: 100%;
+}
+
+.daily-earnings-card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 28px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
+  box-sizing: border-box;
+}
+
+.daily-earnings-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.daily-earnings-card .card-header h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #060b08;
+  margin: 0;
+}
+
+.filter-label {
+  font-size: 13px;
+  color: #88929b;
+  font-weight: 500;
+}
+
+.chart-wrapper {
+  width: 100%;
+  padding-top: 24px;
+}
+
+.custom-bar-chart {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 260px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding-bottom: 10px;
+}
+
+.chart-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bar-value-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #060b08;
+  margin-bottom: 8px;
+  text-align: center;
+  transition: opacity 0.2s ease;
+}
+
+.bar-value-label.zero {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.bar-track {
+  height: 180px;
+  width: 40px;
+  display: flex;
+  align-items: flex-end;
+  background: transparent;
+}
+
+.bar-fill {
+  width: 100%;
+  background: #00c853;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.15);
+  animation: bar-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: bottom;
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.bar-day-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #88929b;
+  margin-top: 12px;
+}
+
+/* =========================================
+   RESPONSIVE DESIGN
+========================================= */
+@media (max-width: 992px) {
+  .earnings-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .custom-bar-chart {
+    height: 220px;
+  }
+  .bar-track {
+    height: 140px;
+    width: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .earnings-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  .daily-earnings-card {
+    padding: 20px;
+  }
+  .custom-bar-chart {
+    height: 200px;
+  }
+  .bar-track {
+    height: 120px;
+    width: 20px;
+  }
+  .bar-value-label {
+    font-size: 10px;
+  }
+  .bar-day-label {
+    font-size: 11px;
+  }
+}

@@ -1,0 +1,76 @@
+/* =========================================
+   CONTAINER
+========================================= */
+.pickup-history {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.pickup-history-header {
+  margin-bottom: 30px;
+}
+
+.pickup-history-header h2 {
+  font-size: 30px;
+
+  margin-bottom: 10px;
+}
+
+.pickup-history-header p {
+  color: var(--text-light);
+
+  font-size: 16px;
+}
+
+
+/* =========================================
+   LIST
+========================================= */
+.pickup-history-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 24px;
+}
+
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+.no-history {
+  background: white;
+
+  padding: 50px 30px;
+
+  border-radius: 20px;
+
+  text-align: center;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.no-history h3 {
+  margin-bottom: 12px;
+
+  color: var(--primary-color);
+}
+
+.no-history p {
+  color: var(--text-light);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .pickup-history-header h2 {
+    font-size: 24px;
+  }
+
+}

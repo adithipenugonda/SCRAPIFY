@@ -1,0 +1,50 @@
+/* =========================================
+   PAGE
+========================================= */
+.track-pickup-page {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.track-header {
+  margin-bottom: 35px;
+}
+
+.track-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.track-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   PICKUP LIST
+========================================= */
+.pickup-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .track-header h1 {
+    font-size: 30px;
+  }
+
+}

@@ -1,0 +1,221 @@
+/* =========================================
+   AUTH PAGE
+========================================= */
+.auth-page {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      to right,
+      #f0fdf4,
+      #dcfce7
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px 20px;
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+.auth-container {
+  width: 100%;
+  max-width: 1200px;
+
+  background: white;
+
+  border-radius: 24px;
+
+  overflow: hidden;
+
+  box-shadow: var(--shadow-lg);
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+}
+
+
+/* =========================================
+   LEFT SIDE
+========================================= */
+.auth-left {
+  background:
+    linear-gradient(
+      to right,
+      #22c55e,
+      #16a34a
+    );
+
+  color: white;
+
+  padding: 60px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+.auth-left h1 {
+  font-size: 48px;
+
+  margin-bottom: 20px;
+}
+
+.auth-left p {
+  line-height: 1.8;
+
+  margin-bottom: 40px;
+}
+
+.auth-left img {
+  width: 280px;
+
+  margin-top: 20px;
+}
+
+
+/* =========================================
+   RIGHT SIDE
+========================================= */
+.auth-right {
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  padding: 40px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+}
+
+.auth-card h2 {
+  font-size: 36px;
+
+  margin-bottom: 10px;
+}
+
+.auth-card p {
+  color: var(--text-light);
+
+  margin-bottom: 30px;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+.auth-input-group {
+  margin-bottom: 20px;
+}
+
+.auth-input-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-weight: 500;
+}
+
+.auth-input-group input,
+.auth-input-group textarea,
+.auth-input-group select {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border-radius: 12px;
+
+  border: 1px solid
+    var(--border-color);
+
+  font-size: 16px;
+
+  outline: none;
+
+  font-family: inherit;
+
+  background: white;
+}
+
+.auth-input-group input:focus,
+.auth-input-group textarea:focus,
+.auth-input-group select:focus {
+  border-color:
+    var(--primary-color);
+}
+
+
+/* =========================================
+   ERROR
+========================================= */
+.auth-error {
+  background: #fee2e2;
+
+  color: #dc2626;
+
+  padding: 14px;
+
+  border-radius: 10px;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+.auth-footer {
+  margin-top: 20px;
+
+  display: flex;
+
+  gap: 8px;
+
+  justify-content: center;
+}
+
+.auth-footer a {
+  color: var(--primary-color);
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+
+  .auth-container {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-left {
+    display: none;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .auth-card h2 {
+    font-size: 28px;
+  }
+
+}

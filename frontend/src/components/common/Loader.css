@@ -1,0 +1,66 @@
+/* =========================================
+   LOADER CONTAINER
+========================================= */
+.loader-container {
+  width: 100%;
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 20px;
+
+  background-color:
+    var(--background-color);
+}
+
+
+/* =========================================
+   SPINNER
+========================================= */
+.loader-spinner {
+  width: 70px;
+  height: 70px;
+
+  border: 8px solid
+    #d1fae5;
+
+  border-top: 8px solid
+    var(--primary-color);
+
+  border-radius: 50%;
+
+  animation: spin 1s linear infinite;
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+.loader-container h2 {
+  color: var(--primary-color);
+
+  font-size: 24px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   ANIMATION
+========================================= */
+@keyframes spin {
+
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+
+}

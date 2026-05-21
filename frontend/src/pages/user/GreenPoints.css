@@ -1,0 +1,59 @@
+/* =========================================
+   PAGE
+========================================= */
+.green-points-page {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.green-header {
+  margin-bottom: 35px;
+}
+
+.green-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.green-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+.points-summary {
+  margin-bottom: 40px;
+}
+
+
+/* =========================================
+   GRID
+========================================= */
+.rewards-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(320px, 1fr));
+
+  gap: 28px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .green-header h1 {
+    font-size: 30px;
+  }
+
+}

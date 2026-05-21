@@ -1,0 +1,183 @@
+.live-rates-page {
+
+  padding: 40px;
+
+  background: #edf4ef;
+
+  min-height: 100vh;
+
+}
+
+
+.rates-header span {
+
+  font-size: 12px;
+
+  letter-spacing: 2px;
+
+  color: #6b7280;
+
+}
+
+
+.rates-header-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  margin-top: 20px;
+
+  margin-bottom: 50px;
+
+}
+
+
+.rates-header h1 {
+
+  font-size: 64px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+  margin-bottom: 16px;
+
+  color: black;
+
+}
+
+
+.rates-header p {
+
+  font-size: 24px;
+
+  color: #5f6b66;
+
+  max-width: 650px;
+
+  line-height: 1.6;
+
+}
+
+
+.last-updated {
+
+  color: #6b7280;
+
+  font-size: 15px;
+
+}
+
+.last-updated span {
+
+  color: #00c853;
+
+  font-weight: 600;
+
+}
+
+
+.rates-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 24px;
+
+}
+
+
+.rate-card {
+
+  background: white;
+
+  border-radius: 28px;
+
+  padding: 28px;
+
+  border: 1px solid #dce5de;
+
+  transition: 0.2s ease;
+
+}
+
+
+.rate-card:hover {
+
+  transform: translateY(-4px);
+
+}
+
+
+.rate-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 30px;
+
+}
+
+
+.rate-icon {
+
+  font-size: 34px;
+
+}
+
+
+.rate-up {
+
+  color: #00c853;
+
+  font-weight: 700;
+
+}
+
+
+.rate-down {
+
+  color: red;
+
+  font-weight: 700;
+
+}
+
+
+.rate-card h3 {
+
+  font-size: 20px;
+
+  margin-bottom: 18px;
+
+  color: #5f6b66;
+
+}
+
+
+.rate-card h2 {
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  color: black;
+
+}
+
+
+.rate-card h2 span {
+
+  font-size: 22px;
+
+  color: #5f6b66;
+
+}

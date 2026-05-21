@@ -1,0 +1,95 @@
+/* =========================================
+   PAGE
+========================================= */
+.pickup-history-page {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.history-header {
+  margin-bottom: 35px;
+}
+
+.history-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.history-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+.history-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 40px;
+}
+
+.summary-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-md);
+}
+
+.summary-card h3 {
+  color: var(--text-light);
+
+  margin-bottom: 12px;
+}
+
+.summary-card h2 {
+  color: var(--primary-color);
+
+  font-size: 34px;
+}
+
+
+/* =========================================
+   HISTORY LIST
+========================================= */
+.history-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 25px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .history-header h1 {
+    font-size: 30px;
+  }
+
+}

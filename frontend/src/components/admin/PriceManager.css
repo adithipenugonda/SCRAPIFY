@@ -1,0 +1,139 @@
+/* =========================================
+   CARD
+========================================= */
+.price-manager-card {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.price-manager-header {
+  margin-bottom: 28px;
+}
+
+.price-manager-header h2 {
+  font-size: 28px;
+
+  margin-bottom: 10px;
+}
+
+.price-manager-header p {
+  color: var(--text-light);
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+.price-table {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* =========================================
+   ROW
+========================================= */
+.price-row {
+  display: grid;
+
+  grid-template-columns:
+    1.5fr
+    1fr
+    1fr;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px;
+
+  border-radius: 16px;
+
+  background: #f8fafc;
+}
+
+.price-head {
+  background: #dcfce7;
+
+  color: var(--primary-color);
+
+  font-weight: 700;
+}
+
+
+/* =========================================
+   VALUE
+========================================= */
+.price-value {
+  color: var(--primary-color);
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+.price-row input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid
+    var(--border-color);
+
+  font-size: 15px;
+}
+
+.price-row input:focus {
+  border-color:
+    var(--primary-color);
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+.price-save-btn {
+  margin-top: 30px;
+
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .price-manager-header h2 {
+    font-size: 24px;
+  }
+
+  .price-row {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .price-save-btn {
+    justify-content: center;
+  }
+
+}

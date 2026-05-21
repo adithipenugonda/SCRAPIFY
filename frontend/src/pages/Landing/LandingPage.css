@@ -1,0 +1,723 @@
+/* =========================================
+   HERO SECTION
+========================================= */
+.hero-section {
+  min-height: 90vh;
+
+  display: flex;
+  align-items: center;
+
+  background:
+    linear-gradient(
+      to right,
+      #f0fdf4,
+      #dcfce7
+    );
+}
+
+.hero-container {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, 1fr);
+
+  gap: 60px;
+
+  align-items: center;
+}
+
+.hero-content h1 {
+  font-size: 60px;
+
+  line-height: 1.2;
+
+  margin-bottom: 20px;
+
+  color: var(--secondary-color);
+}
+
+.hero-content h1 span {
+  color: var(--primary-color);
+}
+
+.hero-content p {
+  font-size: 18px;
+
+  color: var(--text-light);
+
+  line-height: 1.8;
+
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  display: flex;
+
+  gap: 20px;
+}
+
+.hero-image img {
+  max-width: 500px;
+
+  margin: auto;
+}
+
+
+/* =========================================
+   FEATURES
+========================================= */
+.features-section {
+  background: white;
+}
+
+.section-header {
+  text-align: center;
+
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 42px;
+
+  margin-bottom: 15px;
+}
+
+.section-header p {
+  color: var(--text-light);
+
+  font-size: 18px;
+}
+
+.features-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 30px;
+}
+
+.feature-card h3 {
+  margin-bottom: 15px;
+
+  color: var(--primary-color);
+}
+
+.feature-card p {
+  color: var(--text-light);
+
+  line-height: 1.7;
+}
+
+
+/* =========================================
+   CTA SECTION
+========================================= */
+.cta-section {
+  padding: 100px 0;
+
+  background:
+    linear-gradient(
+      to right,
+      #22c55e,
+      #16a34a
+    );
+
+  text-align: center;
+
+  color: white;
+}
+
+.cta-container h2 {
+  font-size: 48px;
+
+  margin-bottom: 20px;
+}
+
+.cta-container p {
+  font-size: 18px;
+
+  margin-bottom: 30px;
+}
+
+
+/* =========================================
+   RATES GRID
+========================================= */
+
+.rates-grid {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(280px, 1fr));
+
+  gap: 28px;
+
+  margin-top: 50px;
+
+}
+
+
+/* =========================================
+   RATE CARD
+========================================= */
+
+.rate-card {
+
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  border: 1px solid #dde7df;
+
+  transition: all 0.25s ease;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.03);
+
+}
+
+
+.rate-card:hover {
+
+  transform: translateY(-5px);
+
+  box-shadow:
+    0 12px 24px rgba(0,0,0,0.06);
+
+}
+
+
+/* =========================================
+   RATES HEADING
+========================================= */
+
+.rates-heading-wrapper {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-end;
+
+  margin-bottom: 45px;
+
+}
+
+
+.rates-small-tag {
+
+  font-size: 11px;
+
+  letter-spacing: 3px;
+
+  color: #64748b;
+
+  display: block;
+
+  margin-bottom: 18px;
+
+}
+
+
+.rates-heading-left h2 {
+
+  font-size: 42px;
+
+  font-weight: 800;
+
+  line-height: 1.1;
+
+  margin-bottom: 14px;
+
+  color: black;
+
+}
+
+
+.rates-heading-left p {
+
+  max-width: 560px;
+
+  font-size: 16px;
+
+  line-height: 1.7;
+
+  color: #5f6b66;
+
+}
+
+
+.rates-heading-right {
+
+  font-size: 13px;
+
+  color: #64748b;
+
+}
+
+
+.rates-heading-right span {
+
+  color: #00c853;
+
+  font-weight: 600;
+
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+
+.rate-card-icon {
+
+  font-size: 34px;
+
+  margin-bottom: 20px;
+
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+
+.rate-card h3 {
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  color: #5f6b66;
+
+  margin-bottom: 14px;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   PRICE
+========================================= */
+
+.rate-card p {
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+  color: black;
+
+  line-height: 1;
+
+}
+
+
+.rate-card p span {
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  color: #64748b;
+
+}
+
+
+.rate-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 22px;
+
+}
+
+
+.rate-up {
+
+  color: #00c853;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+
+.rate-down {
+
+  color: #ef4444;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+
+.rate-neutral {
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+
+  .hero-container {
+    grid-template-columns: 1fr;
+
+    text-align: center;
+  }
+
+  .hero-content h1 {
+    font-size: 46px;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+  }
+
+  .rates-heading-wrapper {
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 20px;
+
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .hero-content h1 {
+    font-size: 36px;
+  }
+
+  .section-header h2,
+  .cta-container h2 {
+    font-size: 32px;
+  }
+
+  .rates-heading-left h2 {
+
+    font-size: 32px;
+
+  }
+
+  .rates-heading-left p {
+
+    font-size: 15px;
+
+  }
+
+  .rate-card p {
+
+    font-size: 18px;
+
+  }
+
+}
+
+/* =========================================
+   IMPACT SECTION
+========================================= */
+
+.impact-wrapper {
+
+  display: grid;
+
+  grid-template-columns:
+    320px 1fr;
+
+  gap: 36px;
+
+  align-items: stretch;
+
+}
+
+
+/* =========================================
+   LEFT CARD
+========================================= */
+
+.impact-main-card {
+
+  background: #00994d;
+
+  border-radius: 36px;
+
+  padding: 32px;
+
+  color: white;
+
+  min-height: 380px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: space-between;
+
+}
+
+
+.impact-small-tag {
+
+  font-size: 11px;
+
+  letter-spacing: 3px;
+
+  opacity: 0.8;
+
+}
+
+
+.impact-main-card h2 {
+
+  font-size: 36px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  margin-top: 18px;
+
+}
+
+
+.impact-big-number {
+
+  font-size: 62px;
+
+  font-weight: 800;
+
+  line-height: 1;
+
+}
+
+
+.impact-big-number span {
+
+  font-size: 22px;
+
+}
+
+
+.impact-main-card p {
+
+  font-size: 15px;
+
+  line-height: 1.7;
+
+  color: rgba(255,255,255,0.85);
+
+}
+
+
+.impact-main-card strong {
+
+  color: #7dff9b;
+
+}
+
+
+/* =========================================
+   LEADERBOARD
+========================================= */
+
+.leaderboard-card {
+
+  background: white;
+
+  border-radius: 36px;
+
+  padding: 28px;
+
+  border: 1px solid #dde7df;
+
+}
+
+
+.leaderboard-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 34px;
+
+}
+
+
+.leaderboard-header h3 {
+
+  font-size: 24px;
+
+  font-weight: 800;
+
+}
+
+
+.leaderboard-header span {
+
+  color: #00a651;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+}
+
+
+/* =========================================
+   ROW
+========================================= */
+
+.leaderboard-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 20px 18px;
+
+  border-radius: 24px;
+
+  margin-bottom: 12px;
+
+}
+
+
+.active-user {
+
+  background: #dff7e7;
+
+  border: 1px solid #8be0aa;
+
+}
+
+
+.leaderboard-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+}
+
+
+.rank {
+
+  font-size: 16px;
+
+  color: #64748b;
+
+  width: 45px;
+
+}
+
+
+.leader-avatar {
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 50%;
+
+  background: #edf3ed;
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-weight: 700;
+
+  font-size: 20px;
+
+}
+
+
+.leaderboard-left h4 {
+
+  font-size: 18px;
+
+  margin-bottom: 4px;
+
+}
+
+
+.leaderboard-left p {
+
+  font-size: 15px;
+
+  color: #64748b;
+
+}
+
+
+.leaderboard-right {
+
+  text-align: right;
+
+}
+
+
+.leaderboard-right h4 {
+
+  font-size: 22px;
+
+  font-weight: 800;
+
+}
+
+
+.leaderboard-right p {
+
+  color: #64748b;
+
+  font-size: 15px;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 992px) {
+
+  .impact-wrapper {
+
+    grid-template-columns: 1fr;
+
+  }
+
+}

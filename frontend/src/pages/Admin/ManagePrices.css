@@ -1,0 +1,161 @@
+/* =========================================
+   PAGE
+========================================= */
+.manage-prices-page {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.manage-prices-header {
+  margin-bottom: 35px;
+}
+
+.manage-prices-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.manage-prices-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   CARD
+========================================= */
+.prices-card {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.prices-header {
+  margin-bottom: 24px;
+}
+
+.prices-header h2 {
+  font-size: 28px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+.prices-table {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* =========================================
+   ROW
+========================================= */
+.prices-row {
+  display: grid;
+
+  grid-template-columns:
+    1.5fr
+    1fr
+    1fr;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border-radius: 16px;
+}
+
+.prices-head {
+  background: #dcfce7;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   PRICE VALUE
+========================================= */
+.price-value {
+  font-weight: 600;
+
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   INPUT
+========================================= */
+.prices-row input {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  border: 1px solid
+    var(--border-color);
+
+  font-size: 15px;
+}
+
+.prices-row input:focus {
+  border-color:
+    var(--primary-color);
+}
+
+
+/* =========================================
+   BUTTON
+========================================= */
+.save-btn-container {
+  margin-top: 30px;
+
+  display: flex;
+
+  justify-content: flex-end;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .manage-prices-header h1 {
+    font-size: 30px;
+  }
+
+  .prices-row {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .save-btn-container {
+    justify-content: center;
+  }
+
+}

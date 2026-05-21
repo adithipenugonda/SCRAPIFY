@@ -1,0 +1,508 @@
+/* =========================================
+   PREMIUM JOB CARD
+========================================= */
+.premium-job-card {
+
+  background:
+    rgba(255,255,255,0.7);
+
+  backdrop-filter:
+    blur(16px);
+
+  border:
+    1px solid rgba(255,255,255,0.16);
+
+  border-radius:
+    26px;
+
+  padding:
+    24px;
+
+  transition:
+    var(--transition);
+
+  box-shadow:
+    var(--shadow-sm);
+
+  overflow: hidden;
+
+  position: relative;
+
+}
+
+
+/* =========================================
+   HOVER
+========================================= */
+.premium-job-card:hover {
+
+  transform:
+    translateY(-6px);
+
+  box-shadow:
+    var(--shadow-lg);
+
+}
+
+
+/* =========================================
+   BACKGROUND GLOW
+========================================= */
+.premium-job-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(0,200,83,0.06);
+
+  right: -70px;
+  top: -70px;
+
+}
+
+
+/* =========================================
+   TOP
+========================================= */
+.premium-job-top {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+
+}
+
+
+/* =========================================
+   LEFT
+========================================= */
+.premium-job-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  z-index: 2;
+
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+.premium-job-icon {
+
+  width: 60px;
+  height: 60px;
+
+  border-radius: 18px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00e676,
+      #00c853
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+
+  color: #04110a;
+
+  box-shadow:
+    0 12px 28px rgba(0,200,83,0.24);
+
+}
+
+
+/* =========================================
+   TEXT
+========================================= */
+.premium-job-left h3 {
+
+  font-size: 21px;
+
+  margin-bottom: 6px;
+
+  font-weight: 700;
+
+}
+
+
+.premium-job-left p {
+
+  color:
+    var(--text-light);
+
+  margin-bottom: 4px;
+
+  font-size: 14px;
+
+}
+
+
+.premium-job-left span {
+
+  color:
+    var(--primary-color);
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+}
+
+
+/* =========================================
+   PRIORITY
+========================================= */
+.priority-badge {
+
+  height: fit-content;
+
+  padding:
+    10px 14px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+  z-index: 2;
+
+}
+
+
+.priority-badge.high {
+
+  background:
+    rgba(239,68,68,0.14);
+
+  color:
+    #dc2626;
+
+}
+
+
+.priority-badge.medium {
+
+  background:
+    rgba(245,158,11,0.16);
+
+  color:
+    #d97706;
+
+}
+
+
+.priority-badge.low {
+
+  background:
+    rgba(0,200,83,0.14);
+
+  color:
+    #00a63e;
+
+}
+
+
+/* =========================================
+   CENTER INFO
+========================================= */
+.premium-job-center {
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(2,1fr);
+
+  gap: 18px;
+
+  margin-bottom: 22px;
+
+  z-index: 2;
+
+  position: relative;
+
+}
+
+
+.premium-job-center div {
+
+  background:
+    rgba(255,255,255,0.55);
+
+  border:
+    1px solid rgba(255,255,255,0.14);
+
+  border-radius:
+    18px;
+
+  padding:
+    18px;
+
+  text-align: center;
+
+}
+
+
+.premium-job-center h4 {
+
+  font-size:
+    24px;
+
+  margin-bottom:
+    8px;
+
+  font-weight:
+    700;
+
+}
+
+
+.premium-job-center p {
+
+  color:
+    var(--text-light);
+
+  font-size:
+    14px;
+
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+.job-status-wrapper {
+
+  margin-bottom:
+    22px;
+
+  z-index: 2;
+
+  position: relative;
+
+}
+
+
+.job-status {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding:
+    10px 16px;
+
+  border-radius:
+    999px;
+
+  font-size:
+    13px;
+
+  font-weight:
+    700;
+
+}
+
+
+.job-status.available {
+
+  background:
+    rgba(0,200,83,0.14);
+
+  color:
+    #00a63e;
+
+}
+
+
+.job-status.in-progress {
+
+  background:
+    rgba(59,130,246,0.14);
+
+  color:
+    #2563eb;
+
+}
+
+
+.job-status.pending {
+
+  background:
+    rgba(245,158,11,0.15);
+
+  color:
+    #d97706;
+
+}
+
+
+.job-status.completed {
+
+  background:
+    rgba(0,200,83,0.14);
+
+  color:
+    #00a63e;
+
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+.premium-job-actions {
+
+  display: flex;
+
+  gap: 14px;
+
+  z-index: 2;
+
+  position: relative;
+
+}
+
+
+/* =========================================
+   ACCEPT BUTTON
+========================================= */
+.accept-btn {
+
+  flex: 1;
+
+  background:
+    linear-gradient(
+      135deg,
+      #00c853,
+      #00e676
+    );
+
+  color:
+    #04110a;
+
+  border: none;
+
+  padding:
+    15px 20px;
+
+  border-radius:
+    16px;
+
+  font-weight:
+    700;
+
+  cursor: pointer;
+
+  transition:
+    var(--transition);
+
+  box-shadow:
+    0 12px 24px rgba(0,200,83,0.22);
+
+}
+
+
+.accept-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 16px 30px rgba(0,200,83,0.3);
+
+}
+
+
+/* =========================================
+   NAVIGATE BUTTON
+========================================= */
+.navigate-btn {
+
+  flex: 1;
+
+  background:
+    rgba(255,255,255,0.65);
+
+  border:
+    1px solid rgba(255,255,255,0.18);
+
+  padding:
+    15px 20px;
+
+  border-radius:
+    16px;
+
+  font-weight:
+    700;
+
+  cursor: pointer;
+
+  transition:
+    var(--transition);
+
+}
+
+
+.navigate-btn:hover {
+
+  background:
+    white;
+
+  transform:
+    translateY(-2px);
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .premium-job-top {
+
+    flex-direction: column;
+
+  }
+
+  .premium-job-center {
+
+    grid-template-columns:
+      1fr;
+
+  }
+
+  .premium-job-actions {
+
+    flex-direction: column;
+
+  }
+
+}

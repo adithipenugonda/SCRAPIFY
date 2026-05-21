@@ -1,0 +1,165 @@
+/* =========================================
+   PAGE
+========================================= */
+.manage-collectors-page {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.manage-collectors-header {
+  margin-bottom: 35px;
+}
+
+.manage-collectors-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.manage-collectors-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   TABLE CARD
+========================================= */
+.collectors-table-card {
+  background: white;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  box-shadow: var(--shadow-sm);
+
+  overflow-x: auto;
+}
+
+
+/* =========================================
+   TABLE HEADER
+========================================= */
+.collectors-table-header {
+  margin-bottom: 24px;
+}
+
+.collectors-table-header h2 {
+  font-size: 28px;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+.collectors-table {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+
+/* =========================================
+   ROW
+========================================= */
+.collectors-row {
+  display: grid;
+
+  grid-template-columns:
+    1.2fr
+    1.8fr
+    1fr
+    1fr
+    1fr
+    1.5fr;
+
+  align-items: center;
+
+  gap: 20px;
+
+  padding: 18px;
+
+  background: #f8fafc;
+
+  border-radius: 16px;
+}
+
+.collectors-head {
+  background: #dcfce7;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+.active-status,
+.inactive-status {
+  width: fit-content;
+
+  padding: 8px 14px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.active-status {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.inactive-status {
+  background: #fee2e2;
+
+  color: #dc2626;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+.collector-actions {
+  display: flex;
+
+  gap: 10px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+
+  .collectors-row {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .collector-actions {
+    flex-direction: column;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .manage-collectors-header h1 {
+    font-size: 30px;
+  }
+
+}

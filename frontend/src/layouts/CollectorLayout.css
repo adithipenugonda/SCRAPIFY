@@ -1,0 +1,66 @@
+/* =========================================
+   LAYOUT
+========================================= */
+.collector-layout {
+
+  display: flex;
+
+  min-height: 100vh;
+
+  background: #f4f7f5;
+
+  font-family: 'Poppins', sans-serif;
+
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+.collector-main {
+
+  flex: 1;
+
+  padding: 40px;
+
+  overflow-y: auto;
+
+  height: 100vh;
+
+  box-sizing: border-box;
+
+}
+
+
+/* =========================================
+   CONTENT
+========================================= */
+.collector-page-content {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 32px;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  width: 100%;
+
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+
+  .collector-main {
+
+    padding: 24px;
+
+  }
+
+}

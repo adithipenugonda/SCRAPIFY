@@ -1,0 +1,140 @@
+/* =========================================
+   PICKUP CARD
+========================================= */
+.pickup-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+}
+
+.pickup-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================
+   TOP SECTION
+========================================= */
+.pickup-card-top {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.pickup-card-top h3 {
+  font-size: 22px;
+
+  margin-bottom: 6px;
+}
+
+.pickup-card-top p {
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   STATUS
+========================================= */
+.pickup-status {
+  padding: 8px 16px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.pending {
+  background: #fef3c7;
+
+  color: #b45309;
+}
+
+.completed {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+.progress {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+.pickup-card-body {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 20px;
+}
+
+
+/* =========================================
+   INFO BOX
+========================================= */
+.pickup-info {
+  background: #f8fafc;
+
+  padding: 18px;
+
+  border-radius: 14px;
+
+  text-align: center;
+}
+
+.pickup-info span {
+  display: block;
+
+  color: var(--text-light);
+
+  margin-bottom: 10px;
+
+  font-size: 14px;
+}
+
+.pickup-info h4 {
+  font-size: 20px;
+
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .pickup-card-body {
+    grid-template-columns: 1fr;
+  }
+
+  .pickup-card-top {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+}

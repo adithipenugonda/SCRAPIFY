@@ -1,0 +1,126 @@
+/* =========================================
+   CARD
+========================================= */
+.custom-card {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 24px;
+
+  box-shadow: var(--shadow-sm);
+
+  transition: var(--transition);
+
+  overflow: hidden;
+}
+
+.custom-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.card-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+
+/* =========================================
+   TITLE
+========================================= */
+.card-title {
+  font-size: 18px;
+
+  font-weight: 600;
+
+  color: var(--text-color);
+
+  margin-bottom: 6px;
+}
+
+
+/* =========================================
+   SUBTITLE
+========================================= */
+.card-subtitle {
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+
+/* =========================================
+   ICON
+========================================= */
+.card-icon {
+  width: 55px;
+  height: 55px;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      to right,
+      #22c55e,
+      #16a34a
+    );
+
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
+
+  font-size: 24px;
+
+  color: white;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+.card-body {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 15px;
+}
+
+
+/* =========================================
+   VALUE
+========================================= */
+.card-value {
+  font-size: 34px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .custom-card {
+    padding: 20px;
+  }
+
+  .card-value {
+    font-size: 28px;
+  }
+
+}

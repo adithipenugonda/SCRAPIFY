@@ -1,0 +1,157 @@
+/* =========================================
+   PAGE
+========================================= */
+.admin-dashboard {
+  width: 100%;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+.admin-header {
+  margin-bottom: 35px;
+}
+
+.admin-header h1 {
+  font-size: 38px;
+
+  margin-bottom: 12px;
+}
+
+.admin-header p {
+  color: var(--text-light);
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   GRID
+========================================= */
+.admin-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 24px;
+
+  margin-bottom: 40px;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+.admin-section {
+  margin-bottom: 40px;
+}
+
+
+/* =========================================
+   SECTION HEADER
+========================================= */
+.section-header-admin {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+
+/* =========================================
+   ACTIVITY LIST
+========================================= */
+.activity-list {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+
+/* =========================================
+   ITEM
+========================================= */
+.activity-item {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+
+  background: #f8fafc;
+
+  padding: 20px;
+
+  border-radius: 16px;
+}
+
+.activity-item h4 {
+  margin-bottom: 6px;
+}
+
+.activity-item p {
+  color: var(--text-light);
+
+  font-size: 14px;
+}
+
+.activity-time {
+  font-size: 14px;
+
+  color: var(--primary-color);
+
+  font-weight: 600;
+}
+
+
+/* =========================================
+   ANALYTICS
+========================================= */
+.analytics-card {
+  text-align: center;
+}
+
+.analytics-card h2 {
+  margin-bottom: 18px;
+}
+
+.analytics-card p {
+  color: var(--text-light);
+
+  line-height: 1.9;
+
+  font-size: 17px;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .admin-header h1 {
+    font-size: 30px;
+  }
+
+  .section-header-admin {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
+  }
+
+  .activity-item {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 12px;
+  }
+
+}

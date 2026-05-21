@@ -1,0 +1,174 @@
+/* =========================================
+   NAVBAR
+========================================= */
+.navbar {
+  width: 100%;
+
+  background-color: white;
+
+  box-shadow: var(--shadow-sm);
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+}
+
+
+/* =========================================
+   NAVBAR CONTAINER
+========================================= */
+.navbar-container {
+  height: 80px;
+
+  display: flex;
+
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+/* =========================================
+   LOGO
+========================================= */
+.navbar-logo {
+  font-size: 30px;
+
+  font-weight: 700;
+
+  color: var(--primary-color);
+
+  transition: var(--transition);
+}
+
+.navbar-logo:hover {
+  transform: scale(1.03);
+}
+
+
+/* =========================================
+   NAV LINKS
+========================================= */
+.navbar-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 30px;
+}
+
+.navbar-links a {
+  font-size: 16px;
+
+  font-weight: 500;
+
+  color: var(--text-color);
+
+  position: relative;
+
+  transition: var(--transition);
+}
+
+.navbar-links a:hover {
+  color: var(--primary-color);
+}
+
+
+/* =========================================
+   AUTH SECTION
+========================================= */
+.navbar-auth {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+
+/* =========================================
+   USER TEXT
+========================================= */
+.navbar-user {
+  font-weight: 600;
+
+  color: var(--text-color);
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+.login-btn,
+.register-btn,
+.logout-btn {
+  padding: 10px 20px;
+
+  border-radius: 10px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  transition: var(--transition);
+}
+
+
+/* LOGIN BUTTON */
+.login-btn {
+  background: transparent;
+
+  border: 1px solid
+    var(--primary-color);
+
+  color: var(--primary-color);
+}
+
+.login-btn:hover {
+  background-color:
+    var(--primary-color);
+
+  color: white;
+}
+
+
+/* REGISTER BUTTON */
+.register-btn,
+.logout-btn {
+  background-color:
+    var(--primary-color);
+
+  color: white;
+}
+
+.register-btn:hover,
+.logout-btn:hover {
+  background-color:
+    var(--primary-dark);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 768px) {
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-user {
+    display: none;
+  }
+
+  .navbar-container {
+    height: 70px;
+  }
+
+  .navbar-logo {
+    font-size: 24px;
+  }
+
+}
