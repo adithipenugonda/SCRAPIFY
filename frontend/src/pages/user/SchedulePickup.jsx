@@ -4,59 +4,135 @@ import React, {
 
 import UserLayout from "../../layouts/UserLayout";
 
-import Button from "../../components/common/Button";
 import Modal from "../../components/common/Modal";
 
 import "./SchedulePickup.css";
 
+const scrapItemsData = [
+  {
+    id: 1,
+    name: "Newspaper",
+    price: 14.5,
+    icon: "📰",
+  },
+  {
+    id: 2,
+    name: "Cardboard",
+    price: 8.2,
+    icon: "📦",
+  },
+  {
+    id: 3,
+    name: "Plastic (PET)",
+    price: 12,
+    icon: "🧴",
+  },
+  {
+    id: 4,
+    name: "Iron Scrap",
+    price: 28,
+    icon: "🔩",
+  },
+  {
+    id: 5,
+    name: "Copper",
+    price: 412,
+    icon: "🪙",
+  },
+  {
+    id: 6,
+    name: "Aluminum",
+    price: 145,
+    icon: "🥫",
+  },
+  {
+    id: 7,
+    name: "E-Waste",
+    price: 95,
+    icon: "💻",
+  },
+  {
+    id: 8,
+    name: "Glass",
+    price: 3.5,
+    icon: "🍾",
+  },
+];
+
+const pickupSlots = [
+  "Today, 4-6 PM",
+  "Tomorrow, 9-11 AM",
+  "Tomorrow, 4-6 PM",
+  "Sat, 10 AM-12 PM",
+];
 
 const SchedulePickup = () => {
 
-  // ==========================================
-  // STATES
-  // ==========================================
-  const [formData, setFormData] =
-    useState({
-      materialType: "",
-      weight: "",
-      pickupDate: "",
-      pickupTime: "",
-      address: "",
-    });
+  const [selectedItems, setSelectedItems] =
+    useState({});
+
+  const [selectedSlot, setSelectedSlot] =
+    useState("Today, 4-6 PM");
 
   const [openModal, setOpenModal] =
     useState(false);
 
-
   // ==========================================
-  // HANDLE CHANGE
+  // HANDLE QUANTITY
   // ==========================================
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
 
-      [e.target.name]:
-        e.target.value,
-    });
+  const increaseQty = (id) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [id]: (prev[id] || 0) + 1,
+    }));
   };
 
+  const decreaseQty = (id) => {
+    setSelectedItems((prev) => ({
+      ...prev,
+      [id]:
+        prev[id] > 0
+          ? prev[id] - 1
+          : 0,
+    }));
+  };
 
   // ==========================================
-  // HANDLE SUBMIT
+  // CALCULATIONS
   // ==========================================
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    console.log(formData);
+  const totalWeight = Object.values(
+    selectedItems
+  ).reduce((a, b) => a + b, 0);
 
+  const totalPayout =
+    scrapItemsData.reduce(
+      (total, item) => {
+        return (
+          total +
+          (selectedItems[item.id] || 0) *
+            item.price
+        );
+      },
+      0
+    );
+
+  const greenPoints =
+    totalWeight * 34;
+
+  // ==========================================
+  // SUBMIT
+  // ==========================================
+
+  const handleConfirmPickup = () => {
     setOpenModal(true);
   };
-
 
   return (
     <UserLayout>
 
-      <div className="schedule-pickup-page">
+      <div className="schedule-page">
 
         {/* ================================= */}
         {/* HEADER */}
@@ -64,195 +140,242 @@ const SchedulePickup = () => {
 
         <div className="schedule-header">
 
+          <span className="schedule-small-tag">
+            01 / WHAT ARE YOU RECYCLING?
+          </span>
+
           <h1>
             Schedule Scrap Pickup 🚚
           </h1>
 
           <p>
-            Select your scrap type,
-            preferred time, and
-            location for pickup.
+            Select scrap materials,
+            pickup slot, and confirm
+            your recycling request.
           </p>
 
         </div>
 
-
         {/* ================================= */}
-        {/* FORM */}
+        {/* MAIN LAYOUT */}
         {/* ================================= */}
 
-        <div className="schedule-form-card">
+        <div className="schedule-layout">
 
-          <form
-            onSubmit={handleSubmit}
-          >
+          {/* LEFT SECTION */}
+          <div className="schedule-left">
 
-            {/* MATERIAL TYPE */}
-            <div className="form-group">
+            {/* SCRAP GRID */}
+            <div className="scrap-grid">
 
-              <label>
-                Scrap Material
-              </label>
+              {scrapItemsData.map(
+                (item) => {
 
-              <select
-                name="materialType"
+                  const qty =
+                    selectedItems[
+                      item.id
+                    ] || 0;
 
-                value={formData.materialType}
+                  return (
+                    <div
+                      key={item.id}
+                      className={`scrap-card ${
+                        qty > 0
+                          ? "active"
+                          : ""
+                      }`}
+                    >
 
-                onChange={handleChange}
+                      <div className="scrap-top">
 
-                required
-              >
+                        <span className="scrap-icon">
+                          {item.icon}
+                        </span>
 
-                <option value="">
-                  Select Material
-                </option>
+                        <div className="qty-controls">
 
-                <option value="Plastic">
-                  Plastic
-                </option>
+                          <button
+                            onClick={() =>
+                              decreaseQty(
+                                item.id
+                              )
+                            }
+                          >
+                            −
+                          </button>
 
-                <option value="Paper">
-                  Paper
-                </option>
+                          <span>
+                            {qty}
+                          </span>
 
-                <option value="Iron">
-                  Iron
-                </option>
+                          <button
+                            onClick={() =>
+                              increaseQty(
+                                item.id
+                              )
+                            }
+                          >
+                            +
+                          </button>
 
-                <option value="E-Waste">
-                  E-Waste
-                </option>
+                        </div>
 
-              </select>
+                      </div>
 
-            </div>
+                      <h3>
+                        {item.name}
+                      </h3>
 
+                      <p className="scrap-price">
+                        ₹{item.price}/kg
+                      </p>
 
-            {/* WEIGHT */}
-            <div className="form-group">
+                      <span className="scrap-weight">
+                        EST. WEIGHT:
+                        {" "}
+                        {qty} KG
+                      </span>
 
-              <label>
-                Estimated Weight (kg)
-              </label>
-
-              <input
-                type="number"
-                name="weight"
-
-                placeholder="Enter estimated weight"
-
-                value={formData.weight}
-
-                onChange={handleChange}
-
-                required
-              />
-
-            </div>
-
-
-            {/* DATE */}
-            <div className="form-group">
-
-              <label>
-                Pickup Date
-              </label>
-
-              <input
-                type="date"
-                name="pickupDate"
-
-                value={formData.pickupDate}
-
-                onChange={handleChange}
-
-                required
-              />
+                    </div>
+                  );
+                }
+              )}
 
             </div>
 
+            {/* PICKUP SLOT */}
+            <div className="pickup-slot-section">
 
-            {/* TIME */}
-            <div className="form-group">
+              <span className="schedule-small-tag">
+                02 / PICKUP SLOT
+              </span>
 
-              <label>
-                Pickup Time
-              </label>
+              <div className="pickup-slots">
 
-              <input
-                type="time"
-                name="pickupTime"
+                {pickupSlots.map(
+                  (slot) => (
+                    <button
+                      key={slot}
+                      className={`slot-btn ${
+                        selectedSlot ===
+                        slot
+                          ? "active-slot"
+                          : ""
+                      }`}
+                      onClick={() =>
+                        setSelectedSlot(
+                          slot
+                        )
+                      }
+                    >
+                      {slot}
+                    </button>
+                  )
+                )}
 
-                value={formData.pickupTime}
-
-                onChange={handleChange}
-
-                required
-              />
-
-            </div>
-
-
-            {/* ADDRESS */}
-            <div className="form-group">
-
-              <label>
-                Pickup Address
-              </label>
-
-              <textarea
-                name="address"
-
-                rows="4"
-
-                placeholder="Enter pickup address"
-
-                value={formData.address}
-
-                onChange={handleChange}
-
-                required
-              ></textarea>
+              </div>
 
             </div>
 
+          </div>
 
-            {/* BUTTON */}
-            <Button
-              text="Schedule Pickup"
-              type="submit"
-              icon="🚚"
-            />
+          {/* RIGHT SUMMARY */}
+          <div className="summary-card">
 
-          </form>
+            <span className="summary-tag">
+              ORDER SUMMARY
+            </span>
+
+            <h2>
+              ₹
+              {totalPayout.toFixed(
+                0
+              )}
+            </h2>
+
+            <p className="summary-subtext">
+              Estimated payout • Final
+              on weighing
+            </p>
+
+            <div className="summary-row">
+              <span>
+                Total weight
+              </span>
+
+              <strong>
+                {totalWeight} kg
+              </strong>
+            </div>
+
+            <div className="summary-row">
+              <span>
+                Pickup slot
+              </span>
+
+              <strong>
+                {selectedSlot}
+              </strong>
+            </div>
+
+            <div className="summary-row">
+              <span>
+                Collector fee
+              </span>
+
+              <strong className="green">
+                Free
+              </strong>
+            </div>
+
+            <div className="summary-row">
+              <span>
+                Green Points
+              </span>
+
+              <strong className="green">
+                +{greenPoints}
+              </strong>
+            </div>
+
+            <button
+              className="confirm-btn"
+              onClick={
+                handleConfirmPickup
+              }
+            >
+              Confirm Pickup
+            </button>
+
+            <p className="summary-note">
+              CANCEL FREE UP TO 1HR
+              BEFORE
+            </p>
+
+          </div>
 
         </div>
 
-
-        {/* ================================= */}
         {/* SUCCESS MODAL */}
-        {/* ================================= */}
 
         <Modal
           isOpen={openModal}
-
           onClose={() =>
             setOpenModal(false)
           }
-
           title="Pickup Scheduled"
         >
 
           <div className="pickup-success">
 
             <h3>
-              🎉 Pickup Request Submitted
+              Pickup Request Submitted
             </h3>
 
             <p>
               Your scrap pickup has
-              been scheduled successfully.
+              been scheduled
+              successfully.
             </p>
 
           </div>

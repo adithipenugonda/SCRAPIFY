@@ -1,54 +1,29 @@
 import React from "react";
 
-import UserLayout from "../../layouts/UserLayout";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
 
-import PickupCard from "../../components/user/PickupCard";
+import UserLayout from "../../layouts/UserLayout";
 
 import "./TrackPickup.css";
 
-
 const TrackPickup = () => {
 
-  // ==========================================
-  // DUMMY PICKUP DATA
-  // ==========================================
-  const pickups = [
-    {
-      id: 1,
-      materialType: "Plastic Waste",
-      weight: 12,
-      amount: 340,
-      status: "Pending",
-      pickupDate: "20 May 2026",
-      collector: "Ravi Kumar",
-    },
-
-    {
-      id: 2,
-      materialType: "E-Waste",
-      weight: 8,
-      amount: 620,
-      status: "In Progress",
-      pickupDate: "22 May 2026",
-      collector: "Anil Sharma",
-    },
-
-    {
-      id: 3,
-      materialType: "Iron Scrap",
-      weight: 25,
-      amount: 1200,
-      status: "Completed",
-      pickupDate: "15 May 2026",
-      collector: "Suresh Reddy",
-    },
+  // Example collector coordinates
+  const collectorPosition = [
+    17.4474,
+    78.3762,
   ];
 
-
   return (
+
     <UserLayout>
 
-      <div className="track-pickup-page">
+      <div className="track-page">
 
         {/* ================================= */}
         {/* HEADER */}
@@ -57,56 +32,115 @@ const TrackPickup = () => {
         <div className="track-header">
 
           <h1>
-            Track Your Pickups 📍
+            Live Pickup Tracking 📍
           </h1>
 
           <p>
-            Monitor your scheduled
-            pickups and their current
-            status in real time.
+            Track your assigned collector
+            in realtime.
           </p>
 
         </div>
 
 
         {/* ================================= */}
-        {/* PICKUP LIST */}
+        {/* MAP SECTION */}
         {/* ================================= */}
 
-        <div className="pickup-list">
+        <div className="track-map-card">
 
-          {pickups.map((pickup) => (
+          <MapContainer
+            center={collectorPosition}
+            zoom={13}
+            scrollWheelZoom={true}
+            className="live-map"
+          >
 
-            <PickupCard
-              key={pickup.id}
-
-              materialType={
-                pickup.materialType
-              }
-
-              weight={pickup.weight}
-
-              amount={pickup.amount}
-
-              status={pickup.status}
-
-              pickupDate={
-                pickup.pickupDate
-              }
-
-              collector={
-                pickup.collector
-              }
+            <TileLayer
+              attribution='&copy; OpenStreetMap contributors'
+              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-          ))}
+            <Marker position={collectorPosition}>
+
+              <Popup>
+                Collector is here 🚚
+              </Popup>
+
+            </Marker>
+
+          </MapContainer>
+
+        </div>
+
+
+        {/* ================================= */}
+        {/* TRACKING INFO */}
+        {/* ================================= */}
+
+        <div className="tracking-info-grid">
+
+
+          <div className="tracking-info-card">
+
+            <span>
+              Collector
+            </span>
+
+            <h3>
+              Ravi Kumar
+            </h3>
+
+          </div>
+
+
+          <div className="tracking-info-card">
+
+            <span>
+              Pickup Status
+            </span>
+
+            <h3>
+              On The Way
+            </h3>
+
+          </div>
+
+
+          <div className="tracking-info-card">
+
+            <span>
+              Estimated Arrival
+            </span>
+
+            <h3>
+              12 mins
+            </h3>
+
+          </div>
+
+
+          <div className="tracking-info-card">
+
+            <span>
+              Vehicle
+            </span>
+
+            <h3>
+              Mini Truck
+            </h3>
+
+          </div>
+
 
         </div>
 
       </div>
 
     </UserLayout>
+
   );
+
 };
 
 export default TrackPickup;

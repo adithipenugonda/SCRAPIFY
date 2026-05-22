@@ -1,20 +1,50 @@
 /* =========================================
    USER LAYOUT
 ========================================= */
+
 .user-layout {
+
   display: flex;
 
   min-height: 100vh;
 
   background-color:
     var(--background-color);
+
+}
+
+
+/* =========================================
+   SIDEBAR FIX
+========================================= */
+
+/* your Sidebar component class */
+
+.sidebar {
+
+  position: fixed;
+
+  left: 0;
+
+  top: 0;
+
+  width: 320px;
+
+  height: 100vh;
+
+  overflow-y: auto;
+
+  z-index: 1000;
+
 }
 
 
 /* =========================================
    MAIN SECTION
 ========================================= */
+
 .user-layout-main {
+
   flex: 1;
 
   display: flex;
@@ -22,26 +52,51 @@
   flex-direction: column;
 
   min-height: 100vh;
+
+  margin-left: 320px;
+
 }
 
 
 /* =========================================
    CONTENT
 ========================================= */
+
 .user-layout-content {
+
   flex: 1;
 
   padding: 30px;
+
 }
 
 
 /* =========================================
    RESPONSIVE
 ========================================= */
+
 @media (max-width: 992px) {
 
+  .sidebar {
+
+    position: relative;
+
+    width: 100%;
+
+    height: auto;
+
+  }
+
+  .user-layout-main {
+
+    margin-left: 0;
+
+  }
+
   .user-layout-content {
+
     padding: 20px;
+
   }
 
 }

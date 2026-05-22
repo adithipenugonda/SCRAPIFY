@@ -148,17 +148,35 @@ const CollectorDashboard = () => {
     }
   };
 
+  // const handleStartNavigation = () => {
+  //   toast.success("Navigation started on Google Maps!", {
+  //     icon: "📍",
+  //     style: {
+  //       background: "#00c853",
+  //       color: "#060b08",
+  //       fontWeight: "bold",
+  //       borderRadius: "12px",
+  //     },
+  //   });
+  // };
+
   const handleStartNavigation = () => {
-    toast.success("Navigation started on Google Maps!", {
-      icon: "📍",
-      style: {
-        background: "#00c853",
-        color: "#060b08",
-        fontWeight: "bold",
-        borderRadius: "12px",
-      },
-    });
-  };
+
+  if (availableJobs.length === 0) {
+    return;
+  }
+
+  const firstJob = availableJobs[0];
+
+  const destination =
+    `${firstJob.location}, Hyderabad`;
+
+  const googleMapsUrl =
+    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+
+  window.location.href = googleMapsUrl;
+
+};
 
   // Calculate route stops summary dynamically
   const activeStopsCount = availableJobs.length + 1; // jobs + depot
@@ -404,13 +422,13 @@ const CollectorDashboard = () => {
                   </p>
                 </div>
 
-                <button
-                  onClick={handleStartNavigation}
-                  disabled={availableJobs.length === 0}
-                  className="btn-start-navigation"
-                >
-                  Start Route Navigation &rarr;
-                </button>
+               <button
+  onClick={handleStartNavigation}
+  disabled={availableJobs.length === 0}
+  className="btn-start-navigation"
+>
+  Start Route Navigation →
+</button>
               </div>
             </div>
           </div>
