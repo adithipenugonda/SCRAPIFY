@@ -137,7 +137,7 @@ const LandingPage = () => {
             </span>
 
             <h2>
-              Simple Recycling Process
+              Simple Recycling Process..
             </h2>
 
             <p>
