@@ -21,6 +21,8 @@
 
   flex: 1;
 
+  margin-left: 320px;
+
   padding: 40px;
 
   overflow-y: auto;
@@ -58,6 +60,8 @@
 @media (max-width: 992px) {
 
   .collector-main {
+
+    margin-left: 0;
 
     padding: 24px;
 
