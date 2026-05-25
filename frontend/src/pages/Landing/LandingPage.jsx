@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 
+
 import {
   Link,
+  useLocation,
   useNavigate,
 } from "react-router-dom";
 
@@ -12,9 +14,11 @@ import "./LandingPage.css";
 import useAuth from "../../hooks/useAuth";
 
 
+
 const LandingPage = () => {
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     isAuthenticated,
@@ -22,27 +26,51 @@ const LandingPage = () => {
   } = useAuth();
 
 
+  // useEffect(() => {
+
+  //   if (isAuthenticated) {
+
+  //     if (user?.role === "collector") {
+
+  //       navigate("/collector/dashboard");
+
+  //     } else if (user?.role === "admin") {
+
+  //       navigate("/admin/dashboard");
+
+  //     } else {
+
+  //       navigate("/dashboard");
+
+  //     }
+
+  //   }
+
+  // }, [isAuthenticated, user, navigate]);
+
   useEffect(() => {
 
-    if (isAuthenticated) {
+  if (location.hash) {
 
-      if (user?.role === "collector") {
+    const section = document.querySelector(
+      location.hash
+    );
 
-        navigate("/collector/dashboard");
+    if (section) {
 
-      } else if (user?.role === "admin") {
+      setTimeout(() => {
 
-        navigate("/admin/dashboard");
+        section.scrollIntoView({
+          behavior: "smooth",
+        });
 
-      } else {
-
-        navigate("/dashboard");
-
-      }
+      }, 100);
 
     }
 
-  }, [isAuthenticated, user]);
+  }
+
+}, [location]);
 
   return (
     <>

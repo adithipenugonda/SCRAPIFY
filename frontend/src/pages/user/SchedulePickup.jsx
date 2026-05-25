@@ -8,6 +8,8 @@ import Modal from "../../components/common/Modal";
 
 import "./SchedulePickup.css";
 
+import API from "../../services/api";
+
 const scrapItemsData = [
   {
     id: 1,
@@ -125,9 +127,60 @@ const SchedulePickup = () => {
   // SUBMIT
   // ==========================================
 
-  const handleConfirmPickup = () => {
+//   const handleConfirmPickup = async () => {
+//     await API.post("/pickups/create", {
+//   materials: selectedItems,
+//   totalWeight,
+//   slot: selectedSlot,
+//   userLocation,
+// });
+//     setOpenModal(true);
+//   };
+
+const handleConfirmPickup = async () => {
+
+  try {
+
+    await API.post("/pickups/create", {
+
+      materials: scrapItemsData
+  .filter(
+    (item) => selectedItems[item.id] > 0
+  )
+  .map((item) => ({
+    materialType: item.name,
+    estimatedWeight:
+      selectedItems[item.id],
+    pricePerKg: item.price,
+  })),
+
+      totalWeight,
+
+      pickupTimeSlot: selectedSlot,
+
+      pickupDate: new Date(),
+
+      address: "Hyderabad",
+
+      city: "Hyderabad",
+
+      state: "Telangana",
+
+      pincode: "500081",
+
+      notes: "Pickup request created",
+
+    });
+
     setOpenModal(true);
-  };
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
 
   return (
     <UserLayout>

@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useAuthContext } from "../../context/AuthContext";
 import CollectorLayout from "../../layouts/CollectorLayout";
 import "./CollectorDashboard.css";
+import API from "../../services/api";
 
 const CollectorDashboard = () => {
   const { user } = useAuthContext();
@@ -82,29 +83,72 @@ const CollectorDashboard = () => {
   const firstName = user?.name ? user.name.split(" ")[0] : "Rajesh";
 
   // Actions
-  const handleAcceptJob = (job) => {
-    toast.success(`Pickup in ${job.location} accepted!`, {
-      icon: "🚚",
-      style: {
-        borderRadius: "12px",
-        background: "#060b08",
-        color: "#fff",
-      },
-    });
+ const handleAcceptJob = async (job) => {
+
+  try {
+
+    await API.put(
+      `/pickups/accept/${job._id}`
+    );
+
+    toast.success(
+      "Pickup accepted!"
+    );
 
     // Update stats
     setStats((prev) => ({
       ...prev,
-      todayEarnings: prev.todayEarnings + job.payout,
-      thisWeekEarnings: prev.thisWeekEarnings + job.payout,
-      todayPickups: prev.todayPickups + 1,
-      thisWeekPickups: prev.thisWeekPickups + 1,
-      acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
+      todayEarnings:
+        prev.todayEarnings + job.totalAmount,
+
+      thisWeekEarnings:
+        prev.thisWeekEarnings + job.totalAmount,
+
+      todayPickups:
+        prev.todayPickups + 1,
+
+      thisWeekPickups:
+        prev.thisWeekPickups + 1,
+
+      acceptanceRate:
+        Math.min(
+          100,
+          prev.acceptanceRate + 1
+        ),
     }));
 
+    // Remove accepted job
+    setAvailableJobs((prev) =>
+      prev.filter((j) => j._id !== job._id)
+    );
+
+  } catch (error) {
+
+    console.log(error);
+
+    toast.error(
+      "Failed to accept pickup"
+    );
+
+  }
+
+};
+
+
+
+    // Update stats
+    // setStats((prev) => ({
+    //   ...prev,
+    //   todayEarnings: prev.todayEarnings + job.payout,
+    //   thisWeekEarnings: prev.thisWeekEarnings + job.payout,
+    //   todayPickups: prev.todayPickups + 1,
+    //   thisWeekPickups: prev.thisWeekPickups + 1,
+    //   acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
+    // }));
+
     // Remove job from dashboard list
-    setAvailableJobs((prev) => prev.filter((j) => j.id !== job.id));
-  };
+  //   setAvailableJobs((prev) => prev.filter((j) => j.id !== job.id));
+  // };
 
   const handleSkipJob = (job) => {
     toast.error(`Pickup skipped.`, {
@@ -122,7 +166,7 @@ const CollectorDashboard = () => {
     }));
 
     // Remove job from dashboard list
-    setAvailableJobs((prev) => prev.filter((j) => j.id !== job.id));
+    setAvailableJobs((prev) => prev.filter((j) => j._id !== job._id));
   };
 
   const toggleOnlineStatus = () => {
@@ -148,17 +192,7 @@ const CollectorDashboard = () => {
     }
   };
 
-  // const handleStartNavigation = () => {
-  //   toast.success("Navigation started on Google Maps!", {
-  //     icon: "📍",
-  //     style: {
-  //       background: "#00c853",
-  //       color: "#060b08",
-  //       fontWeight: "bold",
-  //       borderRadius: "12px",
-  //     },
-  //   });
-  // };
+
 
   const handleStartNavigation = () => {
 
@@ -182,6 +216,44 @@ const CollectorDashboard = () => {
   const activeStopsCount = availableJobs.length + 1; // jobs + depot
   const totalDistanceKm = (availableJobs.reduce((acc, curr) => acc + parseFloat(curr.distance), 0) + 1.8).toFixed(1);
   const totalMinutes = Math.round(availableJobs.length * 12 + 12);
+
+  const fetchPendingPickups = async () => {
+
+  try {
+
+    const response = await API.get(
+      "/pickups/pending"
+    );
+
+    const jobsWithCoords =
+  response.data.pickups.map(
+    (job, index) => ({
+      ...job,
+
+      coords: {
+        x: 80 + index * 70,
+        y: 70 + index * 60,
+      },
+    })
+  );
+
+setAvailableJobs(jobsWithCoords);
+
+  } catch (error) {
+
+    console.log(error);
+
+  }
+
+};
+
+
+  useEffect(() => {
+
+  fetchPendingPickups();
+
+}, []);
+
 
   return (
     <CollectorLayout>
@@ -260,22 +332,24 @@ const CollectorDashboard = () => {
             <div className="pickups-list">
               {availableJobs.length > 0 ? (
                 availableJobs.map((job) => (
-                  <div key={job.id} className="pickup-card">
+                  <div key={job._id} className="pickup-card">
                     <div className="pickup-card-row">
-                      <span className="pickup-material">{job.material}</span>
-                      <span className="pickup-payout">₹{job.payout}</span>
+                      <span className="pickup-material">{job.materials?.[0]?.materialType}</span>
+                      <span className="pickup-payout">₹{job.totalAmount}</span>
                     </div>
 
                     <div className="pickup-card-row info-row">
                       <span className="pickup-details">
-                        {job.location} &bull; {job.time} &bull; {job.distance}
+                        {job.city} &bull; {job.time} &bull; {job.distance}
                       </span>
-                      <span className="pickup-weight">{job.weight}</span>
+                      <span className="pickup-weight">~{job.totalWeight}kg</span>
                     </div>
 
                     <div className="pickup-card-actions">
                       <button
-                        onClick={() => handleAcceptJob(job)}
+                        onClick={() => handleAcceptJob(job)
+                          
+                        }
                         className="btn-accept"
                       >
                         Accept
@@ -322,7 +396,7 @@ const CollectorDashboard = () => {
                     const nextJob = availableJobs[idx + 1] || depotStop;
                     return (
                       <line
-                        key={`line-${job.id}`}
+                        key={`line-${job._id}`}
                         x1={job.coords.x}
                         y1={job.coords.y}
                         x2={nextJob.x || nextJob.coords?.x}
@@ -349,7 +423,7 @@ const CollectorDashboard = () => {
 
                   {/* Active Job Nodes (stops) */}
                   {availableJobs.map((job) => (
-                    <g key={`node-${job.id}`} className="svg-stop-node">
+                    <g key={`node-${job._id}`} className="svg-stop-node">
                       <circle
                         cx={job.coords.x}
                         cy={job.coords.y}
@@ -438,6 +512,8 @@ const CollectorDashboard = () => {
       </div>
     </CollectorLayout>
   );
+
 };
+
 
 export default CollectorDashboard;

@@ -57,6 +57,10 @@ const createPickup = async (req, res) => {
 
       pickupTimeSlot,
 
+      status: "Pending",
+
+      collector: null,
+
       address,
 
       city,
@@ -121,6 +125,36 @@ const getUserPickups = async (req, res) => {
 };
 
 
+// =======================================
+// GET ALL PENDING PICKUPS
+// =======================================
+const getPendingPickups = async (req, res) => {
+
+  try {
+
+    const pickups = await Pickup.find({
+      status: "Pending",
+    })
+      .populate("user", "name")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json({
+      success: true,
+      pickups,
+    });
+
+  } catch (error) {
+
+    console.log(error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+
+};
 // =======================================
 // GET SINGLE PICKUP
 // =======================================
@@ -212,6 +246,74 @@ const deletePickup = async (req, res) => {
   }
 };
 
+// =======================================
+// GET PENDING PICKUPS FOR COLLECTORS
+// =======================================
+// const getPendingPickups = async (req, res) => {
+//   try {
+
+//     const pickups = await Pickup.find({
+//       status: "Pending",
+//     }).populate("user", "name phone");
+
+//     res.status(200).json({
+//       success: true,
+//       pickups,
+//     });
+
+//   } catch (error) {
+
+//     res.status(500).json({
+//       success: false,
+//       message: error.message,
+//     });
+
+//   }
+// };
+
+// =======================================
+// COLLECTOR ACCEPT PICKUP
+// =======================================
+const acceptPickup = async (req, res) => {
+
+  try {
+
+    const pickup = await Pickup.findById(
+      req.params.id
+    );
+
+    if (!pickup) {
+
+      return res.status(404).json({
+        success: false,
+        message: "Pickup not found",
+      });
+
+    }
+
+    pickup.status = "Accepted";
+
+    pickup.collector = req.user._id;
+
+    await pickup.save();
+
+    res.status(200).json({
+      success: true,
+      message: "Pickup accepted successfully",
+      pickup,
+    });
+
+  } catch (error) {
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+
+  }
+
+};
+
 
 module.exports = {
   createPickup,
@@ -219,4 +321,6 @@ module.exports = {
   getSinglePickup,
   updatePickupStatus,
   deletePickup,
+  getPendingPickups,
+  acceptPickup,
 };

@@ -6,6 +6,8 @@ const {
   getSinglePickup,
   updatePickupStatus,
   deletePickup,
+  getPendingPickups,
+  acceptPickup,
 } = require("../controllers/pickupController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -16,7 +18,7 @@ const router = express.Router();
 // =======================================
 // CREATE PICKUP
 // =======================================
-router.post("/", protect, createPickup);
+router.post("/create", protect, createPickup);
 
 
 // =======================================
@@ -30,6 +32,17 @@ router.get("/my-pickups", protect, getUserPickups);
 // =======================================
 router.get("/:id", protect, getSinglePickup);
 
+router.get("/pending", protect, getPendingPickups);
+
+// =======================================
+// ACCEPT PICKUP
+// =======================================
+router.put(
+  "/accept/:id",
+  protect,
+  acceptPickup
+);
+
 
 // =======================================
 // UPDATE PICKUP STATUS
@@ -41,6 +54,8 @@ router.put("/:id/status", protect, updatePickupStatus);
 // DELETE PICKUP
 // =======================================
 router.delete("/:id", protect, deletePickup);
+
+
 
 
 module.exports = router;

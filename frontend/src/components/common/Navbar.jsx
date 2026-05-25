@@ -3,7 +3,9 @@ import React from "react";
 import {
   Link,
   useNavigate,
+  useLocation,
 } from "react-router-dom";
+
 
 import useAuth from "../../hooks/useAuth";
 
@@ -29,6 +31,11 @@ const Navbar = () => {
     navigate("/login");
   };
 
+  // const isDashboardPage =
+  // location.pathname.includes("/dashboard") ||
+  // location.pathname.includes("/collector") ||
+  // location.pathname.includes("/admin");
+
 
   return (
     <nav className="navbar">
@@ -53,15 +60,15 @@ const Navbar = () => {
 
 <div className="navbar-links">
 
-  <a href="#how-it-works">
+  <a href="/#how-it-works">
     How It Works
   </a>
 
-  <a href="#live-rates">
+  <a href="/#live-rates">
     Live Rates
   </a>
 
-  <a href="#impact">
+  <a href="/#impact">
     Impact
   </a>
 
