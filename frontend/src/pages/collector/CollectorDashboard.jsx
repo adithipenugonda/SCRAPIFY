@@ -134,6 +134,36 @@ const CollectorDashboard = () => {
 
 };
 
+const updateLiveLocation =
+  (pickupId) => {
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+
+        try {
+
+          await API.put(
+            `/pickups/${pickupId}/location`,
+            {
+              latitude:
+                position.coords.latitude,
+
+              longitude:
+                position.coords.longitude,
+            }
+          );
+
+        } catch (error) {
+
+          console.log(error);
+
+        }
+
+      }
+    );
+
+};
+
 
 const updatePickupStatus = async (
   pickupId,
@@ -152,6 +182,7 @@ const updatePickupStatus = async (
     toast.success(
       `Pickup marked as ${newStatus}`
     );
+    updateLiveLocation(job._id);
 
     // Refresh dashboard
     fetchPendingPickups();
@@ -281,9 +312,19 @@ setAvailableJobs(jobsWithCoords);
 };
 
 
-  useEffect(() => {
+useEffect(() => {
 
   fetchPendingPickups();
+
+  const interval =
+    setInterval(() => {
+
+      fetchPendingPickups();
+
+    }, 5000);
+
+  return () =>
+    clearInterval(interval);
 
 }, []);
 

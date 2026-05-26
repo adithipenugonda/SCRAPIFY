@@ -1,4 +1,9 @@
-import React from "react";
+import React, {
+  useEffect,
+  useState,
+} from "react";
+
+import API from "../../services/api";
 
 import UserLayout from "../../layouts/UserLayout";
 
@@ -8,52 +13,43 @@ import "./PickupHistoryPage.css";
 
 
 const PickupHistoryPage = () => {
+  const [pickupHistory, setPickupHistory] =
+  useState([]);
 
-  // ==========================================
-  // DUMMY HISTORY DATA
-  // ==========================================
-  const pickupHistory = [
-    {
-      id: 1,
-      materialType: "Plastic Bottles",
-      weight: 15,
-      amount: 450,
-      status: "Completed",
-      pickupDate: "10 May 2026",
-      collector: "Ravi Kumar",
-    },
+  const fetchCompletedPickups =
+  async () => {
 
-    {
-      id: 2,
-      materialType: "Old Newspapers",
-      weight: 20,
-      amount: 320,
-      status: "Completed",
-      pickupDate: "05 May 2026",
-      collector: "Anil Sharma",
-    },
+    try {
 
-    {
-      id: 3,
-      materialType: "E-Waste",
-      weight: 7,
-      amount: 780,
-      status: "Completed",
-      pickupDate: "28 April 2026",
-      collector: "Suresh Reddy",
-    },
+      const response =
+        await API.get(
+          "/pickups/my-pickups"
+        );
 
-    {
-      id: 4,
-      materialType: "Iron Scrap",
-      weight: 35,
-      amount: 1450,
-      status: "Completed",
-      pickupDate: "20 April 2026",
-      collector: "Mahesh Kumar",
-    },
-  ];
+      const completed =
+        response.data.pickups.filter(
+          (pickup) =>
+            pickup.status ===
+            "Completed"
+        );
 
+      setPickupHistory(
+        completed
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+};
+
+useEffect(() => {
+
+  fetchCompletedPickups();
+
+}, []);
 
   return (
     <UserLayout>
@@ -92,7 +88,7 @@ const PickupHistoryPage = () => {
             </h3>
 
             <h2>
-              24
+              {pickupHistory.length}
             </h2>
 
           </div>
@@ -105,7 +101,13 @@ const PickupHistoryPage = () => {
             </h3>
 
             <h2>
-              ₹8,450
+              ₹{
+  pickupHistory.reduce(
+    (acc, curr) =>
+      acc + curr.totalAmount,
+    0
+  )
+}
             </h2>
 
           </div>
@@ -118,7 +120,14 @@ const PickupHistoryPage = () => {
             </h3>
 
             <h2>
-              1,240
+              {
+  pickupHistory.reduce(
+    (acc, curr) =>
+      acc +
+      curr.greenPointsEarned,
+    0
+  )
+}
             </h2>
 
           </div>
@@ -135,24 +144,27 @@ const PickupHistoryPage = () => {
           {pickupHistory.map((pickup) => (
 
             <PickupCard
-              key={pickup.id}
+              key={pickup._id}
 
               materialType={
-                pickup.materialType
+                pickup.materials?.[0]
+  ?.materialType
               }
 
-              weight={pickup.weight}
+              weight={pickup.totalWeight}
 
-              amount={pickup.amount}
+              amount={pickup.totalAmount}
 
               status={pickup.status}
 
               pickupDate={
-                pickup.pickupDate
+                new Date(
+  pickup.pickupDate
+).toLocaleDateString()
               }
 
               collector={
-                pickup.collector
+                pickup.collector?.name
               }
             />
 

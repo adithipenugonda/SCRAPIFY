@@ -21,11 +21,23 @@ const TrackPickup = () => {
   const [pickups, setPickups] =
     useState([]);
 
-  // Example live coordinates
+ const activePickup =
+  pickups.find(
+    (pickup) =>
+      pickup.status !==
+      "Completed"
+  );
+
   const collectorPosition = [
-    17.4474,
-    78.3762,
-  ];
+
+  activePickup?.tracking
+    ?.currentLatitude || 17.4474,
+
+  activePickup?.tracking
+    ?.currentLongitude || 78.3762,
+
+];
+  
 
   // =====================================
   // FETCH USER PICKUPS
@@ -53,12 +65,20 @@ const TrackPickup = () => {
   // =====================================
   // LOAD DATA
   // =====================================
-  useEffect(() => {
+useEffect(() => {
 
-    fetchUserPickups();
+  fetchUserPickups();
 
-  }, []);
+  const interval =
+    setInterval(
+      fetchUserPickups,
+      5000
+    );
 
+  return () =>
+    clearInterval(interval);
+
+}, []);
   return (
 
     <UserLayout>
@@ -118,7 +138,12 @@ const TrackPickup = () => {
 
         <div className="tracking-info-grid">
 
-          {pickups.map((pickup) => (
+          {pickups
+  .filter(
+    (pickup) =>
+      pickup.status !== "Completed"
+  )
+  .map((pickup) => (
 
             <div
               key={pickup._id}

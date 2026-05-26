@@ -8,6 +8,7 @@ const {
   deletePickup,
   getPendingPickups,
   acceptPickup,
+  updateCollectorLocation,
 } = require("../controllers/pickupController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -62,6 +63,11 @@ router.put("/:id/status", protect, updatePickupStatus);
 // =======================================
 router.delete("/:id", protect, deletePickup);
 
+router.put(
+  "/:id/location",
+  protect,
+  updateCollectorLocation
+);
 
 
 

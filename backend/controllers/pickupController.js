@@ -322,6 +322,54 @@ const acceptPickup = async (req, res) => {
 
 };
 
+const updateCollectorLocation =
+  async (req, res) => {
+
+    try {
+
+      const {
+        latitude,
+        longitude,
+      } = req.body;
+
+      const pickup =
+        await Pickup.findById(
+          req.params.id
+        );
+
+      if (!pickup) {
+
+        return res.status(404).json({
+          success: false,
+          message: "Pickup not found",
+        });
+
+      }
+
+      pickup.tracking.currentLatitude =
+        latitude;
+
+      pickup.tracking.currentLongitude =
+        longitude;
+
+      await pickup.save();
+
+      res.status(200).json({
+        success: true,
+        pickup,
+      });
+
+    } catch (error) {
+
+      res.status(500).json({
+        success: false,
+        message: error.message,
+      });
+
+    }
+
+};
+
 
 module.exports = {
   createPickup,
@@ -331,4 +379,5 @@ module.exports = {
   deletePickup,
   getPendingPickups,
   acceptPickup,
+  updateCollectorLocation,
 };
