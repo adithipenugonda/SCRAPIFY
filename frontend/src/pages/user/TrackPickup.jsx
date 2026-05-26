@@ -1,4 +1,9 @@
-import React from "react";
+import React, {
+  useState,
+  useEffect,
+} from "react";
+
+import API from "../../services/api";
 
 import {
   MapContainer,
@@ -13,11 +18,46 @@ import "./TrackPickup.css";
 
 const TrackPickup = () => {
 
-  // Example collector coordinates
+  const [pickups, setPickups] =
+    useState([]);
+
+  // Example live coordinates
   const collectorPosition = [
     17.4474,
     78.3762,
   ];
+
+  // =====================================
+  // FETCH USER PICKUPS
+  // =====================================
+  const fetchUserPickups = async () => {
+
+    try {
+
+      const response = await API.get(
+        "/pickups/my-pickups"
+      );
+
+      setPickups(
+        response.data.pickups
+      );
+
+    } catch (error) {
+
+      console.log(error);
+
+    }
+
+  };
+
+  // =====================================
+  // LOAD DATA
+  // =====================================
+  useEffect(() => {
+
+    fetchUserPickups();
+
+  }, []);
 
   return (
 
@@ -42,9 +82,8 @@ const TrackPickup = () => {
 
         </div>
 
-
         {/* ================================= */}
-        {/* MAP SECTION */}
+        {/* MAP */}
         {/* ================================= */}
 
         <div className="track-map-card">
@@ -73,65 +112,73 @@ const TrackPickup = () => {
 
         </div>
 
-
         {/* ================================= */}
-        {/* TRACKING INFO */}
+        {/* PICKUP TRACKING */}
         {/* ================================= */}
 
         <div className="tracking-info-grid">
 
+          {pickups.map((pickup) => (
 
-          <div className="tracking-info-card">
+            <div
+              key={pickup._id}
+              className="tracking-info-card"
+            >
 
-            <span>
-              Collector
-            </span>
+              <span>
+                Material
+              </span>
 
-            <h3>
-              Ravi Kumar
-            </h3>
+              <h3>
+                {
+                  pickup.materials?.[0]
+                    ?.materialType
+                }
+              </h3>
 
-          </div>
+              <span>
+                Pickup Status
+              </span>
 
+              <h3>
+                {pickup.status}
+              </h3>
 
-          <div className="tracking-info-card">
+              <span>
+                Total Amount
+              </span>
 
-            <span>
-              Pickup Status
-            </span>
+              <h3>
+                ₹{pickup.totalAmount}
+              </h3>
 
-            <h3>
-              On The Way
-            </h3>
+              <span>
+                Weight
+              </span>
 
-          </div>
+              <h3>
+                {pickup.totalWeight}kg
+              </h3>
 
+              {pickup.collector && (
 
-          <div className="tracking-info-card">
+                <>
 
-            <span>
-              Estimated Arrival
-            </span>
+                  <span>
+                    Collector Assigned
+                  </span>
 
-            <h3>
-              12 mins
-            </h3>
+                  <h3>
+                    {pickup.collector.name}
+                  </h3>
 
-          </div>
+                </>
 
+              )}
 
-          <div className="tracking-info-card">
+            </div>
 
-            <span>
-              Vehicle
-            </span>
-
-            <h3>
-              Mini Truck
-            </h3>
-
-          </div>
-
+          ))}
 
         </div>
 

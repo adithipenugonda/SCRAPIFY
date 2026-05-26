@@ -133,10 +133,18 @@ const getPendingPickups = async (req, res) => {
   try {
 
     const pickups = await Pickup.find({
-      status: "Pending",
-    })
-      .populate("user", "name")
-      .sort({ createdAt: -1 });
+  status: {
+    $in: [
+      "Pending",
+      "Accepted",
+      "On The Way",
+    ],
+  },
+})
+.populate("user", "name")
+.populate("collector", "name")
+.sort({ createdAt: -1 });
+
 
     res.status(200).json({
       success: true,

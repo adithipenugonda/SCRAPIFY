@@ -135,6 +135,39 @@ const CollectorDashboard = () => {
 };
 
 
+const updatePickupStatus = async (
+  pickupId,
+  newStatus
+) => {
+
+  try {
+
+    await API.put(
+      `/pickups/${pickupId}/status`,
+      {
+        status: newStatus,
+      }
+    );
+
+    toast.success(
+      `Pickup marked as ${newStatus}`
+    );
+
+    // Refresh dashboard
+    fetchPendingPickups();
+
+  } catch (error) {
+
+    console.log(error);
+
+    toast.error(
+      "Failed to update status"
+    );
+
+  }
+
+};
+
 
     // Update stats
     // setStats((prev) => ({
@@ -346,21 +379,62 @@ setAvailableJobs(jobsWithCoords);
                     </div>
 
                     <div className="pickup-card-actions">
-                      <button
-                        onClick={() => handleAcceptJob(job)
-                          
-                        }
-                        className="btn-accept"
-                      >
-                        Accept
-                      </button>
-                      <button
-                        onClick={() => handleSkipJob(job)}
-                        className="btn-skip"
-                      >
-                        Skip
-                      </button>
-                    </div>
+
+  {job.status === "Pending" && (
+
+    <button
+      onClick={() =>
+        handleAcceptJob(job)
+      }
+      className="btn-accept"
+    >
+      Accept
+    </button>
+
+  )}
+
+  {job.status === "Accepted" && (
+
+    <button
+      onClick={() =>
+        updatePickupStatus(
+          job._id,
+          "On The Way"
+        )
+      }
+      className="btn-accept"
+    >
+      On The Way
+    </button>
+
+  )}
+
+  {job.status === "On The Way" && (
+
+    <button
+      onClick={() =>
+        updatePickupStatus(
+          job._id,
+          "Completed"
+        )
+      }
+      className="btn-accept"
+    >
+      Complete
+    </button>
+
+  )}
+
+  <button
+    onClick={() =>
+      handleSkipJob(job)
+    }
+    className="btn-skip"
+  >
+    Skip
+  </button>
+
+</div>
                   </div>
                 ))
               ) : (

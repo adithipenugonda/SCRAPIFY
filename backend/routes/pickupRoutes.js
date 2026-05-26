@@ -27,12 +27,19 @@ router.post("/create", protect, createPickup);
 router.get("/my-pickups", protect, getUserPickups);
 
 
+
+
+// =======================================
+// GET PENDING PICKUPS
+// =======================================
+router.get("/pending", protect, getPendingPickups);
+
 // =======================================
 // GET SINGLE PICKUP
 // =======================================
 router.get("/:id", protect, getSinglePickup);
 
-router.get("/pending", protect, getPendingPickups);
+
 
 // =======================================
 // ACCEPT PICKUP
