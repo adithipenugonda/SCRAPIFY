@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-
-
-import {
-  Link,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
-
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/Navbar";
-
-import "./LandingPage.css";
-
 import useAuth from "../../hooks/useAuth";
+import { 
+  FaCalendarCheck, 
+  FaTruckFast, 
+  FaHandHoldingDollar, 
+  FaLeaf,
+  FaRegNewspaper,
+  FaBox,
+  FaBottleWater,
+  FaWrench,
+  FaCoins,
+  FaGlassWater,
+  FaLaptop,
+  FaChampagneGlasses
+} from "react-icons/fa6";
+import "./LandingPage.css";
 
 
 
@@ -179,58 +184,39 @@ const LandingPage = () => {
           <div className="features-grid">
 
             <div className="card feature-card">
-
-              <h3>
-                📦 Schedule Pickup
-              </h3>
-
+              <div className="feature-icon"><FaCalendarCheck /></div>
+              <h3>Schedule Pickup</h3>
               <p>
                 Book scrap collection
                 directly from your home.
               </p>
-
             </div>
 
-
             <div className="card feature-card">
-
-              <h3>
-                🚚 Collector Assignment
-              </h3>
-
+              <div className="feature-icon"><FaTruckFast /></div>
+              <h3>Collector Assignment</h3>
               <p>
                 Nearby collectors accept
                 and track your request.
               </p>
-
             </div>
 
-
             <div className="card feature-card">
-
-              <h3>
-                💰 Instant Earnings
-              </h3>
-
+              <div className="feature-icon"><FaHandHoldingDollar /></div>
+              <h3>Instant Earnings</h3>
               <p>
                 Get paid according to
                 live market scrap rates.
               </p>
-
             </div>
 
-
             <div className="card feature-card">
-
-              <h3>
-                🌍 Eco Impact
-              </h3>
-
+              <div className="feature-icon"><FaLeaf /></div>
+              <h3>Eco Impact</h3>
               <p>
                 Track CO₂ savings and
                 recycling contribution.
               </p>
-
             </div>
 
           </div>
@@ -285,217 +271,98 @@ const LandingPage = () => {
 
   {/* NEWSPAPER */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        📰
+      <div className="rate-card-icon text-blue-500">
+        <FaRegNewspaper />
       </div>
-
-      <span className="rate-up">
-        +0.4
-      </span>
-
+      <span className="rate-up">+0.4</span>
     </div>
-
-    <h3>
-      NEWSPAPER
-    </h3>
-
-    <p>
-      ₹14.50
-      <span>/kg</span>
-    </p>
-
+    <h3>NEWSPAPER</h3>
+    <p>₹14.50 <span>/kg</span></p>
   </div>
-
 
   {/* CARDBOARD */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        📦
+      <div className="rate-card-icon text-amber-600">
+        <FaBox />
       </div>
-
-      <span className="rate-down">
-        -0.3
-      </span>
-
+      <span className="rate-down">-0.3</span>
     </div>
-
-    <h3>
-      CARDBOARD
-    </h3>
-
-    <p>
-      ₹8.20
-      <span>/kg</span>
-    </p>
-
+    <h3>CARDBOARD</h3>
+    <p>₹8.20 <span>/kg</span></p>
   </div>
-
 
   {/* PLASTIC */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        🧴
+      <div className="rate-card-icon text-emerald-500">
+        <FaBottleWater />
       </div>
-
-      <span className="rate-up">
-        +0.5
-      </span>
-
+      <span className="rate-up">+0.5</span>
     </div>
-
-    <h3>
-      PLASTIC (PET)
-    </h3>
-
-    <p>
-      ₹12.00
-      <span>/kg</span>
-    </p>
-
+    <h3>PLASTIC (PET)</h3>
+    <p>₹12.00 <span>/kg</span></p>
   </div>
-
 
   {/* IRON */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        🔩
+      <div className="rate-card-icon text-slate-500">
+        <FaWrench />
       </div>
-
-      <span className="rate-up">
-        +1.2
-      </span>
-
+      <span className="rate-up">+1.2</span>
     </div>
-
-    <h3>
-      IRON SCRAP
-    </h3>
-
-    <p>
-      ₹28.00
-      <span>/kg</span>
-    </p>
-
+    <h3>IRON SCRAP</h3>
+    <p>₹28.00 <span>/kg</span></p>
   </div>
-
 
   {/* COPPER */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        🪙
+      <div className="rate-card-icon text-orange-500">
+        <FaCoins />
       </div>
-
-      <span className="rate-up">
-        +6
-      </span>
-
+      <span className="rate-up">+6</span>
     </div>
-
-    <h3>
-      COPPER
-    </h3>
-
-    <p>
-      ₹412.00
-      <span>/kg</span>
-    </p>
-
+    <h3>COPPER</h3>
+    <p>₹412.00 <span>/kg</span></p>
   </div>
-
 
   {/* ALUMINUM */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        🥫
+      <div className="rate-card-icon text-cyan-600">
+        <FaGlassWater />
       </div>
-
-      <span className="rate-neutral">
-        --
-      </span>
-
+      <span className="rate-neutral">--</span>
     </div>
-
-    <h3>
-      ALUMINUM
-    </h3>
-
-    <p>
-      ₹145.00
-      <span>/kg</span>
-    </p>
-
+    <h3>ALUMINUM</h3>
+    <p>₹145.00 <span>/kg</span></p>
   </div>
-
 
   {/* E-WASTE */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        💻
+      <div className="rate-card-icon text-violet-500">
+        <FaLaptop />
       </div>
-
-      <span className="rate-up">
-        +2
-      </span>
-
+      <span className="rate-up">+2</span>
     </div>
-
-    <h3>
-      E-WASTE
-    </h3>
-
-    <p>
-      ₹95.00
-      <span>/kg</span>
-    </p>
-
+    <h3>E-WASTE</h3>
+    <p>₹95.00 <span>/kg</span></p>
   </div>
-
 
   {/* GLASS */}
   <div className="rate-card">
-
     <div className="rate-top">
-
-      <div className="rate-card-icon">
-        🍾
+      <div className="rate-card-icon text-lime-600">
+        <FaChampagneGlasses />
       </div>
-
-      <span className="rate-neutral">
-        --
-      </span>
-
+      <span className="rate-neutral">--</span>
     </div>
-
-    <h3>
-      GLASS
-    </h3>
-
-    <p>
-      ₹3.50
-      <span>/kg</span>
-    </p>
-
+    <h3>GLASS</h3>
+    <p>₹3.50 <span>/kg</span></p>
   </div>
 
 </div>

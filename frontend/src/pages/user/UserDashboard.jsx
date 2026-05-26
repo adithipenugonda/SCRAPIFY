@@ -1,14 +1,10 @@
 import React from "react";
-
 import UserLayout from "../../layouts/UserLayout";
-
 import Card from "../../components/common/Card";
-
+import { FaTruck, FaGift, FaIndianRupeeSign, FaLeaf } from "react-icons/fa6";
 import "./UserDashboard.css";
 
-
 const UserDashboard = () => {
-
   // ==========================================
   // DUMMY DATA
   // ==========================================
@@ -16,25 +12,22 @@ const UserDashboard = () => {
     {
       title: "Total Pickups",
       value: "24",
-      icon: "🚚",
+      icon: <FaTruck />,
     },
-
     {
       title: "Green Points",
       value: "1,240",
-      icon: "🎁",
+      icon: <FaGift />,
     },
-
     {
       title: "Total Earnings",
       value: "₹5,480",
-      icon: "💰",
+      icon: <FaIndianRupeeSign />,
     },
-
     {
       title: "CO₂ Saved",
       value: "320kg",
-      icon: "🌍",
+      icon: <FaLeaf />,
     },
   ];
 

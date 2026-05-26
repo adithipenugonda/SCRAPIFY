@@ -1,52 +1,64 @@
 /* =========================================
-   COLOR VARIABLES
+   COLOR VARIABLES & DESIGN SYSTEM
 ========================================= */
 :root {
-
-  /* Primary Colors */
-  --primary-color: #22c55e;
-  --primary-dark: #16a34a;
-  --primary-light: #86efac;
-
-  /* Secondary Colors */
-  --secondary-color: #0f172a;
-  --secondary-light: #1e293b;
+  /* Brand Colors (Modern Mint & Slate) */
+  --primary-color: #10b981;       /* Premium Emerald Mint */
+  --primary-dark: #059669;        /* Deep Emerald */
+  --primary-light: #34d399;       /* Bright Mint Accent */
+  --primary-glow: rgba(16, 185, 129, 0.15);
+  
+  --secondary-color: #0b0f19;     /* Deep Slate / Midnight Navy */
+  --secondary-light: #1e293b;     /* Slate Gray for secondary headers */
+  --secondary-dark: #030712;      /* Midnight Black */
 
   /* Background Colors */
-  --background-color: #f8fafc;
-  --card-background: #ffffff;
+  --background-color: #f8fafc;    /* Clean Soft Blue-Gray */
+  --card-background: rgba(255, 255, 255, 0.85);
+  --sidebar-bg: #0b0f19;          /* Consistent Deep Slate for Sidebar */
+  
+  /* Glassmorphism Configuration */
+  --glass-bg: rgba(255, 255, 255, 0.70);
+  --glass-border: rgba(255, 255, 255, 0.50);
+  --glass-blur: blur(16px);
+  --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
 
   /* Text Colors */
-  --text-color: #1e293b;
-  --text-light: #64748b;
+  --text-color: #0f172a;          /* Slate-900 */
+  --text-light: #64748b;          /* Slate-500 */
+  --text-muted: #94a3b8;          /* Slate-400 */
   --text-white: #ffffff;
 
   /* Border */
-  --border-color: #e2e8f0;
+  --border-color: rgba(226, 232, 240, 0.8); /* Slate-200 */
 
   /* Status Colors */
-  --success-color: #22c55e;
+  --success-color: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.1);
+  
   --warning-color: #f59e0b;
+  --warning-bg: rgba(245, 158, 11, 0.1);
+  
   --danger-color: #ef4444;
+  --danger-bg: rgba(239, 68, 68, 0.1);
+  
   --info-color: #3b82f6;
+  --info-bg: rgba(59, 130, 246, 0.1);
 
   /* Shadows */
-  --shadow-sm:
-    0 2px 8px rgba(0, 0, 0, 0.08);
-
-  --shadow-md:
-    0 4px 16px rgba(0, 0, 0, 0.12);
-
-  --shadow-lg:
-    0 8px 24px rgba(0, 0, 0, 0.16);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -6px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.18);
 
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 16px;
   --radius-lg: 24px;
+  --radius-xl: 32px;
 
   /* Typography */
-  --font-family: "Poppins", sans-serif;
+  --font-family: "Poppins", system-ui, -apple-system, sans-serif;
 
   --font-sm: 14px;
   --font-md: 16px;
@@ -69,13 +81,9 @@
   --spacing-xl: 40px;
 
   /* Transition */
-  --transition:
-    all 0.3s ease;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-  /* Navbar Height */
+  /* Navigation Heights & Widths */
   --navbar-height: 80px;
-
-  /* Sidebar Width */
-  --sidebar-width: 260px;
-
+  --sidebar-width: 320px;
 }

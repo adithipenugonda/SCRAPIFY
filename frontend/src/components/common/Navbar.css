@@ -1,100 +1,103 @@
 /* =========================================
-   NAVBAR
+   STICKY GLASSMORPHIC NAVBAR
 ========================================= */
 .navbar {
   width: 100%;
-
-  background-color: white;
-
-  box-shadow: var(--shadow-sm);
-
+  background-color: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
-
   z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.02);
+  transition: var(--transition);
 }
-
 
 /* =========================================
    NAVBAR CONTAINER
 ========================================= */
 .navbar-container {
-  height: 80px;
-
+  height: 76px;
   display: flex;
-
   justify-content: space-between;
   align-items: center;
 }
-
 
 /* =========================================
    LOGO
 ========================================= */
 .navbar-logo {
-  font-size: 30px;
-
-  font-weight: 700;
-
-  color: var(--primary-color);
-
-  transition: var(--transition);
+  font-size: 24px;
+  font-weight: var(--weight-bold);
+  color: var(--text-color);
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .navbar-logo:hover {
-  transform: scale(1.03);
+  color: var(--primary-color);
+  transform: translateY(-1px);
 }
-
 
 /* =========================================
    NAV LINKS
 ========================================= */
 .navbar-links {
   display: flex;
-
   align-items: center;
-
-  gap: 30px;
+  gap: 32px;
 }
 
 .navbar-links a {
-  font-size: 16px;
-
-  font-weight: 500;
-
-  color: var(--text-color);
-
+  font-size: 15px;
+  font-weight: var(--weight-medium);
+  color: var(--text-light);
   position: relative;
+  padding: 8px 4px;
+}
 
+.navbar-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
   transition: var(--transition);
+  border-radius: 99px;
 }
 
 .navbar-links a:hover {
   color: var(--primary-color);
 }
 
+.navbar-links a:hover::after {
+  width: 100%;
+}
 
 /* =========================================
    AUTH SECTION
 ========================================= */
 .navbar-auth {
   display: flex;
-
   align-items: center;
-
-  gap: 15px;
+  gap: 16px;
 }
 
-
-/* =========================================
-   USER TEXT
-========================================= */
+/* USER NAME */
 .navbar-user {
-  font-weight: 600;
-
+  font-size: 14px;
+  font-weight: var(--weight-semibold);
   color: var(--text-color);
+  background: var(--background-color);
+  padding: 8px 16px;
+  border-radius: 99px;
+  border: 1px solid var(--border-color);
 }
-
 
 /* =========================================
    BUTTONS
@@ -103,58 +106,62 @@
 .register-btn,
 .logout-btn {
   padding: 10px 20px;
-
-  border-radius: 10px;
-
-  font-size: 15px;
-
-  font-weight: 600;
-
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: var(--weight-semibold);
   transition: var(--transition);
 }
-
 
 /* LOGIN BUTTON */
 .login-btn {
   background: transparent;
-
-  border: 1px solid
-    var(--primary-color);
-
+  border: 1.5px solid var(--primary-color);
   color: var(--primary-color);
 }
 
 .login-btn:hover {
-  background-color:
-    var(--primary-color);
-
+  background-color: var(--primary-color);
   color: white;
+  box-shadow: 0 4px 12px var(--primary-glow);
 }
 
-
-/* REGISTER BUTTON */
+/* REGISTER & LOGOUT BUTTON */
 .register-btn,
 .logout-btn {
-  background-color:
-    var(--primary-color);
-
+  background-color: var(--primary-color);
   color: white;
+  box-shadow: 0 4px 12px var(--primary-glow);
 }
 
 .register-btn:hover,
 .logout-btn:hover {
-  background-color:
-    var(--primary-dark);
-
-  transform: translateY(-2px);
+  background-color: var(--primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
 }
 
+.register-btn:active,
+.logout-btn:active {
+  transform: translateY(0);
+}
+
+.logout-btn {
+  background-color: #fee2e2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+  box-shadow: none;
+}
+
+.logout-btn:hover {
+  background-color: #fca5a5;
+  color: #b91c1c;
+  box-shadow: none;
+}
 
 /* =========================================
    RESPONSIVE
 ========================================= */
 @media (max-width: 768px) {
-
   .navbar-links {
     display: none;
   }
@@ -164,11 +171,10 @@
   }
 
   .navbar-container {
-    height: 70px;
+    height: 68px;
   }
 
   .navbar-logo {
-    font-size: 24px;
+    font-size: 20px;
   }
-
 }

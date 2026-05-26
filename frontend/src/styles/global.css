@@ -1,456 +1,252 @@
 /* =========================================
    GOOGLE FONT
 ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-
-/* =========================================
-   ROOT VARIABLES
-========================================= */
-:root {
-
-  /* COLORS */
-  --primary-color: #00c853;
-
-  --primary-light: #5efc82;
-
-  --primary-dark: #009624;
-
-  --secondary-color: #0b0f14;
-
-  --background-color: #f4f8f5;
-
-  --dashboard-bg: #edf3ef;
-
-  --card-bg: rgba(255, 255, 255, 0.82);
-
-  --glass-bg: rgba(255, 255, 255, 0.6);
-
-  --sidebar-bg: #050b07;
-
-  --sidebar-hover: #101914;
-
-  --white-color: #ffffff;
-
-  --text-color: #101828;
-
-  --text-light: #667085;
-
-  --border-color: rgba(255,255,255,0.12);
-
-  --danger-color: #ef4444;
-
-  --warning-color: #f59e0b;
-
-
-  /* SHADOWS */
-  --shadow-sm:
-    0 4px 12px rgba(0,0,0,0.04);
-
-  --shadow-md:
-    0 12px 28px rgba(0,0,0,0.08);
-
-  --shadow-lg:
-    0 24px 48px rgba(0,0,0,0.12);
-
-
-  /* BORDER RADIUS */
-  --radius-sm: 12px;
-
-  --radius-md: 22px;
-
-  --radius-lg: 32px;
-
-
-  /* BLUR */
-  --blur-effect: blur(20px);
-
-
-  /* TRANSITION */
-  --transition:
-    all 0.3s ease;
-
-}
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 /* =========================================
-   GLOBAL RESET
+   GLOBAL RESET & BASICS
 ========================================= */
 * {
   margin: 0;
   padding: 0;
-
   box-sizing: border-box;
 }
 
-
-/* =========================================
-   BODY
-========================================= */
 body {
-
-  font-family:
-    "Poppins",
-    sans-serif;
-
-  background:
-    linear-gradient(
-      135deg,
-      #edf3ef,
-      #f8fafc
-    );
-
-  color:
-    var(--text-color);
-
-  min-height:
-    100vh;
-
-  overflow-x:
-    hidden;
-
-  -webkit-font-smoothing:
-    antialiased;
-
-}
-
-
-/* =========================================
-   ROOT APP
-========================================= */
-#root {
-
-  width: 100% !important;
-
-  max-width: 100% !important;
-
-  margin: 0 !important;
-
-  text-align: left !important;
-
+  font-family: 'Plus Jakarta Sans', 'Poppins', system-ui, sans-serif;
+  background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 50%, #f1f5f9 100%);
+  color: var(--text-color);
   min-height: 100vh;
-
-  display: flex;
-
-  flex-direction: column;
-
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+#root {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  text-align: left !important;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-/* =========================================
-   LINKS
-========================================= */
 a {
   text-decoration: none;
-
   color: inherit;
+  transition: var(--transition);
 }
-
 
 /* =========================================
    BUTTONS
 ========================================= */
 button {
-
   border: none;
-
   outline: none;
-
   cursor: pointer;
-
   font-family: inherit;
-
-  transition:
-    var(--transition);
-
+  transition: var(--transition);
 }
 
+/* PRIMARY BUTTON */
+.primary-btn {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-semibold);
+  font-size: 15px;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.4);
+}
+
+.primary-btn:active {
+  transform: translateY(0);
+}
+
+/* SECONDARY BUTTON */
+.secondary-btn {
+  background: white;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: var(--weight-medium);
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
+.secondary-btn:hover {
+  background: var(--background-color);
+  border-color: var(--text-light);
+  transform: translateY(-1px);
+}
+
+.secondary-btn:active {
+  transform: translateY(0);
+}
 
 /* =========================================
-   INPUTS
+   INPUTS, TEXTAREAS & SELECTS
 ========================================= */
 input,
 textarea,
 select {
-
-  font-family:
-    inherit;
-
-  outline:
-    none;
-
-  border:
-    1px solid
-    var(--border-color);
-
-  transition:
-    var(--transition);
-
+  font-family: inherit;
+  outline: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 15px;
+  background-color: white;
+  color: var(--text-color);
+  transition: var(--transition);
+  width: 100%;
 }
 
-
-/* =========================================
-   INPUT FOCUS
-========================================= */
 input:focus,
 textarea:focus,
 select:focus {
-
-  border-color:
-    var(--primary-color);
-
-  box-shadow:
-    0 0 0 4px rgba(0, 200, 83, 0.12);
-
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 4px var(--primary-glow);
 }
 
-
-/* =========================================
-   IMAGES
-========================================= */
-img {
-
-  width: 100%;
-
+label {
   display: block;
-
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: var(--weight-medium);
+  color: var(--secondary-light);
 }
-
 
 /* =========================================
-   CONTAINER
-========================================= */
-.container {
-
-  width: 92%;
-
-  max-width: 1400px;
-
-  margin: auto;
-
-}
-
-
-/* =========================================
-   SECTION
-========================================= */
-.section {
-
-  padding:
-    80px 0;
-
-}
-
-
-/* =========================================
-   FLEX UTILITIES
-========================================= */
-.flex {
-  display: flex;
-}
-
-.flex-center {
-
-  display: flex;
-
-  justify-content: center;
-
-  align-items: center;
-
-}
-
-.flex-between {
-
-  display: flex;
-
-  justify-content: space-between;
-
-  align-items: center;
-
-}
-
-
-/* =========================================
-   GRID UTILITIES
-========================================= */
-.grid {
-  display: grid;
-}
-
-
-/* =========================================
-   PRIMARY BUTTON
-========================================= */
-.primary-btn {
-
-  background:
-    linear-gradient(
-      135deg,
-      #00c853,
-      #00e676
-    );
-
-  color: black;
-
-  padding:
-    14px 28px;
-
-  border-radius:
-    16px;
-
-  font-weight:
-    700;
-
-  transition:
-    var(--transition);
-
-  box-shadow:
-    0 12px 30px rgba(0, 200, 83, 0.2);
-
-}
-
-.primary-btn:hover {
-
-  transform:
-    translateY(-3px);
-
-  box-shadow:
-    0 18px 35px rgba(0, 200, 83, 0.28);
-
-}
-
-
-/* =========================================
-   SECONDARY BUTTON
-========================================= */
-.secondary-btn {
-
-  background:
-    rgba(255,255,255,0.7);
-
-  backdrop-filter:
-    blur(10px);
-
-  color:
-    var(--text-color);
-
-  border:
-    1px solid rgba(255,255,255,0.2);
-
-  padding:
-    14px 28px;
-
-  border-radius:
-    16px;
-
-  font-weight:
-    600;
-
-}
-
-.secondary-btn:hover {
-
-  background:
-    white;
-
-  transform:
-    translateY(-2px);
-
-}
-
-
-/* =========================================
-   CARD
+   CARDS (Premium Glassmorphism)
 ========================================= */
 .card {
-
-  background:
-    var(--card-bg);
-
-  backdrop-filter:
-    var(--blur-effect);
-
-  border:
-    1px solid
-    rgba(255,255,255,0.18);
-
-  border-radius:
-    var(--radius-md);
-
-  box-shadow:
-    var(--shadow-md);
-
-  padding:
-    26px;
-
-  transition:
-    var(--transition);
-
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
 }
 
 .card:hover {
-
-  transform:
-    translateY(-5px);
-
-  box-shadow:
-    var(--shadow-lg);
-
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: rgba(16, 185, 129, 0.25);
 }
 
-
 /* =========================================
-   SCROLLBAR
+   SCROLLBARS
 ========================================= */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-
-  background:
-    #ecf0ec;
-
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 99px;
+  transition: var(--transition);
+}
 
-  background:
-    linear-gradient(
-      #00c853,
-      #00e676
-    );
-
-  border-radius:
-    20px;
-
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.45);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* =========================================
+   LAYOUT UTILITIES
+========================================= */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
 
+.section {
+  padding: 80px 0;
+}
 
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================================
+   STATUS BADGES
+========================================= */
+.status {
+  padding: 6px 12px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: var(--weight-semibold);
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+}
+
+.status.pending {
+  background-color: var(--warning-bg);
+  color: var(--warning-color);
+}
+
+.status.completed {
+  background-color: var(--success-bg);
+  color: var(--success-color);
+}
+
+.status.progress,
+.status.active {
+  background-color: var(--info-bg);
+  color: var(--info-color);
+}
+
+.status.danger,
+.status.cancelled {
+  background-color: var(--danger-bg);
+  color: var(--danger-color);
+}
 
 /* =========================================
    RESPONSIVE
 ========================================= */
-@media (max-width: 992px) {
-
-  .container {
-    width: 95%;
-  }
-
-}
-
 @media (max-width: 768px) {
-
   .section {
-
-    padding:
-      60px 0;
-
+    padding: 50px 0;
   }
-
 }

@@ -1,343 +1,252 @@
 /* =========================================
-   SIDEBAR
+   PREMIUM SIDEBAR (Console layout)
 ========================================= */
 .sidebar {
-
   width: 320px;
-
   min-height: 100vh;
-
-  background: #060b08;
-
+  background: var(--sidebar-bg);
   color: white;
-
   display: flex;
-
   flex-direction: column;
-
   justify-content: space-between;
-
-  border-right: none;
-
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
   position: sticky;
-
   top: 0;
-
-  padding: 24px 0;
-
+  padding: 28px 0;
   overflow: hidden;
-
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+  transition: var(--transition);
 }
 
-
 /* =========================================
-   TOP
+   TOP SECTION
 ========================================= */
 .sidebar-top {
-
-  padding: 0 20px;
-
+  padding: 0 24px;
 }
 
-
-/* =========================================
-   BRAND
-========================================= */
+/* BRAND HEADER */
 .sidebar-brand {
-
   display: flex;
-
   align-items: center;
-
-  gap: 14px;
-
-  padding-bottom: 24px;
-
-  border-bottom:
-    1px solid rgba(255,255,255,0.06);
-
+  gap: 16px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-
-/* =========================================
-   BRAND CIRCLE
-========================================= */
+/* BRAND CIRCLE */
 .brand-circle {
-
-  width: 44px;
-  height: 44px;
-
-  border-radius: 50%;
-
-  background: #00c853;
-
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   display: flex;
-
   justify-content: center;
   align-items: center;
-
-  font-weight: 700;
-
+  font-size: 20px;
   color: white;
-
-  font-size: 18px;
-
+  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+  transition: var(--transition);
 }
 
+.sidebar-brand:hover .brand-circle {
+  transform: rotate(360deg);
+}
 
-/* =========================================
-   BRAND TEXT
-========================================= */
 .sidebar-brand h2 {
-
-  font-size: 20px;
-
-  font-weight: 700;
-
-  letter-spacing: 0.5px;
-
+  font-size: 18px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 1px;
   margin: 0;
-
+  background: linear-gradient(to right, white 0%, rgba(255, 255, 255, 0.7) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .sidebar-brand p {
-
-  font-size: 9px;
-
-  color: rgba(255,255,255,0.4);
-
-  letter-spacing: 1.5px;
-
-  margin-top: 3px;
-
+  font-size: 10px;
+  color: var(--primary-light);
+  letter-spacing: 2px;
+  margin-top: 4px;
+  font-weight: var(--weight-semibold);
   text-transform: uppercase;
-
 }
 
-
 /* =========================================
-   LINKS WRAPPER
+   NAVIGATION LINKS
 ========================================= */
 .sidebar-links {
-
   display: flex;
-
   flex-direction: column;
-
-  gap: 8px;
-
-  margin-top: 30px;
-
+  gap: 6px;
+  margin-top: 32px;
   padding: 0 16px;
-
 }
 
-
-/* =========================================
-   SIDEBAR LINK
-========================================= */
+/* LINK ELEMENT */
 .sidebar-link {
-
   display: flex;
-
   align-items: center;
-
-  gap: 12px;
-
-  padding: 14px 20px;
-
-  border-radius: 9999px;
-
-  color: #88929b;
-
-  font-weight: 600;
-
-  font-size: 15px;
-
-  transition: all 0.2s ease;
-
+  gap: 14px;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-weight: var(--weight-medium);
+  font-size: 14px;
+  transition: var(--transition);
   position: relative;
-
 }
 
-
-/* =========================================
-   HOVER
-========================================= */
 .sidebar-link:hover {
-
-  background: rgba(255,255,255,0.04);
-
+  background: rgba(255, 255, 255, 0.04);
   color: white;
-
 }
 
-
-/* =========================================
-   ACTIVE LINK
-========================================= */
+/* ACTIVE STATE */
 .sidebar-link.active {
-
-  background: #00c853;
-
-  color: #060b08;
-
-  font-weight: 700;
-
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(16, 185, 129, 0.05) 100%);
+  color: var(--primary-light);
+  font-weight: var(--weight-semibold);
+  border-left: 3px solid var(--primary-color);
+  padding-left: 17px; /* Adjustment for border */
 }
 
-
-/* =========================================
-   ICON
-========================================= */
+/* LINK ICONS */
 .sidebar-icon {
-
-  font-size: 16px;
-
+  font-size: 18px;
   width: 20px;
-
   display: flex;
-
   justify-content: center;
-
   flex-shrink: 0;
-
 }
 
+.sidebar-link.active .sidebar-icon {
+  color: var(--primary-color);
+  filter: drop-shadow(0 0 4px var(--primary-color));
+}
 
 /* =========================================
-   FOOTER
+   FOOTER PROFILE SECTION
 ========================================= */
 .sidebar-footer {
-
-  padding: 20px;
-
-  border-top:
-    1px solid rgba(255,255,255,0.06);
-
+  padding: 24px 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-
-/* =========================================
-   PROFILE
-========================================= */
 .sidebar-profile {
-
   display: flex;
-
   align-items: center;
-
   gap: 14px;
-
 }
 
-
-/* =========================================
-   PROFILE AVATAR
-========================================= */
+/* PROFILE AVATAR */
 .profile-avatar {
-
   width: 44px;
   height: 44px;
-
   border-radius: 50%;
-
-  background: #06af52bc;
-
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(16, 185, 129, 0.4) 100%);
+  border: 1px solid rgba(16, 185, 129, 0.3);
   display: flex;
-
   justify-content: center;
   align-items: center;
-
-  font-weight: 700;
-
-  color: #060b08;
-
+  font-weight: var(--weight-bold);
+  color: var(--primary-light);
   font-size: 16px;
-
 }
 
+/* PROFILE DETAILS */
+.profile-info {
+  flex: 1;
+}
 
-/* =========================================
-   PROFILE TEXT
-========================================= */
 .sidebar-profile h4 {
-
-  font-size: 15px;
-
-  margin-bottom: 2px;
-
-  font-weight: 600;
-
+  font-size: 14px;
+  margin-bottom: 4px;
+  font-weight: var(--weight-semibold);
   color: white;
-
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
 }
 
-.sidebar-profile p {
-
+/* EXIT CONSOLE BUTTON */
+.exit-console-btn {
+  background: transparent;
+  border: none;
   font-size: 12px;
-
-  color: rgba(255,255,255,0.4);
-
-  transition: color 0.2s ease;
-
+  color: rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  transition: var(--transition);
   cursor: pointer;
-
-  margin: 0;
-
 }
 
-.sidebar-profile p:hover {
-
-  color: white;
-
+.exit-console-btn:hover {
+  color: #fca5a5;
 }
 
+.logout-icon {
+  font-size: 12px;
+}
 
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE LAYOUT
 ========================================= */
 @media (max-width: 992px) {
-
   .sidebar {
-
-    width: 92px;
-
+    width: 88px;
   }
 
   .sidebar-brand div:last-child,
   .sidebar-profile div:last-child {
-
     display: none;
-
   }
 
-  .sidebar-link {
-
-    justify-content: center;
-
-    padding: 16px;
-
-    font-size: 0;
-
-  }
-
-  .sidebar-icon {
-
-    font-size: 20px;
-
+  .sidebar-top {
+    padding: 0;
   }
 
   .sidebar-brand {
-
     justify-content: center;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
 
+  .sidebar-links {
+    padding: 0 12px;
+    align-items: center;
+  }
+
+  .sidebar-link {
+    justify-content: center;
+    padding: 14px;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+  }
+
+  .sidebar-link.active {
+    border-left: none;
+    background: rgba(16, 185, 129, 0.15);
+    padding-left: 14px;
+  }
+
+  .sidebar-text {
+    display: none;
+  }
+
+  .sidebar-icon {
+    font-size: 20px;
   }
 
   .sidebar-profile {
-
     justify-content: center;
-
   }
 
+  .sidebar-footer {
+    padding: 20px 0 0;
+  }
 }
