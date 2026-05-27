@@ -8,12 +8,15 @@ import {
 
 
 import useAuth from "../../hooks/useAuth";
+import { useTheme } from "../../context/ThemeContext";
+import { FaSun, FaMoon } from "react-icons/fa6";
 
 import "./Navbar.css";
 
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const {
     user,
@@ -80,6 +83,15 @@ const Navbar = () => {
         {/* ================================= */}
 
         <div className="navbar-auth">
+
+          <button 
+            className="theme-toggle-btn neo-btn-tactile" 
+            onClick={toggleTheme} 
+            title={`Switch to ${theme === 'light' ? 'Dark' : 'Light'} Mode`}
+            aria-label="Toggle Theme"
+          >
+            {theme === "light" ? <FaMoon className="theme-icon moon" /> : <FaSun className="theme-icon sun" />}
+          </button>
 
           {isAuthenticated ? (
             <>

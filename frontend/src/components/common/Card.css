@@ -29,7 +29,7 @@
 .custom-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(0, 200, 83, 0.25);
 }
 
 .custom-card:hover::before {
@@ -73,13 +73,13 @@
   width: 48px;
   height: 48px;
   border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(16, 185, 129, 0.18) 100%);
+  background: linear-gradient(135deg, rgba(0, 200, 83, 0.08) 0%, rgba(0, 200, 83, 0.18) 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 20px;
   color: var(--primary-color);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(0, 200, 83, 0.15);
   transition: var(--transition);
 }
 
@@ -87,7 +87,7 @@
   transform: scale(1.05);
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: white;
-  box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+  box-shadow: 0 4px 10px rgba(0, 200, 83, 0.2);
 }
 
 /* =========================================

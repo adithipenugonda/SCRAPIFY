@@ -3,23 +3,23 @@
 ========================================= */
 :root {
   /* Brand Colors (Modern Mint & Slate) */
-  --primary-color: #10b981;       /* Premium Emerald Mint */
-  --primary-dark: #059669;        /* Deep Emerald */
-  --primary-light: #34d399;       /* Bright Mint Accent */
-  --primary-glow: rgba(16, 185, 129, 0.15);
+  --primary-color: #00c853;       /* Bright Green */
+  --primary-dark: #009624;        /* Deep Green */
+  --primary-light: #5efc82;       /* Light Green Accent */
+  --primary-glow: rgba(0, 200, 83, 0.15);
   
-  --secondary-color: #0b0f19;     /* Deep Slate / Midnight Navy */
+  --secondary-color: #070c09;     /* Forest Black */
   --secondary-light: #1e293b;     /* Slate Gray for secondary headers */
-  --secondary-dark: #030712;      /* Midnight Black */
+  --secondary-dark: #000000;      /* Pure Black */
 
   /* Background Colors */
-  --background-color: #f8fafc;    /* Clean Soft Blue-Gray */
-  --card-background: rgba(255, 255, 255, 0.85);
-  --sidebar-bg: #0b0f19;          /* Consistent Deep Slate for Sidebar */
+  --background-color: #f4f8f6;    /* Soft Light Green-White */
+  --card-background: #ffffff;      /* Pure White */
+  --sidebar-bg: #070c09;          /* Forest Black for Sidebar */
   
   /* Glassmorphism Configuration */
-  --glass-bg: rgba(255, 255, 255, 0.70);
-  --glass-border: rgba(255, 255, 255, 0.50);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(228, 236, 230, 0.5);
   --glass-blur: blur(16px);
   --glass-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.05);
 
@@ -30,11 +30,11 @@
   --text-white: #ffffff;
 
   /* Border */
-  --border-color: rgba(226, 232, 240, 0.8); /* Slate-200 */
+  --border-color: #e4ece6;        /* Light Grey-Green Border */
 
   /* Status Colors */
-  --success-color: #10b981;
-  --success-bg: rgba(16, 185, 129, 0.1);
+  --success-color: #00c853;
+  --success-bg: rgba(0, 200, 83, 0.08);
   
   --warning-color: #f59e0b;
   --warning-bg: rgba(245, 158, 11, 0.1);
@@ -49,7 +49,7 @@
   --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
   --shadow-md: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
   --shadow-lg: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 10px 10px -6px rgba(15, 23, 42, 0.08);
-  --shadow-glow: 0 0 25px rgba(16, 185, 129, 0.18);
+  --shadow-glow: 0 0 25px rgba(0, 200, 83, 0.18);
 
   /* Border Radius */
   --radius-sm: 8px;
@@ -58,7 +58,7 @@
   --radius-xl: 32px;
 
   /* Typography */
-  --font-family: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-family: "Plus Jakarta Sans", "Poppins", system-ui, -apple-system, sans-serif;
 
   --font-sm: 14px;
   --font-md: 16px;
@@ -86,4 +86,59 @@
   /* Navigation Heights & Widths */
   --navbar-height: 80px;
   --sidebar-width: 320px;
+}
+
+/* =========================================
+   DARK CYBERPUNK MODE OVERRIDES
+   ========================================= */
+[data-theme="dark"] {
+  /* Brand Colors (Forest Dark Mode) */
+  --primary-color: #00c853;       /* Bright Green */
+  --primary-dark: #009624;        /* Deep Green */
+  --primary-light: #5efc82;       /* Light Green Accent */
+  --primary-glow: rgba(0, 200, 83, 0.2);
+  
+  --secondary-color: #070c09;     /* Forest Black */
+  --secondary-light: #0b0f19;     /* Dark Grey Accent */
+  --secondary-dark: #000000;      /* Pure Black */
+
+  /* Background Colors */
+  --background-color: #040605;    /* Deep Forest Space Black */
+  --card-background: #0d120f;     /* Dark Green-Grey Card */
+  --sidebar-bg: #070c09;          /* Forest Black for Sidebar */
+  
+  /* Glassmorphism Configuration */
+  --glass-bg: rgba(13, 18, 15, 0.8);
+  --glass-border: rgba(0, 200, 83, 0.1);
+  --glass-blur: blur(24px);
+  --glass-shadow: 0 12px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* Text Colors */
+  --text-color: #f1f5f9;          /* Crisp Silver */
+  --text-light: #94a3b8;          /* Slate Grey */
+  --text-muted: #4b5563;          /* Dark Grey */
+  --text-white: #ffffff;
+
+  /* Border */
+  --border-color: rgba(0, 200, 83, 0.15);
+
+  /* Status Colors */
+  --success-color: #00c853;
+  --success-bg: rgba(0, 200, 83, 0.12);
+  
+  --warning-color: #fbbf24;
+  --warning-bg: rgba(251, 191, 36, 0.12);
+  
+  --danger-color: #f43f5e;
+  --danger-bg: rgba(244, 63, 94, 0.12);
+  
+  --info-color: #38bdf8;
+  --info-bg: rgba(56, 189, 248, 0.12);
+
+  /* Shadows & Glowing Green Accents */
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-md: 0 12px 30px -5px rgba(0, 0, 0, 0.7);
+  --shadow-lg: 0 24px 38px -5px rgba(0, 0, 0, 0.8);
+  --shadow-glow: 0 0 20px rgba(0, 200, 83, 0.25);
+  --shadow-glow-secondary: 0 0 20px rgba(94, 252, 130, 0.15);
 }

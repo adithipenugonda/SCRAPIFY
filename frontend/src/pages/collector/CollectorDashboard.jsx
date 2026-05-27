@@ -6,6 +6,63 @@ import CollectorLayout from "../../layouts/CollectorLayout";
 import "./CollectorDashboard.css";
 import API from "../../services/api";
 
+const nodeCoords = [
+  { x: 80, y: 80 },
+  { x: 230, y: 95 },
+  { x: 95, y: 205 }
+];
+
+const mockJobs = [
+  {
+    _id: "mock-1",
+    material: "Paper + Plastic",
+    payout: 145,
+    location: "HSR Sector 2",
+    time: "Now",
+    distance: "1.2 km",
+    weight: "~9kg",
+    coords: nodeCoords[0],
+    status: "Pending"
+  },
+  {
+    _id: "mock-2",
+    material: "E-Waste",
+    payout: 332,
+    location: "Koramangala 5th Block",
+    time: "Now",
+    distance: "2.4 km",
+    weight: "~3.5kg",
+    coords: nodeCoords[1],
+    status: "Pending"
+  },
+  {
+    _id: "mock-3",
+    material: "Iron Scrap",
+    payout: 616,
+    location: "BTM Layout",
+    time: "30 min",
+    distance: "0.8 km",
+    weight: "~22kg",
+    coords: nodeCoords[2],
+    status: "Pending"
+  }
+];
+
+const formatWeight = (weight) => {
+  if (!weight) return "";
+  let w = String(weight);
+  if (!w.startsWith("~")) w = "~" + w;
+  if (!w.endsWith("kg") && !w.endsWith("kg ")) w = w + "kg";
+  return w;
+};
+
+const formatDistance = (distance) => {
+  if (!distance) return "";
+  let d = String(distance);
+  if (!d.endsWith("km") && !d.endsWith("km ")) d = d + " km";
+  return d;
+};
+
 const CollectorDashboard = () => {
   const { user } = useAuthContext();
 
@@ -24,44 +81,10 @@ const CollectorDashboard = () => {
   });
 
   // Jobs state (each job maps to an SVG node in the optimized route visualizer)
-  const [availableJobs, setAvailableJobs] = useState([
-    {
-      id: 1,
-      material: "Paper + Plastic",
-      payout: 145,
-      location: "HSR Sector 2",
-      time: "Now",
-      distance: "1.2 km",
-      weight: "~9kg",
-      coords: { x: 80, y: 70 },
-      dotColor: "#ff9800",
-    },
-    {
-      id: 2,
-      material: "E-Waste",
-      payout: 332,
-      location: "Koramangala 5th Block",
-      time: "Now",
-      distance: "2.4 km",
-      weight: "~3.5kg",
-      coords: { x: 230, y: 90 },
-      dotColor: "#00bcd4",
-    },
-    {
-      id: 3,
-      material: "Iron Scrap",
-      payout: 616,
-      location: "BTM Layout",
-      time: "30 min",
-      distance: "0.8 km",
-      weight: "~22kg",
-      coords: { x: 70, y: 210 },
-      dotColor: "#9c27b0",
-    },
-  ]);
+  const [availableJobs, setAvailableJobs] = useState(mockJobs);
 
   // Static depot stop
-  const depotStop = { x: 230, y: 210, label: "Depot" };
+  const depotStop = { x: 215, y: 210, label: "Depot" };
 
   // Calculate dynamic greeting based on local hour
   const getGreeting = () => {
@@ -83,139 +106,94 @@ const CollectorDashboard = () => {
   const firstName = user?.name ? user.name.split(" ")[0] : "Rajesh";
 
   // Actions
- const handleAcceptJob = async (job) => {
+  const handleAcceptJob = async (job) => {
+    try {
+      const jobIdStr = String(job._id || job.id);
+      if (jobIdStr.startsWith("mock-")) {
+        toast.success("Pickup accepted!");
+        setStats((prev) => ({
+          ...prev,
+          todayEarnings: prev.todayEarnings + (job.payout || 0),
+          thisWeekEarnings: prev.thisWeekEarnings + (job.payout || 0),
+          todayPickups: prev.todayPickups + 1,
+          thisWeekPickups: prev.thisWeekPickups + 1,
+          acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
+        }));
+        setAvailableJobs((prev) => prev.filter((j) => String(j._id || j.id) !== jobIdStr));
+        return;
+      }
 
-  try {
+      await API.put(`/pickups/accept/${job._id}`);
+      toast.success("Pickup accepted!");
 
-    await API.put(
-      `/pickups/accept/${job._id}`
-    );
+      // Update stats
+      setStats((prev) => ({
+        ...prev,
+        todayEarnings: prev.todayEarnings + (job.totalAmount || 0),
+        thisWeekEarnings: prev.thisWeekEarnings + (job.totalAmount || 0),
+        todayPickups: prev.todayPickups + 1,
+        thisWeekPickups: prev.thisWeekPickups + 1,
+        acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
+      }));
 
-    toast.success(
-      "Pickup accepted!"
-    );
+      // Remove accepted job
+      setAvailableJobs((prev) => prev.filter((j) => j._id !== job._id));
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to accept pickup");
+    }
+  };
 
-    // Update stats
-    setStats((prev) => ({
-      ...prev,
-      todayEarnings:
-        prev.todayEarnings + job.totalAmount,
-
-      thisWeekEarnings:
-        prev.thisWeekEarnings + job.totalAmount,
-
-      todayPickups:
-        prev.todayPickups + 1,
-
-      thisWeekPickups:
-        prev.thisWeekPickups + 1,
-
-      acceptanceRate:
-        Math.min(
-          100,
-          prev.acceptanceRate + 1
-        ),
-    }));
-
-    // Remove accepted job
-    setAvailableJobs((prev) =>
-      prev.filter((j) => j._id !== job._id)
-    );
-
-  } catch (error) {
-
-    console.log(error);
-
-    toast.error(
-      "Failed to accept pickup"
-    );
-
-  }
-
-};
-
-const updateLiveLocation =
-  (pickupId) => {
-
+  const updateLiveLocation = (pickupId) => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
-
         try {
-
           await API.put(
             `/pickups/${pickupId}/location`,
             {
-              latitude:
-                position.coords.latitude,
-
-              longitude:
-                position.coords.longitude,
+              latitude: position.coords.latitude,
+              longitude: position.coords.longitude,
             }
           );
-
         } catch (error) {
-
           console.log(error);
-
         }
-
       }
     );
+  };
 
-};
-
-
-const updatePickupStatus = async (
-  pickupId,
-  newStatus
-) => {
-
-  try {
-
-    await API.put(
-      `/pickups/${pickupId}/status`,
-      {
-        status: newStatus,
+  const updatePickupStatus = async (pickupId, newStatus) => {
+    try {
+      if (String(pickupId).startsWith("mock-")) {
+        toast.success(`Pickup marked as ${newStatus}`);
+        setAvailableJobs((prev) =>
+          prev.map((j) =>
+            String(j._id || j.id) === String(pickupId) ? { ...j, status: newStatus } : j
+          )
+        );
+        return;
       }
-    );
 
-    toast.success(
-      `Pickup marked as ${newStatus}`
-    );
-    updateLiveLocation(job._id);
+      await API.put(
+        `/pickups/${pickupId}/status`,
+        {
+          status: newStatus,
+        }
+      );
 
-    // Refresh dashboard
-    fetchPendingPickups();
+      toast.success(`Pickup marked as ${newStatus}`);
+      updateLiveLocation(pickupId);
 
-  } catch (error) {
-
-    console.log(error);
-
-    toast.error(
-      "Failed to update status"
-    );
-
-  }
-
-};
-
-
-    // Update stats
-    // setStats((prev) => ({
-    //   ...prev,
-    //   todayEarnings: prev.todayEarnings + job.payout,
-    //   thisWeekEarnings: prev.thisWeekEarnings + job.payout,
-    //   todayPickups: prev.todayPickups + 1,
-    //   thisWeekPickups: prev.thisWeekPickups + 1,
-    //   acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
-    // }));
-
-    // Remove job from dashboard list
-  //   setAvailableJobs((prev) => prev.filter((j) => j.id !== job.id));
-  // };
+      // Refresh dashboard
+      fetchPendingPickups();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to update status");
+    }
+  };
 
   const handleSkipJob = (job) => {
-    toast.error(`Pickup skipped.`, {
+    toast.error("Pickup skipped.", {
       icon: "✕",
       style: {
         borderRadius: "12px",
@@ -230,7 +208,8 @@ const updatePickupStatus = async (
     }));
 
     // Remove job from dashboard list
-    setAvailableJobs((prev) => prev.filter((j) => j._id !== job._id));
+    const jobIdStr = String(job._id || job.id);
+    setAvailableJobs((prev) => prev.filter((j) => String(j._id || j.id) !== jobIdStr));
   };
 
   const toggleOnlineStatus = () => {
@@ -256,77 +235,51 @@ const updatePickupStatus = async (
     }
   };
 
-
-
   const handleStartNavigation = () => {
+    if (availableJobs.length === 0) {
+      return;
+    }
 
-  if (availableJobs.length === 0) {
-    return;
-  }
-
-  const firstJob = availableJobs[0];
-
-  const destination =
-    `${firstJob.location}, Hyderabad`;
-
-  const googleMapsUrl =
-    `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
-
-  window.location.href = googleMapsUrl;
-
-};
+    const firstJob = availableJobs[0];
+    const destination = `${firstJob.location || firstJob.city}, Hyderabad`;
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+    window.location.href = googleMapsUrl;
+  };
 
   // Calculate route stops summary dynamically
-  const activeStopsCount = availableJobs.length + 1; // jobs + depot
-  const totalDistanceKm = (availableJobs.reduce((acc, curr) => acc + parseFloat(curr.distance), 0) + 1.8).toFixed(1);
+  const activeStopsCount = availableJobs.length > 0 ? Math.min(4, availableJobs.length + 1) : 0;
+  const totalDistanceKm = availableJobs.length > 0 
+    ? (availableJobs.reduce((acc, curr) => acc + parseFloat(curr.distance || 0), 0) + 1.8).toFixed(1)
+    : "0.0";
   const totalMinutes = Math.round(availableJobs.length * 12 + 12);
 
   const fetchPendingPickups = async () => {
+    try {
+      const response = await API.get("/pickups/pending");
+      if (response.data && response.data.pickups && response.data.pickups.length > 0) {
+        const jobsWithCoords = response.data.pickups.map((job, index) => ({
+          ...job,
+          coords: nodeCoords[index % nodeCoords.length],
+        }));
+        setAvailableJobs(jobsWithCoords);
+      } else {
+        setAvailableJobs(mockJobs);
+      }
+    } catch (error) {
+      console.log(error);
+      setAvailableJobs(mockJobs);
+    }
+  };
 
-  try {
+  useEffect(() => {
+    fetchPendingPickups();
 
-    const response = await API.get(
-      "/pickups/pending"
-    );
-
-    const jobsWithCoords =
-  response.data.pickups.map(
-    (job, index) => ({
-      ...job,
-
-      coords: {
-        x: 80 + index * 70,
-        y: 70 + index * 60,
-      },
-    })
-  );
-
-setAvailableJobs(jobsWithCoords);
-
-  } catch (error) {
-
-    console.log(error);
-
-  }
-
-};
-
-
-useEffect(() => {
-
-  fetchPendingPickups();
-
-  const interval =
-    setInterval(() => {
-
+    const interval = setInterval(() => {
       fetchPendingPickups();
-
     }, 5000);
 
-  return () =>
-    clearInterval(interval);
-
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
 
   return (
@@ -395,7 +348,7 @@ useEffect(() => {
         <section className="dashboard-main-content">
           
           {/* COLUMN 1: PICKUPS */}
-          <div className="pickups-column">
+          <div className="pickups-container-card">
             <div className="column-header">
               <h3>Available pickups nearby</h3>
               <Link to="/collector/jobs" className="view-all-link">
@@ -404,78 +357,56 @@ useEffect(() => {
             </div>
 
             <div className="pickups-list">
-              {availableJobs.length > 0 ? (
-                availableJobs.map((job) => (
-                  <div key={job._id} className="pickup-card">
+              {availableJobs.slice(0, 3).length > 0 ? (
+                availableJobs.slice(0, 3).map((job) => (
+                  <div key={job._id || job.id} className="pickup-card">
                     <div className="pickup-card-row">
-                      <span className="pickup-material">{job.materials?.[0]?.materialType}</span>
-                      <span className="pickup-payout">₹{job.totalAmount}</span>
+                      <span className="pickup-material">{job.material || job.materials?.[0]?.materialType || "General Scrap"}</span>
+                      <span className="pickup-payout">₹{job.payout || job.totalAmount || 0}</span>
                     </div>
 
                     <div className="pickup-card-row info-row">
                       <span className="pickup-details">
-                        {job.city} &bull; {job.time} &bull; {job.distance}
+                        {job.location || job.city || "Nearby"} &bull; {job.time || "Now"} &bull; {formatDistance(job.distance || "1.0 km")}
                       </span>
-                      <span className="pickup-weight">~{job.totalWeight}kg</span>
+                      <span className="pickup-weight">{formatWeight(job.weight || job.totalWeight)}</span>
                     </div>
 
                     <div className="pickup-card-actions">
+                      {(job.status === "Pending" || !job.status) && (
+                        <button
+                          onClick={() => handleAcceptJob(job)}
+                          className="btn-accept"
+                        >
+                          Accept
+                        </button>
+                      )}
 
-  {job.status === "Pending" && (
+                      {job.status === "Accepted" && (
+                        <button
+                          onClick={() => updatePickupStatus(job._id || job.id, "On The Way")}
+                          className="btn-accept"
+                        >
+                          On The Way
+                        </button>
+                      )}
 
-    <button
-      onClick={() =>
-        handleAcceptJob(job)
-      }
-      className="btn-accept"
-    >
-      Accept
-    </button>
+                      {job.status === "On The Way" && (
+                        <button
+                          onClick={() => updatePickupStatus(job._id || job.id, "Completed")}
+                          className="btn-accept"
+                        >
+                          Complete
+                        </button>
+                      )}
 
-  )}
-
-  {job.status === "Accepted" && (
-
-    <button
-      onClick={() =>
-        updatePickupStatus(
-          job._id,
-          "On The Way"
-        )
-      }
-      className="btn-accept"
-    >
-      On The Way
-    </button>
-
-  )}
-
-  {job.status === "On The Way" && (
-
-    <button
-      onClick={() =>
-        updatePickupStatus(
-          job._id,
-          "Completed"
-        )
-      }
-      className="btn-accept"
-    >
-      Complete
-    </button>
-
-  )}
-
-  <button
-    onClick={() =>
-      handleSkipJob(job)
-    }
-    className="btn-skip"
-  >
-    Skip
-  </button>
-
-</div>
+                      <button
+                        onClick={() => handleSkipJob(job)}
+                        className="btn-skip"
+                      >
+                        Skip
+                      </button>
+                    </div>
                   </div>
                 ))
               ) : (
@@ -488,137 +419,118 @@ useEffect(() => {
             </div>
           </div>
 
-          {/* COLUMN 2: OPTIMIZED ROUTE */}
+          {/* COLUMN 2: OPTIMIZED ROUTE & TARGETS */}
           <div className="route-column">
-            <div className="column-header">
-              <h3>OPTIMIZED ROUTE</h3>
-            </div>
-
             <div className="route-map-card">
-              {/* SVG CUSTOM VECTOR MAP */}
-              <div className="svg-map-container">
-                <svg viewBox="0 0 300 280" className="vector-route-svg">
-                  {/* Grid / street line backdrops for realism */}
-                  <line x1="0" y1="150" x2="300" y2="150" stroke="rgba(0,0,0,0.03)" strokeWidth="4" />
-                  <line x1="150" y1="0" x2="150" y2="280" stroke="rgba(0,0,0,0.03)" strokeWidth="4" />
-                  <line x1="0" y1="70" x2="300" y2="70" stroke="rgba(0,0,0,0.02)" strokeWidth="2" />
-                  <line x1="0" y1="210" x2="300" y2="210" stroke="rgba(0,0,0,0.02)" strokeWidth="2" />
-                  <line x1="70" y1="0" x2="70" y2="280" stroke="rgba(0,0,0,0.02)" strokeWidth="2" />
-                  <line x1="230" y1="0" x2="230" y2="280" stroke="rgba(0,0,0,0.02)" strokeWidth="2" />
+              <div className="column-header">
+                <h3>OPTIMIZED ROUTE</h3>
+              </div>
 
-                  {/* Dotted Route Connections */}
-                  {availableJobs.map((job, idx) => {
-                    const nextJob = availableJobs[idx + 1] || depotStop;
-                    return (
-                      <line
-                        key={`line-${job._id}`}
-                        x1={job.coords.x}
-                        y1={job.coords.y}
-                        x2={nextJob.x || nextJob.coords?.x}
-                        y2={nextJob.y || nextJob.coords?.y}
-                        stroke="#00c853"
-                        strokeWidth="3.5"
-                        strokeDasharray="5 5"
-                        className="pulse-route-line"
-                      />
-                    );
-                  })}
+              {/* SVG CUSTOM VECTOR MAP CANVAS */}
+              <div className="route-map-canvas">
+                <svg viewBox="0 0 300 240" className="vector-route-svg">
+                  {/* Dotted Star Connections from center (150, 120) */}
+                  {availableJobs.slice(0, 3).map((job) => (
+                    <line
+                      key={`line-${job._id || job.id}`}
+                      x1="150"
+                      y1="120"
+                      x2={job.coords?.x || 150}
+                      y2={job.coords?.y || 120}
+                      stroke="#00c853"
+                      strokeWidth="2.5"
+                      strokeDasharray="4 4"
+                      className="pulse-route-line"
+                    />
+                  ))}
+                  
+                  {/* Connection to Depot */}
                   {availableJobs.length > 0 && (
                     <line
                       x1="150"
-                      y1="140"
-                      x2={availableJobs[0].coords.x}
-                      y2={availableJobs[0].coords.y}
+                      y1="120"
+                      x2={depotStop.x}
+                      y2={depotStop.y}
                       stroke="#00c853"
-                      strokeWidth="3.5"
-                      strokeDasharray="5 5"
+                      strokeWidth="2.5"
+                      strokeDasharray="4 4"
                       className="pulse-route-line"
                     />
                   )}
 
-                  {/* Active Job Nodes (stops) */}
-                  {availableJobs.map((job) => (
-                    <g key={`node-${job._id}`} className="svg-stop-node">
-                      <circle
-                        cx={job.coords.x}
-                        cy={job.coords.y}
-                        r="12"
-                        fill="rgba(6, 11, 8, 0.15)"
-                      />
-                      <circle
-                        cx={job.coords.x}
-                        cy={job.coords.y}
-                        r="7"
-                        fill="#060b08"
-                      />
-                      <circle
-                        cx={job.coords.x}
-                        cy={job.coords.y}
-                        r="3"
-                        fill="#00c853"
-                      />
-                    </g>
+                  {/* Outer Stops (Jobs) */}
+                  {availableJobs.slice(0, 3).map((job) => (
+                    <circle
+                      key={`node-${job._id || job.id}`}
+                      cx={job.coords?.x || 150}
+                      cy={job.coords?.y || 120}
+                      r="6.5"
+                      fill="#050807"
+                      className="svg-stop-node"
+                    />
                   ))}
 
-                  {/* Static Depot Node */}
-                  <g className="svg-depot-node">
-                    <circle cx={depotStop.x} cy={depotStop.y} r="10" fill="rgba(0, 200, 83, 0.2)" />
-                    <circle cx={depotStop.x} cy={depotStop.y} r="6" fill="#00c853" />
-                  </g>
+                  {/* Depot Stop */}
+                  {availableJobs.length > 0 && (
+                    <circle
+                      cx={depotStop.x}
+                      cy={depotStop.y}
+                      r="6.5"
+                      fill="#050807"
+                    />
+                  )}
 
                   {/* Center Node (Collector Position) */}
                   <g className="svg-collector-node">
-                    {/* Ring Pulse */}
+                    {/* Pulsing radar rings */}
                     <circle
                       cx="150"
-                      cy="140"
-                      r="16"
-                      fill="rgba(0, 200, 83, 0.15)"
+                      cy="120"
+                      r="14"
+                      fill="rgba(0, 200, 83, 0.12)"
                       className="map-radar-pulse"
                     />
-                    {/* Outer Target ring */}
                     <circle
                       cx="150"
-                      cy="140"
+                      cy="120"
                       r="9"
-                      fill="none"
-                      stroke="#00c853"
-                      strokeWidth="2"
-                    />
-                    {/* Center Core dot */}
-                    <circle
-                      cx="150"
-                      cy="140"
-                      r="4"
                       fill="#00c853"
                     />
+                    {/* White cross lines inside the green circle */}
+                    <line x1="146.5" y1="116.5" x2="153.5" y2="123.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" />
+                    <line x1="153.5" y1="116.5" x2="146.5" y2="123.5" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" />
                   </g>
                 </svg>
               </div>
 
               {/* Route Summary */}
-              <div className="route-details-panel">
-                <div className="route-summary-text">
-                  <h4>
-                    {availableJobs.length > 0
-                      ? `${activeStopsCount} stops &bull; ${totalDistanceKm} km`
-                      : "Route Empty"}
-                  </h4>
-                  <p>
-                    {availableJobs.length > 0
-                      ? `Est. ${totalMinutes} min &bull; Save 14 min vs default`
-                      : "No active pickups navigation route."}
-                  </p>
-                </div>
-
-               <button
-  onClick={handleStartNavigation}
-  disabled={availableJobs.length === 0}
-  className="btn-start-navigation"
->
-  Start Route Navigation →
-</button>
+              <div className="route-summary-text">
+                <h4>
+                  {availableJobs.length > 0
+                    ? `${activeStopsCount} stops • ${totalDistanceKm} km`
+                    : "Route Empty"}
+                </h4>
+                <p>
+                  {availableJobs.length > 0
+                    ? `Est. ${totalMinutes} min • Save 14 min vs default`
+                    : "No active pickups navigation route."}
+                </p>
               </div>
+            </div>
+
+            {/* WEEKLY TARGET PANEL */}
+            <div className="weekly-target-card">
+              <span className="target-title">WEEKLY TARGET</span>
+              <h2 className="target-value">₹{stats.thisWeekEarnings.toLocaleString()} / ₹12,000</h2>
+              <div className="target-progress-bar">
+                <div
+                  className="target-progress-fill"
+                  style={{ width: `${Math.min(100, (stats.thisWeekEarnings / 12000) * 100)}%` }}
+                ></div>
+              </div>
+              <p className="target-subtext">
+                ₹{Math.max(0, 12000 - stats.thisWeekEarnings).toLocaleString()} to bonus tier
+              </p>
             </div>
           </div>
 
@@ -627,8 +539,6 @@ useEffect(() => {
       </div>
     </CollectorLayout>
   );
-
 };
-
 
 export default CollectorDashboard;

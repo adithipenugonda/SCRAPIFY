@@ -1,35 +1,18 @@
-import React, {
-  useState,
-} from "react";
-
-import {
-  Link,
-  useNavigate,
-} from "react-router-dom";
-
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/Navbar";
-import Button from "../../components/common/Button";
 import Loader from "../../components/common/Loader";
-
 import useAuth from "../../hooks/useAuth";
-
 import "./Auth.css";
 
-
 const Register = () => {
-
   const navigate = useNavigate();
-
-  const {
-    register,
-  } = useAuth();
-
+  const { register } = useAuth();
 
   // ==========================================
   // STATES
   // ==========================================
-const [formData, setFormData] =
-  useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
@@ -40,13 +23,8 @@ const [formData, setFormData] =
     pincode: "",
     role: "user",
   });
-
-  const [loading, setLoading] =
-    useState(false);
-
-  const [error, setError] =
-    useState("");
-
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   // ==========================================
   // HANDLE CHANGE
@@ -54,26 +32,19 @@ const [formData, setFormData] =
   const handleChange = (e) => {
     setFormData({
       ...formData,
-
-      [e.target.name]:
-        e.target.value,
+      [e.target.name]: e.target.value,
     });
   };
-
 
   // ==========================================
   // HANDLE SUBMIT
   // ==========================================
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     setLoading(true);
-
     setError("");
 
-    const result = await register(
-      formData
-    );
+    const result = await register(formData);
 
     if (result.success) {
       if (result.role === "collector") {
@@ -84,309 +55,184 @@ const [formData, setFormData] =
         navigate("/dashboard");
       }
     } else {
-
       setError(result.message);
-
     }
-
     setLoading(false);
   };
 
-
-  // ==========================================
-  // LOADING
-  // ==========================================
   if (loading) {
     return <Loader />;
   }
 
-
   return (
     <>
-
       <Navbar />
 
       <div className="auth-page">
-
         <div className="auth-container">
-
           {/* ================================= */}
-          {/* LEFT */}
+          {/* LEFT PANEL */}
           {/* ================================= */}
-
           <div className="auth-left">
+            <div className="auth-left-logo">
+              ♻️ SCRAPIFY
+            </div>
 
-            <h1>
-              Join Scrapify ♻️
-            </h1>
+            <div className="auth-left-body">
+              <h1>
+                Recycling that pays<br />
+                you back<span>.</span>
+              </h1>
+              <p>
+                Join the platform turning everyday household waste into
+                wealth — one pickup at a time.
+              </p>
+            </div>
 
-            <p>
-              Start your eco-friendly
-              journey and turn your
-              household waste into
-              valuable rewards.
-            </p>
-
-            <img
-              src="https://cdn-icons-png.flaticon.com/512/6797/6797200.png"
-              alt="Register"
-            />
-
+            <div className="auth-left-footer">
+              © 2026 SCRAPIFY • WASTE → WEALTH
+            </div>
           </div>
 
-
           {/* ================================= */}
-          {/* RIGHT */}
+          {/* RIGHT PANEL */}
           {/* ================================= */}
-
           <div className="auth-right">
-
-            <div className="auth-card">
-
-              <h2>
-                Create Account
-              </h2>
-
-              <p>
-                Register to start
-                recycling smarter
+            <div className="auth-card" style={{ margin: "20px 0" }}>
+              <span className="auth-tag">Sign Up</span>
+              <h2>Create Account</h2>
+              <p className="auth-subtitle">
+                Already have an account? <Link to="/login">Log in</Link>
               </p>
 
-
-              {/* ERROR */}
-              {error && (
-                <div className="auth-error">
-                  {error}
-                </div>
-              )}
-
+              {/* ERROR DISPLAY */}
+              {error && <div className="auth-error">{error}</div>}
 
               {/* FORM */}
-              <form
-                onSubmit={handleSubmit}
-              >
-
+              <form onSubmit={handleSubmit}>
                 {/* NAME */}
                 <div className="auth-input-group">
-
-                  <label>
-                    Full Name
-                  </label>
-
+                  <label>Full Name</label>
                   <input
                     type="text"
                     name="name"
-
                     placeholder="Enter your full name"
-
                     value={formData.name}
-
                     onChange={handleChange}
-
                     required
                   />
-
                 </div>
-
 
                 {/* EMAIL */}
                 <div className="auth-input-group">
-
-                  <label>
-                    Email
-                  </label>
-
+                  <label>Email</label>
                   <input
                     type="email"
                     name="email"
-
-                    placeholder="Enter your email"
-
+                    placeholder="you@email.com"
                     value={formData.email}
-
                     onChange={handleChange}
-
                     required
                   />
-
                 </div>
 
                 {/* PHONE */}
                 <div className="auth-input-group">
-
-                <label>
-                Phone Number
-               </label>
-
-              <input
-              type="text"
-              name="phone"
-            placeholder="Enter phone number"
-            value={formData.phone}
-            onChange={handleChange}
-             required/>
-
-          </div>
-
+                  <label>Phone Number</label>
+                  <input
+                    type="text"
+                    name="phone"
+                    placeholder="Enter phone number"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
 
                 {/* PASSWORD */}
                 <div className="auth-input-group">
-
-                  <label>
-                    Password
-                  </label>
-
+                  <label>Password</label>
                   <input
                     type="password"
                     name="password"
-
                     placeholder="Create a password"
-
                     value={formData.password}
-
                     onChange={handleChange}
-
                     required
                   />
-
                 </div>
 
-
                 {/* ADDRESS */}
-<div className="auth-input-group">
+                <div className="auth-input-group">
+                  <label>Address</label>
+                  <textarea
+                    name="address"
+                    placeholder="Enter your address"
+                    value={formData.address}
+                    onChange={handleChange}
+                    required
+                  ></textarea>
+                </div>
 
-  <label>
-    Address
-  </label>
+                {/* CITY */}
+                <div className="auth-input-group">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    name="city"
+                    placeholder="Enter city"
+                    value={formData.city}
+                    onChange={handleChange}
+                  />
+                </div>
 
-  <textarea
-    name="address"
+                {/* STATE */}
+                <div className="auth-input-group">
+                  <label>State</label>
+                  <input
+                    type="text"
+                    name="state"
+                    placeholder="Enter state"
+                    value={formData.state}
+                    onChange={handleChange}
+                  />
+                </div>
 
-    placeholder="Enter your address"
+                {/* PINCODE */}
+                <div className="auth-input-group">
+                  <label>Pincode</label>
+                  <input
+                    type="text"
+                    name="pincode"
+                    placeholder="Enter pincode"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                  />
+                </div>
 
-    value={formData.address}
+                {/* ROLE */}
+                <div className="auth-input-group">
+                  <label>Select Role</label>
+                  <select
+                    name="role"
+                    value={formData.role}
+                    onChange={handleChange}
+                  >
+                    <option value="user">User</option>
+                    <option value="collector">Collector</option>
+                    <option value="admin">Admin</option>
+                  </select>
+                </div>
 
-    onChange={handleChange}
-
-    required
-  ></textarea>
-
-</div>
-
-<div className="auth-input-group">
-
-  <label>
-    City
-  </label>
-
-  <input
-    type="text"
-    name="city"
-    value={formData.city}
-    onChange={handleChange}
-    placeholder="Enter city"
-  />
-
-</div>
-
-
-<div className="auth-input-group">
-
-  <label>
-    State
-  </label>
-
-  <input
-    type="text"
-    name="state"
-    value={formData.state}
-    onChange={handleChange}
-    placeholder="Enter state"
-  />
-
-</div>
-
-
-<div className="auth-input-group">
-
-  <label>
-    Pincode
-  </label>
-
-  <input
-    type="text"
-    name="pincode"
-    value={formData.pincode}
-    onChange={handleChange}
-    placeholder="Enter pincode"
-  />
-
-</div>
-
-
-{/* ROLE */}
-<div className="auth-input-group">
-
-  <label>
-    Select Role
-  </label>
-
-  <select
-    name="role"
-
-    value={formData.role}
-
-    onChange={handleChange}
-  >
-
-    <option value="user">
-      User
-    </option>
-
-    <option value="collector">
-      Collector
-    </option>
-
-    <option value="admin">
-      Admin
-    </option>
-
-  </select>
-
-</div>
-
-
-                {/* BUTTON */}
-                <Button
-                  text="Create Account"
-                  type="submit"
-                  fullWidth={true}
-                />
-
+                {/* REGISTER BUTTON */}
+                <button type="submit" className="auth-submit-btn">
+                  Create Account &rarr;
+                </button>
               </form>
-
-
-              {/* LOGIN LINK */}
-              <div className="auth-footer">
-
-                <p>
-                  Already have an account?
-                </p>
-
-                <Link to="/login">
-                  Login
-                </Link>
-
-              </div>
-
             </div>
-
           </div>
-
         </div>
-
       </div>
-
     </>
   );
 };

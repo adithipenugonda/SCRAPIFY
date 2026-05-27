@@ -1,7 +1,7 @@
 /* =========================================
    GOOGLE FONT
 ========================================= */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap');
 
 /* =========================================
    GLOBAL RESET & BASICS
@@ -20,6 +20,12 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+  letter-spacing: -0.03em;
+  font-weight: 800;
 }
 
 #root {
@@ -58,7 +64,7 @@ button {
   font-weight: var(--weight-semibold);
   font-size: 15px;
   letter-spacing: 0.2px;
-  box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.25);
+  box-shadow: 0 4px 14px 0 rgba(0, 200, 83, 0.25);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -67,7 +73,7 @@ button {
 
 .primary-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px 0 rgba(16, 185, 129, 0.4);
+  box-shadow: 0 6px 20px 0 rgba(0, 200, 83, 0.4);
 }
 
 .primary-btn:active {
@@ -152,7 +158,7 @@ label {
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-lg);
-  border-color: rgba(16, 185, 129, 0.25);
+  border-color: rgba(0, 200, 83, 0.25);
 }
 
 /* =========================================
@@ -168,13 +174,13 @@ label {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.2);
+  background: rgba(0, 200, 83, 0.2);
   border-radius: 99px;
   transition: var(--transition);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.45);
+  background: rgba(0, 200, 83, 0.45);
 }
 
 html {
@@ -249,4 +255,221 @@ html {
   .section {
     padding: 50px 0;
   }
+}
+
+/* =========================================
+   NEOMORPHIC & CYBERPUNK HUD CUSTOM SYSTEM
+   ========================================= */
+
+/* Cyber-grid background */
+[data-theme="dark"] body {
+  background-color: var(--background-color);
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(0, 200, 83, 0.03) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(94, 252, 130, 0.03) 0px, transparent 50%),
+    linear-gradient(rgba(0, 200, 83, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 200, 83, 0.012) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
+}
+
+[data-theme="dark"] body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(0, 200, 83, 0.008) 50%, rgba(0, 0, 0, 0.04) 50%);
+  background-size: 100% 6px;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* 1. Neomorphic Elements (Tactility) */
+.neo-card-flat {
+  background: var(--background-color);
+  box-shadow: 6px 6px 12px rgba(15, 23, 42, 0.05), -6px -6px 12px rgba(255, 255, 255, 0.9);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  transition: var(--transition);
+}
+
+[data-theme="dark"] .neo-card-flat {
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6), -5px -5px 15px rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.neo-card-flat:hover {
+  transform: translateY(-2px);
+  box-shadow: 10px 10px 20px rgba(15, 23, 42, 0.08), -10px -10px 20px rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] .neo-card-flat:hover {
+  box-shadow: 8px 8px 25px rgba(0, 0, 0, 0.8), -8px -8px 25px rgba(13, 242, 201, 0.03);
+  border-color: rgba(13, 242, 201, 0.15);
+}
+
+.neo-btn-tactile {
+  background: var(--background-color);
+  box-shadow: 4px 4px 8px rgba(15, 23, 42, 0.06), -4px -4px 8px rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  color: var(--text-color);
+  font-weight: var(--weight-semibold);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+[data-theme="dark"] .neo-btn-tactile {
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.5), -4px -4px 10px rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.neo-btn-tactile:hover {
+  transform: translateY(-1px);
+  box-shadow: 6px 6px 12px rgba(15, 23, 42, 0.08), -6px -6px 12px rgba(255, 255, 255, 1);
+}
+
+[data-theme="dark"] .neo-btn-tactile:hover {
+  box-shadow: 6px 6px 14px rgba(0, 0, 0, 0.6), -6px -6px 14px rgba(13, 242, 201, 0.05);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.neo-btn-tactile:active {
+  transform: translateY(1px);
+  box-shadow: inset 3px 3px 6px rgba(15, 23, 42, 0.08), inset -3px -3px 6px rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .neo-btn-tactile:active {
+  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.6), inset -3px -3px 6px rgba(255, 255, 255, 0.01);
+}
+
+/* 2. Cyberpunk HUD & Panels */
+.cyber-panel {
+  position: relative;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+[data-theme="dark"] .cyber-panel {
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  border-left: 2px solid var(--primary-color);
+}
+
+[data-theme="dark"] .cyber-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 14px;
+  height: 14px;
+  background: var(--primary-color);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .cyber-panel:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-glow);
+}
+
+/* Cyber glitch text */
+.glitch-text {
+  position: relative;
+}
+
+[data-theme="dark"] .glitch-text:hover::before,
+[data-theme="dark"] .glitch-text:hover::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background-color);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .glitch-text:hover::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff007f;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+[data-theme="dark"] .glitch-text:hover::after {
+  left: -2px;
+  text-shadow: -1px 0 #00ffff;
+  clip: rect(85px, 450px, 140px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(15px, 9999px, 66px, 0); }
+  10% { clip: rect(85px, 9999px, 5px, 0); }
+  20% { clip: rect(3px, 9999px, 85px, 0); }
+  30% { clip: rect(112px, 9999px, 76px, 0); }
+  40% { clip: rect(25px, 9999px, 13px, 0); }
+  50% { clip: rect(61px, 9999px, 115px, 0); }
+  60% { clip: rect(99px, 9999px, 20px, 0); }
+  70% { clip: rect(34px, 9999px, 77px, 0); }
+  80% { clip: rect(120px, 9999px, 54px, 0); }
+  90% { clip: rect(8px, 9999px, 98px, 0); }
+  100% { clip: rect(72px, 9999px, 44px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(76px, 9999px, 116px, 0); }
+  11% { clip: rect(25px, 9999px, 35px, 0); }
+  22% { clip: rect(85px, 9999px, 12px, 0); }
+  33% { clip: rect(3px, 9999px, 95px, 0); }
+  44% { clip: rect(110px, 9999px, 62px, 0); }
+  55% { clip: rect(29px, 9999px, 81px, 0); }
+  66% { clip: rect(65px, 9999px, 118px, 0); }
+  77% { clip: rect(9px, 9999px, 27px, 0); }
+  88% { clip: rect(44px, 9999px, 88px, 0); }
+  100% { clip: rect(122px, 9999px, 5px, 0); }
+}
+
+/* Neon animated border */
+.glowing-neon-border {
+  position: relative;
+}
+
+[data-theme="dark"] .glowing-neon-border::before {
+  content: "";
+  position: absolute;
+  top: -1px; left: -1px; right: -1px; bottom: -1px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-light), var(--primary-color));
+  background-size: 200% 200%;
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+  animation: borderGlow 4s linear infinite;
+}
+
+[data-theme="dark"] .glowing-neon-border:hover::before {
+  opacity: 1;
+}
+
+@keyframes borderGlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Light Mode Card Base */
+[data-theme="light"] .card {
+  box-shadow: 0 4px 20px rgba(0, 200, 83, 0.05);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(0, 200, 83, 0.1);
 }
