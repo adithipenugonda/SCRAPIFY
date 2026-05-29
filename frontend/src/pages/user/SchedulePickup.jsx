@@ -8,7 +8,7 @@ import "./SchedulePickup.css";
 const scrapItemsData = [
   { id: 1, name: "Newspaper", price: 14.5, icon: "📰" },
   { id: 2, name: "Cardboard", price: 8.2, icon: "📦" },
-  { id: 3, name: "Plastic (PET)", price: 12, icon: "🧴" },
+  { id: 3, name: "Plastic", price: 12, icon: "🧴" },
   { id: 4, name: "Iron Scrap", price: 28, icon: "🔩" },
   { id: 5, name: "Copper", price: 412, icon: "🪙" },
   { id: 6, name: "Aluminum", price: 145, icon: "🥫" },

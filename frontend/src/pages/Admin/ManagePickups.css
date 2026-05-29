@@ -1,0 +1,380 @@
+/* =========================================
+   PAGE
+========================================= */
+.manage-pickups-page {
+  width: 100%;
+}
+
+/* =========================================
+   HEADER
+========================================= */
+.manage-pickups-header {
+  margin-bottom: 35px;
+}
+
+.manage-pickups-header h1 {
+  font-size: 38px;
+  margin-bottom: 12px;
+}
+
+.manage-pickups-header p {
+  color: var(--text-light);
+  font-size: 17px;
+}
+
+/* =========================================
+   FILTER & SEARCH BAR
+========================================= */
+.pickups-filter-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.search-form-admin {
+  display: flex;
+  gap: 12px;
+  flex: 1;
+  max-width: 550px;
+}
+
+.admin-search-input {
+  flex: 1;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+
+.admin-search-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+}
+
+.filter-actions-admin {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-filter-select {
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  font-size: 15px;
+  background: white;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.clear-filters-btn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 12px;
+}
+
+.clear-filters-btn:hover {
+  text-decoration: underline;
+}
+
+/* =========================================
+   TABLE CARD
+========================================= */
+.pickups-table-card {
+  background: white;
+  border-radius: 24px;
+  padding: 28px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 40px;
+}
+
+.pickups-table-header {
+  margin-bottom: 24px;
+}
+
+.pickups-table-header h2 {
+  font-size: 28px;
+}
+
+.pickups-table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.pickups-table {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 900px;
+}
+
+/* =========================================
+   ROW
+========================================= */
+.pickups-row {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr 1.2fr 1fr 0.8fr 0.8fr 1.2fr 1.2fr;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #f8fafc;
+  border-radius: 16px;
+  font-size: 15px;
+}
+
+.pickups-head {
+  background: #dcfce7;
+  font-weight: 700;
+  color: var(--primary-color);
+  padding: 18px 20px;
+}
+
+.pickup-id-cell {
+  font-family: monospace;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* =========================================
+   STATUS PILLS
+========================================= */
+.status-pill {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.status-pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-accepted {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.status-ontheway {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.status-completed {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-cancelled {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.status-default {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* =========================================
+   PAGINATION
+========================================= */
+.admin-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.pagination-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+.pagination-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  font-size: 15px;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* =========================================
+   MODAL DETAIL LAYOUT
+========================================= */
+.pickup-modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 100%;
+}
+
+.details-grid-admin {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.details-col-admin h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #1e293b;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.details-col-admin p {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: #475569;
+  line-height: 1.5;
+}
+
+.cancel-reason-p {
+  background: #fee2e2;
+  color: #dc2626 !important;
+  padding: 10px 14px;
+  border-radius: 8px;
+}
+
+/* Materials inside Modal */
+.modal-materials-section h3 {
+  font-size: 18px;
+  margin-bottom: 15px;
+  color: #1e293b;
+  border-bottom: 2px solid #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.modal-materials-table {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.materials-row-head,
+.materials-row-item,
+.materials-row-total {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.2fr;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.materials-row-head {
+  font-weight: 700;
+  color: #475569;
+  border-bottom: 1px solid #cbd5e1;
+  padding-bottom: 12px;
+  margin-bottom: 6px;
+}
+
+.materials-row-item {
+  color: #334155;
+}
+
+.materials-row-total {
+  font-weight: 700;
+  color: var(--primary-color);
+  border-top: 1px solid #cbd5e1;
+  padding-top: 12px;
+  margin-top: 6px;
+}
+
+/* Modal Actions */
+.modal-actions-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  border-top: 2px solid #f1f5f9;
+}
+
+.update-status-admin-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.update-status-admin-container label {
+  font-size: 15px;
+}
+
+.modal-status-select-field {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  outline: none;
+  font-size: 15px;
+  background: white;
+  cursor: pointer;
+}
+
+.danger-actions-admin {
+  margin-left: auto;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+@media (max-width: 992px) {
+  .details-grid-admin {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .modal-actions-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .danger-actions-admin {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .pickups-filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-form-admin {
+    max-width: 100%;
+  }
+
+  .manage-pickups-header h1 {
+    font-size: 30px;
+  }
+}

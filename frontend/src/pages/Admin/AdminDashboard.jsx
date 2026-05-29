@@ -1,223 +1,160 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-
 import Card from "../../components/common/Card";
-
+import API from "../../services/api";
 import "./AdminDashboard.css";
 
-
 const AdminDashboard = () => {
+  const [analytics, setAnalytics] = useState(null);
+  const [recentPickups, setRecentPickups] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // ==========================================
-  // DUMMY STATS
-  // ==========================================
-  const stats = [
-    {
-      title: "Total Users",
-      value: "2,450",
-      icon: "👥",
-    },
+  const fetchDashboardData = async () => {
+    try {
+      const response = await API.get("/admin/dashboard");
+      if (response.data && response.data.dashboard) {
+        setAnalytics(response.data.dashboard.analytics);
+        setRecentPickups(response.data.dashboard.recentPickups);
+      }
+    } catch (error) {
+      console.error("Error fetching admin dashboard data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    {
-      title: "Collectors",
-      value: "124",
-      icon: "🚚",
-    },
+  useEffect(() => {
+    fetchDashboardData();
+  }, []);
 
-    {
-      title: "Total Pickups",
-      value: "8,920",
-      icon: "♻️",
-    },
-
-    {
-      title: "Revenue",
-      value: "₹12.4L",
-      icon: "💰",
-    },
-  ];
-
+  const stats = analytics
+    ? [
+        {
+          title: "Total Users",
+          value: analytics.totalUsers.toLocaleString(),
+          icon: "👥",
+        },
+        {
+          title: "Total Collectors",
+          value: analytics.totalCollectors.toLocaleString(),
+          icon: "🚚",
+        },
+        {
+          title: "Total Pickups",
+          value: analytics.totalPickups.toLocaleString(),
+          icon: "♻️",
+        },
+        {
+          title: "Pending Pickups",
+          value: analytics.pendingPickups.toLocaleString(),
+          icon: "⏳",
+        },
+        {
+          title: "Accepted Pickups",
+          value: analytics.acceptedPickups.toLocaleString(),
+          icon: "✅",
+        },
+        {
+          title: "Completed Pickups",
+          value: analytics.completedPickups.toLocaleString(),
+          icon: "📦",
+        },
+        {
+          title: "Total Revenue",
+          value: `₹${analytics.totalRevenue.toLocaleString()}`,
+          icon: "💰",
+        },
+        {
+          title: "Green Points",
+          value: analytics.totalGreenPointsGenerated.toLocaleString(),
+          icon: "🌱",
+        },
+      ]
+    : [];
 
   return (
     <AdminLayout>
-
       <div className="admin-dashboard">
-
         {/* ================================= */}
         {/* HEADER */}
         {/* ================================= */}
-
         <div className="admin-header">
-
           <div>
-
-            <h1>
-              Admin Dashboard ⚙️
-            </h1>
-
+            <h1>Admin Dashboard ⚙️</h1>
             <p>
-              Monitor users, collectors,
-              pickups, analytics, and
-              overall platform activity.
+              Monitor users, collectors, pickups, analytics, and overall platform activity.
             </p>
-
           </div>
-
         </div>
 
-
-        {/* ================================= */}
-        {/* STATS GRID */}
-        {/* ================================= */}
-
-        <div className="admin-grid">
-
-          {stats.map((item, index) => (
-
-            <Card
-              key={index}
-
-              title={item.title}
-
-              value={item.value}
-
-              icon={item.icon}
-            />
-
-          ))}
-
-        </div>
-
-
-        {/* ================================= */}
-        {/* RECENT ACTIVITY */}
-        {/* ================================= */}
-
-        <div className="admin-section">
-
-          <div className="card">
-
-            <div className="section-header-admin">
-
-              <h2>
-                Recent Platform Activity
-              </h2>
-
-              <button className="primary-btn">
-                View Reports
-              </button>
-
+        {loading ? (
+          <p style={{ color: "var(--text-light)", fontSize: "14px" }}>Loading data...</p>
+        ) : (
+          <>
+            {/* ================================= */}
+            {/* STATS GRID */}
+            {/* ================================= */}
+            <div className="admin-grid">
+              {stats.map((item, index) => (
+                <Card
+                  key={index}
+                  title={item.title}
+                  value={item.value}
+                  icon={item.icon}
+                />
+              ))}
             </div>
 
-
-            <div className="activity-list">
-
-              {/* ITEM */}
-              <div className="activity-item">
-
-                <div>
-
-                  <h4>
-                    New User Registered
-                  </h4>
-
-                  <p>
-                    Adithi joined Scrapify
-                  </p>
-
+            {/* ================================= */}
+            {/* RECENT ACTIVITY */}
+            {/* ================================= */}
+            <div className="admin-section">
+              <div className="card">
+                <div className="section-header-admin">
+                  <h2>Recent Platform Activity</h2>
                 </div>
 
-                <span className="activity-time">
-                  2 mins ago
-                </span>
-
-              </div>
-
-
-              {/* ITEM */}
-              <div className="activity-item">
-
-                <div>
-
-                  <h4>
-                    Pickup Completed
-                  </h4>
-
-                  <p>
-                    E-Waste pickup completed
-                    in Madhapur
-                  </p>
-
+                <div className="activity-list">
+                  {recentPickups && recentPickups.length > 0 ? (
+                    recentPickups.map((pickup) => (
+                      <div key={pickup._id} className="activity-item">
+                        <div>
+                          <h4>
+                            {pickup.materials?.[0]?.materialType || "General Scrap"} pickup request - {pickup.status}
+                          </h4>
+                          <p>
+                            User: {pickup.user?.name || "Unknown"}
+                            {pickup.collector && ` | Collector: ${pickup.collector.name}`}
+                          </p>
+                        </div>
+                        <span className="activity-time">
+                          {new Date(pickup.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <p style={{ color: "var(--text-light)", fontSize: "14px" }}>
+                      No recent activities recorded.
+                    </p>
+                  )}
                 </div>
-
-                <span className="activity-time">
-                  10 mins ago
-                </span>
-
               </div>
-
-
-              {/* ITEM */}
-              <div className="activity-item">
-
-                <div>
-
-                  <h4>
-                    New Collector Added
-                  </h4>
-
-                  <p>
-                    Ravi Kumar joined as
-                    collector
-                  </p>
-
-                </div>
-
-                <span className="activity-time">
-                  1 hour ago
-                </span>
-
-              </div>
-
             </div>
 
-          </div>
-
-        </div>
-
-
-        {/* ================================= */}
-        {/* ANALYTICS */}
-        {/* ================================= */}
-
-        <div className="admin-section">
-
-          <div className="card analytics-card">
-
-            <h2>
-              Platform Insights 📊
-            </h2>
-
-            <p>
-              Scrapify processed
-              <strong>
-                {" "}2.4 tons{" "}
-              </strong>
-              of recyclable waste this
-              month with a
-              <strong>
-                {" "}34% growth{" "}
-              </strong>
-              compared to last month.
-            </p>
-
-          </div>
-
-        </div>
-
+            {/* ================================= */}
+            {/* ANALYTICS */}
+            {/* ================================= */}
+            <div className="admin-section">
+              <div className="card analytics-card">
+                <h2>Platform Insights 📊</h2>
+                <p>
+                  Scrapify is currently serving <strong>{analytics?.totalUsers} registered users</strong> and <strong>{analytics?.totalCollectors} active collectors</strong> across the platform. A total of <strong>{analytics?.totalGreenPointsGenerated} Green Points</strong> have been generated to promote sustainable environmental practices.
+                </p>
+              </div>
+            </div>
+          </>
+        )}
       </div>
-
     </AdminLayout>
   );
 };

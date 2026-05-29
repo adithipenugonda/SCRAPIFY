@@ -9,6 +9,7 @@ const {
 } = require("../controllers/scrapController");
 
 const { protect } = require("../middleware/authMiddleware");
+const authorize = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
@@ -16,7 +17,7 @@ const router = express.Router();
 // ==========================================
 // ADD SCRAP PRICE
 // ==========================================
-router.post("/", protect, addScrapPrice);
+router.post("/", protect, authorize("admin"), addScrapPrice);
 
 
 // ==========================================
@@ -34,13 +35,13 @@ router.get("/:id", getSingleScrapPrice);
 // ==========================================
 // UPDATE SCRAP PRICE
 // ==========================================
-router.put("/:id", protect, updateScrapPrice);
+router.put("/:id", protect, authorize("admin"), updateScrapPrice);
 
 
 // ==========================================
 // DELETE SCRAP PRICE
 // ==========================================
-router.delete("/:id", protect, deleteScrapPrice);
+router.delete("/:id", protect, authorize("admin"), deleteScrapPrice);
 
 
 module.exports = router;

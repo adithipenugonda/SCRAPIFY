@@ -10,6 +10,7 @@ const {
 } = require("../controllers/rewardController");
 
 const { protect } = require("../middleware/authMiddleware");
+const authorize = require("../middleware/roleMiddleware");
 
 const router = express.Router();
 
@@ -17,7 +18,7 @@ const router = express.Router();
 // ==========================================
 // ADD REWARD
 // ==========================================
-router.post("/", protect, addReward);
+router.post("/", protect, authorize("admin"), addReward);
 
 
 // ==========================================
@@ -57,6 +58,7 @@ router.get(
 router.delete(
   "/:id",
   protect,
+  authorize("admin"),
   deleteReward
 );
 

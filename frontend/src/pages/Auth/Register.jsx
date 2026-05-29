@@ -52,7 +52,7 @@ const Register = () => {
       } else if (result.role === "admin") {
         navigate("/admin/dashboard");
       } else {
-        navigate("/dashboard");
+        navigate("/user/dashboard");
       }
     } else {
       setError(result.message);
@@ -220,7 +220,6 @@ const Register = () => {
                   >
                     <option value="user">User</option>
                     <option value="collector">Collector</option>
-                    <option value="admin">Admin</option>
                   </select>
                 </div>
 

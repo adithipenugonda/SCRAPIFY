@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-const Collector = require("../models/Collector");
+const Collector = require("../models/User");
 const Pickup = require("../models/Pickup");
 
 const generateToken = require("../utils/generateToken");

@@ -1,8 +1,6 @@
 const bcrypt = require("bcryptjs");
 
 const User = require("../models/User");
-const Collector = require("../models/Collector");
-const Admin = require("../models/Admin");
 const generateToken = require("../utils/generateToken");
 
 
@@ -23,12 +21,18 @@ const registerUser = async (req, res) => {
       role = "user",
     } = req.body;
 
-    // Check if user already exists in ANY of the collections
-    const existingUser = await User.findOne({ email });
-    const existingCollector = await Collector.findOne({ email });
-    const existingAdmin = await Admin.findOne({ email });
+    // Block public admin registration
+    if (role === "admin") {
+      return res.status(400).json({
+        success: false,
+        message: "Admin accounts cannot be registered via public signup. They must be created manually.",
+      });
+    }
 
-    if (existingUser || existingCollector || existingAdmin) {
+    // Check if user already exists
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser) {
       return res.status(400).json({
         success: false,
         message: "User already exists",
@@ -42,7 +46,7 @@ const registerUser = async (req, res) => {
     let newUser;
 
     if (role === "collector") {
-      newUser = await Collector.create({
+      newUser = await User.create({
         name,
         email,
         password: hashedPassword,
@@ -51,13 +55,7 @@ const registerUser = async (req, res) => {
         city: city || "",
         state: state || "",
         pincode: pincode || "",
-      });
-    } else if (role === "admin") {
-      newUser = await Admin.create({
-        name,
-        email,
-        password: hashedPassword,
-        phone: phone || "",
+        role: "collector",
       });
     } else {
       newUser = await User.create({
@@ -69,6 +67,7 @@ const registerUser = async (req, res) => {
         city: city || "",
         state: state || "",
         pincode: pincode || "",
+        role: "user",
       });
     }
 
@@ -103,19 +102,8 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Check all three collections
-    let foundUser = await User.findOne({ email });
-    let role = "user";
-
-    if (!foundUser) {
-      foundUser = await Collector.findOne({ email });
-      role = "collector";
-    }
-
-    if (!foundUser) {
-      foundUser = await Admin.findOne({ email });
-      role = "admin";
-    }
+    // Check unified User collection
+    const foundUser = await User.findOne({ email });
 
     if (!foundUser) {
       return res.status(401).json({
@@ -123,6 +111,8 @@ const loginUser = async (req, res) => {
         message: "Invalid email or password",
       });
     }
+
+    const role = foundUser.role || "user";
 
     // Compare Password
     const isMatch = await bcrypt.compare(password, foundUser.password);

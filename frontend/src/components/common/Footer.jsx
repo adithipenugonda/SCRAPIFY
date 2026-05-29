@@ -47,7 +47,7 @@ const Footer = () => {
             Home
           </Link>
 
-          <Link to="/dashboard">
+          <Link to="/user/dashboard">
             Dashboard
           </Link>
 

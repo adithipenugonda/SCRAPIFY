@@ -27,7 +27,7 @@ const Sidebar = () => {
   const userLinks = [
     {
       name: "Dashboard",
-      path: "/dashboard",
+      path: "/user/dashboard",
       icon: <FaHouse />,
     },
     {
@@ -91,6 +91,11 @@ const Sidebar = () => {
       name: "Collectors",
       path: "/admin/collectors",
       icon: <FaTruck />,
+    },
+    {
+      name: "Pickups",
+      path: "/admin/pickups",
+      icon: <FaClipboardList />,
     },
     {
       name: "Prices",

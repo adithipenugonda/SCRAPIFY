@@ -12,7 +12,7 @@ const pickupSchema = new mongoose.Schema(
     // Assigned collector
     collector: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Collector",
+      ref: "User",
       default: null,
     },
 

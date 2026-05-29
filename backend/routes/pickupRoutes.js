@@ -9,6 +9,7 @@ const {
   getPendingPickups,
   acceptPickup,
   updateCollectorLocation,
+  getCollectorCompletedPickups,
 } = require("../controllers/pickupController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -26,6 +27,12 @@ router.post("/create", protect, createPickup);
 // GET USER PICKUPS
 // =======================================
 router.get("/my-pickups", protect, getUserPickups);
+
+
+// =======================================
+// GET COLLECTOR COMPLETED PICKUPS
+// =======================================
+router.get("/collector-history", protect, getCollectorCompletedPickups);
 
 
 

@@ -17,21 +17,22 @@ import LandingPage from "../pages/Landing/LandingPage";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 
-import UserDashboard from "../pages/User/UserDashboard";
-import SchedulePickup from "../pages/User/SchedulePickup";
-import TrackPickup from "../pages/User/TrackPickup";
-import PickupHistoryPage from "../pages/User/PickupHistoryPage";
-import GreenPoints from "../pages/User/GreenPoints";
-import LiveRates from "../pages/User/LiveRates";
+import UserDashboard from "../pages/user/UserDashboard";
+import SchedulePickup from "../pages/user/SchedulePickup";
+import TrackPickup from "../pages/user/TrackPickup";
+import PickupHistoryPage from "../pages/user/PickupHistoryPage";
+import GreenPoints from "../pages/user/GreenPoints";
+import LiveRates from "../pages/user/LiveRates";
 
-import CollectorDashboard from "../pages/Collector/CollectorDashboard";
-import AvailableJobs from "../pages/Collector/AvailableJobs";
-import Earnings from "../pages/Collector/Earnings";
+import CollectorDashboard from "../pages/collector/CollectorDashboard";
+import AvailableJobs from "../pages/collector/AvailableJobs";
+import Earnings from "../pages/collector/Earnings";
 
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageCollectors from "../pages/Admin/ManageCollectors";
 import ManagePrices from "../pages/Admin/ManagePrices";
+import ManagePickups from "../pages/Admin/ManagePickups";
 
 
 // ==========================================
@@ -62,7 +63,7 @@ const ProtectedRoute = ({
     } else if (user?.role === "admin") {
       return <Navigate to="/admin/dashboard" />;
     } else {
-      return <Navigate to="/dashboard" />;
+      return <Navigate to="/user/dashboard" />;
     }
   }
 
@@ -90,7 +91,7 @@ const PublicOnlyRoute = ({ children }) => {
     } else if (user?.role === "admin") {
       return <Navigate to="/admin/dashboard" />;
     } else {
-      return <Navigate to="/dashboard" />;
+      return <Navigate to="/user/dashboard" />;
     }
   }
 
@@ -122,7 +123,7 @@ const CatchAllRoute = () => {
   if (user?.role === "admin") {
     return <Navigate to="/admin/dashboard" />;
   }
-  return <Navigate to="/dashboard" />;
+  return <Navigate to="/user/dashboard" />;
 };
 
 
@@ -166,7 +167,7 @@ const AppRoutes = () => {
       {/* ===================================== */}
 
       <Route
-        path="/dashboard"
+        path="/user/dashboard"
         element={
           <ProtectedRoute allowedRoles={["user"]}>
             <UserDashboard />
@@ -284,6 +285,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <ManagePrices />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/pickups"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <ManagePickups />
           </ProtectedRoute>
         }
       />

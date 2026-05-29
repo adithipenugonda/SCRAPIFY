@@ -122,7 +122,7 @@ export const ROUTES = {
 
   REGISTER: "/register",
 
-  DASHBOARD: "/dashboard",
+  DASHBOARD: "/user/dashboard",
 
   PICKUP: "/schedule-pickup",
 

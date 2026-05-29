@@ -21,17 +21,8 @@ const protect = async (req, res, next) => {
       // Verify Token
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-      // Get User From Database based on decoded role
-      let user = null;
-      if (decoded.role === "collector") {
-        const Collector = require("../models/Collector");
-        user = await Collector.findById(decoded.id).select("-password");
-      } else if (decoded.role === "admin") {
-        const Admin = require("../models/Admin");
-        user = await Admin.findById(decoded.id).select("-password");
-      } else {
-        user = await User.findById(decoded.id).select("-password");
-      }
+      // Get User From Database directly
+      let user = await User.findById(decoded.id).select("-password");
 
       req.user = user;
       next();

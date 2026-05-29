@@ -10,11 +10,23 @@ import {
   TileLayer,
   Marker,
   Popup,
+  useMap,
 } from "react-leaflet";
 
 import UserLayout from "../../layouts/UserLayout";
 
 import "./TrackPickup.css";
+
+// Helper component to center map dynamically when coordinates change
+const ChangeMapView = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (center && center[0] && center[1]) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, map]);
+  return null;
+};
 
 const TrackPickup = () => {
 
@@ -114,19 +126,20 @@ useEffect(() => {
             scrollWheelZoom={true}
             className="live-map"
           >
+            <ChangeMapView center={collectorPosition} />
 
             <TileLayer
               attribution='&copy; OpenStreetMap contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            <Marker position={collectorPosition}>
-
-              <Popup>
-                Collector is here 🚚
-              </Popup>
-
-            </Marker>
+            {activePickup?.collector && (
+              <Marker position={collectorPosition}>
+                <Popup>
+                  Collector is here 🚚
+                </Popup>
+              </Marker>
+            )}
 
           </MapContainer>
 

@@ -193,6 +193,7 @@ useEffect(() => {
         login,
         register,
         logout,
+        loadUser,
 
         isAuthenticated: !!token,
       }}

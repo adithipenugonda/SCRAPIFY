@@ -1,194 +1,136 @@
-import React, {
-  useState,
-} from "react";
-
+import React, { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
-
 import Button from "../../components/common/Button";
-
+import API from "../../services/api";
 import "./ManagePrices.css";
 
-
 const ManagePrices = () => {
+  const [prices, setPrices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [saving, setSaving] = useState(false);
 
-  // ==========================================
-  // STATE
-  // ==========================================
-  const [prices, setPrices] =
-    useState([
-      {
-        id: 1,
-        material: "Plastic",
-        price: 28,
-      },
+  const fetchPrices = async () => {
+    try {
+      const response = await API.get("/scrap-prices");
+      if (response.data && response.data.scrapPrices) {
+        setPrices(response.data.scrapPrices);
+      }
+    } catch (err) {
+      console.error("Error fetching scrap prices:", err);
+      setError("Failed to load scrap prices.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      {
-        id: 2,
-        material: "Paper",
-        price: 12,
-      },
+  useEffect(() => {
+    fetchPrices();
+  }, []);
 
-      {
-        id: 3,
-        material: "Iron",
-        price: 45,
-      },
-
-      {
-        id: 4,
-        material: "E-Waste",
-        price: 85,
-      },
-    ]);
-
-
-  // ==========================================
-  // HANDLE PRICE CHANGE
-  // ==========================================
-  const handlePriceChange = (
-    id,
-    value
-  ) => {
-
+  const handlePriceChange = (id, value) => {
     setPrices((prevPrices) =>
       prevPrices.map((item) =>
-
-        item.id === id
+        item._id === id
           ? {
               ...item,
-              price: value,
+              pricePerKg: parseFloat(value) || 0,
             }
           : item
       )
     );
   };
 
-
-  // ==========================================
-  // SAVE PRICES
-  // ==========================================
-  const handleSave = () => {
-
-    console.log(prices);
-
-    alert(
-      "Scrap prices updated successfully!"
-    );
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      // Perform updates sequentially or in parallel for all materials
+      const promises = prices.map((item) =>
+        API.put(`/scrap-prices/${item._id}`, {
+          pricePerKg: item.pricePerKg,
+        })
+      );
+      await Promise.all(promises);
+      alert("Scrap prices updated successfully in database!");
+      fetchPrices();
+    } catch (err) {
+      console.error("Error saving scrap prices:", err);
+      alert("Failed to update scrap prices on the server.");
+    } finally {
+      setSaving(false);
+    }
   };
-
 
   return (
     <AdminLayout>
-
       <div className="manage-prices-page">
-
         {/* ================================= */}
         {/* HEADER */}
         {/* ================================= */}
-
         <div className="manage-prices-header">
-
-          <h1>
-            Manage Scrap Prices 💰
-          </h1>
-
-          <p>
-            Update and control
-            market prices for
-            recyclable materials.
-          </p>
-
+          <h1>Manage Scrap Prices 💰</h1>
+          <p>Update and control market prices for recyclable materials.</p>
         </div>
-
 
         {/* ================================= */}
         {/* PRICE TABLE */}
         {/* ================================= */}
-
         <div className="prices-card">
-
           <div className="prices-header">
-
-            <h2>
-              Current Scrap Rates
-            </h2>
-
+            <h2>Current Scrap Rates</h2>
           </div>
 
-
-          <div className="prices-table">
-
-            {/* TABLE HEAD */}
-            <div className="prices-row prices-head">
-
-              <span>
-                Material
-              </span>
-
-              <span>
-                Price per KG
-              </span>
-
-              <span>
-                Update Price
-              </span>
-
-            </div>
-
-
-            {/* TABLE BODY */}
-            {prices.map((item) => (
-
-              <div
-                key={item.id}
-                className="prices-row"
-              >
-
-                <span>
-                  ♻️ {item.material}
-                </span>
-
-
-                <span className="price-value">
-                  ₹{item.price}/kg
-                </span>
-
-
-                <input
-                  type="number"
-
-                  value={item.price}
-
-                  onChange={(e) =>
-                    handlePriceChange(
-                      item.id,
-                      e.target.value
-                    )
-                  }
-                />
-
+          {loading ? (
+            <p style={{ padding: "20px", color: "var(--text-light)" }}>Loading rates...</p>
+          ) : error ? (
+            <p style={{ padding: "20px", color: "red" }}>{error}</p>
+          ) : (
+            <div className="prices-table">
+              {/* TABLE HEAD */}
+              <div className="prices-row prices-head">
+                <span>Material</span>
+                <span>Price per KG</span>
+                <span>Update Price</span>
               </div>
 
-            ))}
-
-          </div>
-
+              {/* TABLE BODY */}
+              {prices && prices.length > 0 ? (
+                prices.map((item) => (
+                  <div key={item._id} className="prices-row">
+                    <span>♻️ {item.materialType}</span>
+                    <span className="price-value">₹{item.pricePerKg}/kg</span>
+                    <input
+                      type="number"
+                      value={item.pricePerKg}
+                      onChange={(e) =>
+                        handlePriceChange(item._id, e.target.value)
+                      }
+                      min="0"
+                      step="0.5"
+                    />
+                  </div>
+                ))
+              ) : (
+                <p style={{ padding: "20px", color: "var(--text-light)", textAlign: "center" }}>
+                  No materials found in system.
+                </p>
+              )}
+            </div>
+          )}
 
           {/* BUTTON */}
-          <div className="save-btn-container">
-
-            <Button
-              text="Save Changes"
-              icon="💾"
-              onClick={handleSave}
-            />
-
-          </div>
-
+          {!loading && !error && (
+            <div className="save-btn-container">
+              <Button
+                text={saving ? "Saving..." : "Save Changes"}
+                icon="💾"
+                onClick={handleSave}
+                disabled={saving}
+              />
+            </div>
+          )}
         </div>
-
       </div>
-
     </AdminLayout>
   );
 };

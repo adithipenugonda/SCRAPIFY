@@ -136,8 +136,8 @@ const CollectorDashboard = () => {
         acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
       }));
 
-      // Remove accepted job
-      setAvailableJobs((prev) => prev.filter((j) => j._id !== job._id));
+      // Refresh dashboard immediately
+      fetchPendingPickups();
     } catch (error) {
       console.log(error);
       toast.error("Failed to accept pickup");
@@ -241,7 +241,7 @@ const CollectorDashboard = () => {
     }
 
     const firstJob = availableJobs[0];
-    const destination = `${firstJob.location || firstJob.city}, Hyderabad`;
+    const destination = `${(typeof firstJob.location === "string" ? firstJob.location : firstJob.address) || firstJob.city}, Hyderabad`;
     const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
     window.location.href = googleMapsUrl;
   };
@@ -280,6 +280,41 @@ const CollectorDashboard = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Periodic live location tracking when there is a database pickup "On The Way"
+  useEffect(() => {
+    const activeJob = availableJobs.find(
+      (job) => job.status === "On The Way" && !String(job._id || job.id).startsWith("mock-")
+    );
+
+    if (!activeJob) return;
+
+    const interval = setInterval(() => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          async (position) => {
+            try {
+              await API.put(
+                `/pickups/${activeJob._id}/location`,
+                {
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude,
+                }
+              );
+            } catch (error) {
+              console.error("Failed to update collector live location:", error);
+            }
+          },
+          (error) => {
+            console.error("Error fetching geolocation:", error);
+          },
+          { enableHighAccuracy: true }
+        );
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [availableJobs]);
 
 
   return (
@@ -367,7 +402,7 @@ const CollectorDashboard = () => {
 
                     <div className="pickup-card-row info-row">
                       <span className="pickup-details">
-                        {job.location || job.city || "Nearby"} &bull; {job.time || "Now"} &bull; {formatDistance(job.distance || "1.0 km")}
+                        {(typeof job.location === "string" ? job.location : job.address) || job.city || "Nearby"} &bull; {job.time || "Now"} &bull; {formatDistance(job.distance || "1.0 km")}
                       </span>
                       <span className="pickup-weight">{formatWeight(job.weight || job.totalWeight)}</span>
                     </div>
