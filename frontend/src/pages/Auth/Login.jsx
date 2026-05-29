@@ -33,22 +33,8 @@ const Login = () => {
   // HANDLE ROLE SHORTCUTS PREFILL
   // ==========================================
   const handleRolePrefill = (role) => {
-    if (role === "user") {
-      setFormData({
-        email: "user@scrapify.com",
-        password: "password123",
-      });
-    } else if (role === "collector") {
-      setFormData({
-        email: "collector@scrapify.com",
-        password: "password123",
-      });
-    } else if (role === "admin") {
-      setFormData({
-        email: "admin@scrapify.com",
-        password: "password123",
-      });
-    }
+    // User requested to not prefill emails and passwords when these are clicked.
+    // If you'd like to implement visual role selection without prefilling, it can be added here.
   };
 
   // ==========================================
@@ -184,13 +170,6 @@ const Login = () => {
                   className="shortcut-btn"
                 >
                   Collector
-                </button>
-                <button 
-                  type="button" 
-                  onClick={() => handleRolePrefill("admin")} 
-                  className="shortcut-btn"
-                >
-                  Admin
                 </button>
               </div>
             </div>
