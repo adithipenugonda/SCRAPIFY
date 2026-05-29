@@ -1,66 +1,95 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import API from "../../services/api";
 import "./LiveRates.css";
 
-const LiveRates = () => {
+const materialIcons = {
+  "newspaper": "📰",
+  "cardboard": "📦",
+  "plastic": "🧴",
+  "iron scrap": "🔩",
+  "copper": "🪙",
+  "aluminum": "🥫",
+  "e-waste": "💻",
+  "glass": "🍾"
+};
 
-  const rates = [
+const LiveRates = () => {
+  const [rates, setRates] = useState([
     {
       icon: "📰",
       name: "NEWSPAPER",
       price: "₹14.50",
       change: "+0.4",
     },
-
     {
       icon: "📦",
       name: "CARDBOARD",
       price: "₹8.20",
       change: "-0.3",
     },
-
     {
       icon: "🧴",
       name: "PLASTIC (PET)",
       price: "₹12.00",
       change: "+0.5",
     },
-
     {
       icon: "🔩",
       name: "IRON SCRAP",
       price: "₹28.00",
       change: "+1.2",
     },
-
     {
       icon: "🪙",
       name: "COPPER",
       price: "₹412.00",
       change: "+6",
     },
-
     {
       icon: "🥫",
       name: "ALUMINUM",
       price: "₹145.00",
       change: "--",
     },
-
     {
       icon: "💻",
       name: "E-WASTE",
       price: "₹95.00",
       change: "+2",
     },
-
     {
       icon: "🍾",
       name: "GLASS",
       price: "₹3.50",
       change: "--",
     },
-  ];
+  ]);
+
+  useEffect(() => {
+    const fetchLiveRates = async () => {
+      try {
+        const response = await API.get("/scrap-prices");
+        if (response.data && response.data.scrapPrices) {
+          const dbPrices = response.data.scrapPrices;
+          const formattedRates = dbPrices.map((item) => {
+            const changeVal = item.priceChange !== undefined ? item.priceChange : 0;
+            const changeStr = changeVal > 0 ? `+${changeVal}` : changeVal < 0 ? `${changeVal}` : "--";
+            
+            return {
+              icon: materialIcons[item.materialType.toLowerCase()] || "♻️",
+              name: item.materialType.toUpperCase(),
+              price: `₹${item.pricePerKg.toFixed(2)}`,
+              change: changeStr,
+            };
+          });
+          setRates(formattedRates);
+        }
+      } catch (error) {
+        console.error("Error fetching live rates in LiveRates page:", error);
+      }
+    };
+    fetchLiveRates();
+  }, []);
 
 
   return (

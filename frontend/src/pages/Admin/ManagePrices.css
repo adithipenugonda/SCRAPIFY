@@ -159,3 +159,35 @@
   }
 
 }
+
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .prices-card {
+  background: var(--background-color);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+[data-theme="dark"] .prices-row {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  color: #f1f5f9;
+}
+
+[data-theme="dark"] .prices-head {
+  background: rgba(0, 200, 83, 0.12);
+  color: var(--primary-light);
+  border: 1px solid rgba(0, 200, 83, 0.2);
+}
+
+[data-theme="dark"] .prices-row input {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .prices-row input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.25);
+}

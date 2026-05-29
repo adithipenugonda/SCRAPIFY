@@ -75,7 +75,7 @@ const ManagePrices = () => {
         {/* ================================= */}
         {/* PRICE TABLE */}
         {/* ================================= */}
-        <div className="prices-card">
+        <div className="prices-card neo-card-flat glowing-neon-border">
           <div className="prices-header">
             <h2>Current Scrap Rates</h2>
           </div>

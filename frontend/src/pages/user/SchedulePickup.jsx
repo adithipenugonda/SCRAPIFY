@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import UserLayout from "../../layouts/UserLayout";
 import Modal from "../../components/common/Modal";
@@ -37,9 +37,32 @@ const cardEntrance = {
 };
 
 const SchedulePickup = () => {
+  const [scrapItems, setScrapItems] = useState(scrapItemsData);
   const [selectedItems, setSelectedItems] = useState({});
   const [selectedSlot, setSelectedSlot] = useState("Today, 4-6 PM");
   const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    const fetchLiveRates = async () => {
+      try {
+        const response = await API.get("/scrap-prices");
+        if (response.data && response.data.scrapPrices) {
+          const dbPrices = response.data.scrapPrices;
+          setScrapItems((prevItems) =>
+            prevItems.map((item) => {
+              const dbItem = dbPrices.find(
+                (db) => db.materialType.toLowerCase() === item.name.toLowerCase()
+              );
+              return dbItem ? { ...item, price: dbItem.pricePerKg } : item;
+            })
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching live rates in SchedulePickup:", error);
+      }
+    };
+    fetchLiveRates();
+  }, []);
 
   const increaseQty = (id) => {
     setSelectedItems((prev) => ({
@@ -57,7 +80,7 @@ const SchedulePickup = () => {
 
   // Calculations
   const totalWeight = Object.values(selectedItems).reduce((a, b) => a + b, 0);
-  const totalPayout = scrapItemsData.reduce((total, item) => {
+  const totalPayout = scrapItems.reduce((total, item) => {
     return total + (selectedItems[item.id] || 0) * item.price;
   }, 0);
   const greenPoints = totalWeight * 34;
@@ -65,7 +88,7 @@ const SchedulePickup = () => {
   const handleConfirmPickup = async () => {
     try {
       await API.post("/pickups/create", {
-        materials: scrapItemsData
+        materials: scrapItems
           .filter((item) => selectedItems[item.id] > 0)
           .map((item) => ({
             materialType: item.name,
@@ -113,7 +136,7 @@ const SchedulePickup = () => {
               initial="hidden"
               animate="visible"
             >
-              {scrapItemsData.map((item) => {
+              {scrapItems.map((item) => {
                 const qty = selectedItems[item.id] || 0;
                 const isActive = qty > 0;
 

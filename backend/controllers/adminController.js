@@ -205,6 +205,44 @@ const getAdminDashboard = async (
     const scrapPrices =
       await ScrapPrice.find();
 
+    // Fetch last 7 days of pickup data
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    sevenDaysAgo.setHours(0, 0, 0, 0);
+
+    const pickupsLast7Days = await Pickup.find({
+      createdAt: { $gte: sevenDaysAgo }
+    });
+
+    // Initialize dailyStats map for last 7 days
+    const dailyStats = {};
+    const daysName = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    
+    for (let i = 6; i >= 0; i--) {
+      const d = new Date();
+      d.setDate(d.getDate() - i);
+      const dateStr = d.toISOString().split("T")[0];
+      const dayLabel = daysName[d.getDay()] + " " + d.getDate();
+      dailyStats[dateStr] = { 
+        date: dateStr, 
+        name: dayLabel,
+        pickups: 0, 
+        earnings: 0 
+      };
+    }
+
+    pickupsLast7Days.forEach(p => {
+      const dateStr = p.createdAt.toISOString().split("T")[0];
+      if (dailyStats[dateStr]) {
+        dailyStats[dateStr].pickups += 1;
+        if (p.status === "Completed") {
+          dailyStats[dateStr].earnings += (p.totalAmount || 0);
+        }
+      }
+    });
+
+    const chartData = Object.values(dailyStats);
+
     res.status(200).json({
       success: true,
 
@@ -220,6 +258,8 @@ const getAdminDashboard = async (
           totalRevenue,
           totalGreenPointsGenerated,
         },
+
+        chartData,
 
         recentPickups,
 

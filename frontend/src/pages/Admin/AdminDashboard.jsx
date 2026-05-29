@@ -2,11 +2,23 @@ import React, { useState, useEffect } from "react";
 import AdminLayout from "../../layouts/AdminLayout";
 import Card from "../../components/common/Card";
 import API from "../../services/api";
+import {
+  AreaChart,
+  Area,
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 import "./AdminDashboard.css";
 
 const AdminDashboard = () => {
   const [analytics, setAnalytics] = useState(null);
   const [recentPickups, setRecentPickups] = useState([]);
+  const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const fetchDashboardData = async () => {
@@ -15,6 +27,7 @@ const AdminDashboard = () => {
       if (response.data && response.data.dashboard) {
         setAnalytics(response.data.dashboard.analytics);
         setRecentPickups(response.data.dashboard.recentPickups);
+        setChartData(response.data.dashboard.chartData || []);
       }
     } catch (error) {
       console.error("Error fetching admin dashboard data:", error);
@@ -103,6 +116,54 @@ const AdminDashboard = () => {
                   icon={item.icon}
                 />
               ))}
+            </div>
+
+            {/* ================================= */}
+            {/* CHARTS SECTION */}
+            {/* ================================= */}
+            <div className="admin-charts-row">
+              <div className="card admin-chart-card">
+                <h3>Daily Pickup Requests (Last 7 Days)</h3>
+                <div className="chart-container-admin">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <BarChart data={chartData} margin={{ top: 20, right: 10, left: -20, bottom: 0 }}>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                      <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} />
+                      <YAxis stroke="#64748b" fontSize={11} tickLine={false} />
+                      <Tooltip 
+                        contentStyle={{ background: "#ffffff", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                        labelStyle={{ fontWeight: "bold", color: "#1e293b" }}
+                      />
+                      <Bar dataKey="pickups" fill="#22c55e" radius={[4, 4, 0, 0]} name="Requests" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+
+              <div className="card admin-chart-card">
+                <h3>Daily Revenue Generated (Last 7 Days)</h3>
+                <div className="chart-container-admin">
+                  <ResponsiveContainer width="100%" height={300}>
+                    <AreaChart data={chartData} margin={{ top: 20, right: 10, left: -10, bottom: 0 }}>
+                      <defs>
+                        <linearGradient id="colorEarnings" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="5%" stopColor="#22c55e" stopOpacity={0.3}/>
+                          <stop offset="95%" stopColor="#22c55e" stopOpacity={0}/>
+                        </linearGradient>
+                      </defs>
+                      <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                      <XAxis dataKey="name" stroke="#64748b" fontSize={11} tickLine={false} />
+                      <YAxis stroke="#64748b" fontSize={11} tickLine={false} tickFormatter={(v) => `₹${v}`} />
+                      <Tooltip 
+                        formatter={(value) => [`₹${value.toLocaleString()}`, "Revenue"]}
+                        contentStyle={{ background: "#ffffff", borderRadius: "8px", border: "1px solid #cbd5e1" }}
+                        labelStyle={{ fontWeight: "bold", color: "#1e293b" }}
+                      />
+                      <Area type="monotone" dataKey="earnings" stroke="#22c55e" strokeWidth={2} fillOpacity={1} fill="url(#colorEarnings)" />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
             </div>
 
             {/* ================================= */}

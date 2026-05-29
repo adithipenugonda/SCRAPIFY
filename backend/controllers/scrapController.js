@@ -52,9 +52,45 @@ const addScrapPrice = async (req, res) => {
 // ==========================================
 const getAllScrapPrices = async (req, res) => {
   try {
-    const scrapPrices = await ScrapPrice.find({
+    const defaultPrices = {
+      "Newspaper": 14.5,
+      "Cardboard": 8.2,
+      "Plastic": 12,
+      "Iron Scrap": 28,
+      "Copper": 412,
+      "Aluminum": 145,
+      "E-Waste": 95,
+      "Glass": 3.5
+    };
+
+    // Find existing prices
+    let scrapPrices = await ScrapPrice.find({
       isActive: true,
-    }).sort({ materialType: 1 });
+    });
+
+    const existingTypes = scrapPrices.map(item => item.materialType);
+    const missingTypes = Object.keys(defaultPrices).filter(
+      type => !existingTypes.includes(type)
+    );
+
+    if (missingTypes.length > 0) {
+      const createPromises = missingTypes.map(type =>
+        ScrapPrice.create({
+          materialType: type,
+          pricePerKg: defaultPrices[type],
+          priceChange: 0,
+          isActive: true
+        })
+      );
+      await Promise.all(createPromises);
+      // Refetch after seeding
+      scrapPrices = await ScrapPrice.find({
+        isActive: true,
+      });
+    }
+
+    // Sort alphabetically by materialType
+    scrapPrices.sort((a, b) => a.materialType.localeCompare(b.materialType));
 
     res.status(200).json({
       success: true,

@@ -22,6 +22,8 @@
   flex-direction: column;
 
   min-height: 100vh;
+
+  margin-left: 320px;
 }
 
 
@@ -39,6 +41,10 @@
    RESPONSIVE
 ========================================= */
 @media (max-width: 992px) {
+
+  .admin-layout-main {
+    margin-left: 0;
+  }
 
   .admin-layout-content {
     padding: 20px;
