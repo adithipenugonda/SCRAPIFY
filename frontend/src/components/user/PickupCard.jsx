@@ -10,6 +10,8 @@ const PickupCard = ({
   status,
   pickupDate,
   collector,
+  paymentMethod,
+  paymentStatus,
 }) => {
 
   // ==========================================
@@ -104,7 +106,31 @@ const PickupCard = ({
           </span>
 
           <h4>
-            {collector}
+            {collector || "Not Assigned"}
+          </h4>
+
+        </div>
+
+        <div className="pickup-info">
+
+          <span>
+            💳 Method
+          </span>
+
+          <h4>
+            {paymentMethod || "UPI"}
+          </h4>
+
+        </div>
+
+        <div className="pickup-info">
+
+          <span>
+            💵 Payment Status
+          </span>
+
+          <h4 className={paymentStatus === "Paid" ? "green" : "pending"}>
+            {paymentStatus || "Pending"}
           </h4>
 
         </div>

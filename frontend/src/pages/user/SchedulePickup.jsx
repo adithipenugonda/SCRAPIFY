@@ -40,6 +40,7 @@ const SchedulePickup = () => {
   const [scrapItems, setScrapItems] = useState(scrapItemsData);
   const [selectedItems, setSelectedItems] = useState({});
   const [selectedSlot, setSelectedSlot] = useState("Today, 4-6 PM");
+  const [paymentMethod, setPaymentMethod] = useState("UPI");
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -103,6 +104,7 @@ const SchedulePickup = () => {
         state: "Telangana",
         pincode: "500081",
         notes: "Pickup request created",
+        paymentMethod,
       });
       setOpenModal(true);
     } catch (error) {
@@ -202,6 +204,50 @@ const SchedulePickup = () => {
                 })}
               </div>
             </motion.div>
+
+            {/* PAYMENT METHOD */}
+            <motion.div 
+              className="payment-method-section"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              style={{ marginTop: "30px" }}
+            >
+              <span className="schedule-small-tag">03 / PAYMENT METHOD</span>
+              <div className="payment-methods" style={{ display: "flex", gap: "16px", marginTop: "16px" }}>
+                {["UPI", "Cash", "Bank Transfer"].map((method) => {
+                  const isSelected = paymentMethod === method;
+                  let icon = "🪙";
+                  if (method === "UPI") icon = "📱";
+                  if (method === "Cash") icon = "💵";
+                  if (method === "Bank Transfer") icon = "🏦";
+
+                  return (
+                    <motion.button
+                      key={method}
+                      type="button"
+                      className={`slot-btn neo-btn-tactile ${isSelected ? "active-slot" : ""}`}
+                      style={{
+                        flex: 1,
+                        padding: "16px",
+                        borderRadius: "14px",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        gap: "8px",
+                        cursor: "pointer",
+                      }}
+                      onClick={() => setPaymentMethod(method)}
+                      whileHover={{ y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <span style={{ fontSize: "24px" }}>{icon}</span>
+                      <span style={{ fontSize: "14px", fontWeight: "600" }}>{method}</span>
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </motion.div>
           </div>
 
           {/* RIGHT SUMMARY */}
@@ -223,6 +269,11 @@ const SchedulePickup = () => {
             <div className="summary-row">
               <span>Pickup slot</span>
               <strong>{selectedSlot}</strong>
+            </div>
+
+            <div className="summary-row">
+              <span>Payment Method</span>
+              <strong>{paymentMethod}</strong>
             </div>
 
             <div className="summary-row">

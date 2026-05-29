@@ -84,7 +84,7 @@
   display: grid;
 
   grid-template-columns:
-    repeat(3, 1fr);
+    repeat(auto-fit, minmax(130px, 1fr));
 
   gap: 20px;
 }
@@ -114,9 +114,17 @@
 }
 
 .pickup-info h4 {
-  font-size: 20px;
+  font-size: 18px;
 
   color: var(--primary-color);
+}
+
+.pickup-info h4.green {
+  color: #15803d;
+}
+
+.pickup-info h4.pending {
+  color: #b45309;
 }
 
 

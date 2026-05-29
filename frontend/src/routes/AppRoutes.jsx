@@ -23,6 +23,7 @@ import TrackPickup from "../pages/user/TrackPickup";
 import PickupHistoryPage from "../pages/user/PickupHistoryPage";
 import GreenPoints from "../pages/user/GreenPoints";
 import LiveRates from "../pages/user/LiveRates";
+import PaymentHistory from "../pages/user/PaymentHistory";
 
 import CollectorDashboard from "../pages/collector/CollectorDashboard";
 import AvailableJobs from "../pages/collector/AvailableJobs";
@@ -198,6 +199,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["user"]}>
             <PickupHistoryPage />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/user/payment-history"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <PaymentHistory />
           </ProtectedRoute>
         }
       />

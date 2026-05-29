@@ -166,6 +166,10 @@ useEffect(() => {
               collector={
                 pickup.collector?.name
               }
+
+              paymentMethod={pickup.paymentMethod}
+
+              paymentStatus={pickup.paymentStatus}
             />
 
           ))}

@@ -46,6 +46,11 @@ const Sidebar = () => {
       icon: <FaClockRotateLeft />,
     },
     {
+      name: "Payments",
+      path: "/user/payment-history",
+      icon: <FaIndianRupeeSign />,
+    },
+    {
       name: "Rewards",
       path: "/green-points",
       icon: <FaGift />,

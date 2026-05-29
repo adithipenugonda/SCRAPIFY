@@ -16,6 +16,7 @@ const createPickup = async (req, res) => {
       state,
       pincode,
       notes,
+      paymentMethod,
     } = req.body;
 
     // Generate Pickup ID
@@ -70,6 +71,8 @@ const createPickup = async (req, res) => {
       pincode,
 
       notes,
+
+      paymentMethod: paymentMethod || "UPI",
     });
 
     // Update User Stats

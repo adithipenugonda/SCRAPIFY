@@ -104,10 +104,11 @@ const UserDashboard = () => {
                         {pickup.materials?.[0]?.materialType || "General Scrap"}
                         {pickup.materials?.length > 1 && ` + ${pickup.materials.length - 1} more`}
                       </h4>
-                      <p style={{ display: "flex", gap: "16px", marginTop: "4px" }}>
+                      <p style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "4px" }}>
                         <span>📅 {new Date(pickup.pickupDate).toLocaleDateString()}</span>
                         <span>⚖️ {pickup.totalWeight} kg</span>
                         <span>💰 ₹{pickup.totalAmount}</span>
+                        <span>💳 {pickup.paymentMethod || "UPI"} • <strong style={{ color: pickup.paymentStatus === "Paid" ? "#00c853" : "#eab308" }}>{pickup.paymentStatus || "Pending"}</strong></span>
                         {pickup.collector && <span>🚚 {pickup.collector.name}</span>}
                       </p>
                     </div>
