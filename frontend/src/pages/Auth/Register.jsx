@@ -48,7 +48,7 @@ const Register = () => {
 
     if (result.success) {
       if (result.role === "collector") {
-        navigate("/collector/dashboard");
+        navigate("/login");
       } else if (result.role === "admin") {
         navigate("/admin/dashboard");
       } else {

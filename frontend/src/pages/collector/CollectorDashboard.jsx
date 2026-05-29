@@ -71,13 +71,13 @@ const CollectorDashboard = () => {
 
   // Stats state (for dynamic updates when accepting jobs)
   const [stats, setStats] = useState({
-    todayEarnings: 1840,
-    todayPickups: 6,
-    thisWeekEarnings: 9420,
-    thisWeekPickups: 32,
-    rating: 4.9,
-    ratingCount: 1247,
-    acceptanceRate: 96,
+    todayEarnings: 0,
+    todayPickups: 0,
+    thisWeekEarnings: 0,
+    thisWeekPickups: 0,
+    rating: 5.0,
+    ratingCount: 0,
+    acceptanceRate: 100,
   });
 
   // Jobs state (each job maps to an SVG node in the optimized route visualizer)
@@ -271,8 +271,28 @@ const CollectorDashboard = () => {
     }
   };
 
+  const fetchDashboardStats = async () => {
+    try {
+      const response = await API.get("/collector/dashboard");
+      if (response.data && response.data.success) {
+        const { stats } = response.data.dashboard;
+        setStats((prev) => ({
+          ...prev,
+          todayEarnings: stats.totalEarnings || 0,
+          todayPickups: stats.completedPickups || 0,
+          thisWeekEarnings: stats.monthlyEarnings || 0,
+          thisWeekPickups: stats.completedPickups || 0,
+          rating: stats.rating || 5.0,
+        }));
+      }
+    } catch (error) {
+      console.log("Failed to fetch dashboard stats", error);
+    }
+  };
+
   useEffect(() => {
     fetchPendingPickups();
+    fetchDashboardStats();
 
     const interval = setInterval(() => {
       fetchPendingPickups();

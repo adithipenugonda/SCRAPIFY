@@ -120,6 +120,13 @@ export const AuthProvider = ({
 
       const data = response.data;
 
+      if (userData.role === "collector") {
+        return {
+          success: true,
+          role: "collector",
+        };
+      }
+
       localStorage.setItem(
         "token",
         data.token
