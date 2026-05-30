@@ -162,7 +162,7 @@ const pickupSchema = new mongoose.Schema(
 
     paymentMethod: {
       type: String,
-      enum: ["UPI", "Cash", "Bank Transfer"],
+      enum: ["UPI", "Cash", "Bank Transfer", "Razorpay"],
       default: "UPI",
     },
 

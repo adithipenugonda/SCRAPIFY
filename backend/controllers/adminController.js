@@ -243,6 +243,13 @@ const getAdminDashboard = async (
 
     const chartData = Object.values(dailyStats);
 
+    const Transaction = require("../models/Transaction");
+    const recentTransactions = await Transaction.find()
+      .sort({ createdAt: -1 })
+      .limit(5)
+      .populate("user", "name")
+      .populate("pickup", "pickupId totalWeight");
+
     res.status(200).json({
       success: true,
 
@@ -262,6 +269,7 @@ const getAdminDashboard = async (
         chartData,
 
         recentPickups,
+        recentTransactions,
 
         scrapPrices,
       },
@@ -474,7 +482,9 @@ const updatePickupStatusAdmin = async (req, res) => {
     pickup.status = status;
 
     if (status === "Completed") {
-      pickup.paymentStatus = "Paid";
+      if (pickup.paymentMethod === "Cash") {
+        pickup.paymentStatus = "Paid";
+      }
       if (pickup.collector) {
         await Collector.findByIdAndUpdate(pickup.collector, {
           $inc: {

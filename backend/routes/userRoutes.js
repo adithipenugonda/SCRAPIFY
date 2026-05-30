@@ -5,6 +5,7 @@ const {
   updateUserProfile,
   getUserPickupHistory,
   deleteUserAccount,
+  changePassword,
 } = require("../controllers/userController");
 
 const { protect } = require("../middleware/authMiddleware");
@@ -51,6 +52,16 @@ router.get(
   "/pickup-history",
   protect,
   getUserPickupHistory
+);
+
+
+// ==========================================
+// CHANGE PASSWORD
+// ==========================================
+router.put(
+  "/profile/password",
+  protect,
+  changePassword
 );
 
 

@@ -72,6 +72,11 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    
+    totalPaid: {
+      type: Number,
+      default: 0,
+    },
 
     rewardsEarned: [
       {

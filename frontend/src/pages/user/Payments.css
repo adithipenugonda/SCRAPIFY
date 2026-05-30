@@ -1,0 +1,155 @@
+.payments-page {
+  padding: 32px 0;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.payments-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.payments-header p {
+  color: var(--text-light);
+  margin-top: 8px;
+}
+
+.payments-section {
+  margin-top: 40px;
+}
+
+.payments-section h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.payments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-card {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+}
+
+.payment-info h4 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+  color: var(--text-color);
+}
+
+.payment-info p {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+.payment-action {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.payment-amount {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.btn-pay {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-pay:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.2);
+}
+
+.empty-state {
+  background: white;
+  padding: 40px;
+  border-radius: var(--radius-md);
+  text-align: center;
+  border: 1px dashed var(--border-color);
+  color: var(--text-light);
+}
+
+.history-table-wrapper {
+  background: white;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th, .history-table td {
+  padding: 16px 24px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.history-table th {
+  background: var(--bg-color);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.history-table td {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.history-table td.amount {
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.success {
+  background: rgba(0, 200, 83, 0.1);
+  color: #00c853;
+}
+
+@media (max-width: 768px) {
+  .payment-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .payment-action {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

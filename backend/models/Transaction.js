@@ -17,11 +17,21 @@ const transactionSchema =
         required: true,
       },
 
-      // Transaction ID
+      // Transaction ID (Custom ID)
       transactionId: {
         type: String,
         unique: true,
         required: true,
+      },
+
+      // Razorpay Order ID
+      orderId: {
+        type: String,
+      },
+
+      // Razorpay Payment ID
+      paymentId: {
+        type: String,
       },
 
       // Amount
@@ -38,9 +48,10 @@ const transactionSchema =
           "UPI",
           "Cash",
           "Bank Transfer",
+          "Razorpay",
         ],
 
-        default: "UPI",
+        default: "Razorpay",
       },
 
       // Payment Status

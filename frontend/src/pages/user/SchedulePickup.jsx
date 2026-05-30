@@ -41,7 +41,9 @@ const SchedulePickup = () => {
   const [selectedItems, setSelectedItems] = useState({});
   const [selectedSlot, setSelectedSlot] = useState("Today, 4-6 PM");
   const [paymentMethod, setPaymentMethod] = useState("UPI");
+  const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const { user } = useAuthContext();
 
   useEffect(() => {
     const fetchLiveRates = async () => {
@@ -86,9 +88,28 @@ const SchedulePickup = () => {
   }, 0);
   const greenPoints = totalWeight * 34;
 
-  const handleConfirmPickup = async () => {
+  const loadRazorpayScript = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+      script.onload = () => resolve(true);
+      script.onerror = () => resolve(false);
+      document.body.appendChild(script);
+    });
+  };
+
+  const handleConfirmPickup = () => {
+    if (totalWeight === 0) {
+      toast.error("Please add at least one scrap item");
+      return;
+    }
+    setOpenPaymentModal(true);
+  };
+
+  const submitPickup = async (method) => {
     try {
-      await API.post("/pickups/create", {
+      setPaymentMethod(method);
+      const res = await API.post("/pickups/create", {
         materials: scrapItems
           .filter((item) => selectedItems[item.id] > 0)
           .map((item) => ({
@@ -99,16 +120,90 @@ const SchedulePickup = () => {
         totalWeight,
         pickupTimeSlot: selectedSlot,
         pickupDate: new Date(),
-        address: "Hyderabad",
-        city: "Hyderabad",
-        state: "Telangana",
-        pincode: "500081",
+        address: user?.address || "Hyderabad",
+        city: user?.city || "Hyderabad",
+        state: user?.state || "Telangana",
+        pincode: user?.pincode || "500081",
         notes: "Pickup request created",
-        paymentMethod,
+        paymentMethod: method,
       });
-      setOpenModal(true);
+
+      const newPickup = res.data.pickup;
+
+      if (method === "Cash") {
+        setOpenPaymentModal(false);
+        setOpenModal(true);
+        return;
+      }
+
+      // Handle Razorpay if UPI/Bank
+      const scriptLoaded = await loadRazorpayScript();
+      if (!scriptLoaded) {
+        toast.error("Razorpay SDK failed to load.");
+        setOpenPaymentModal(false);
+        setOpenModal(true); // Still created as Pending
+        return;
+      }
+
+      const orderRes = await API.post("/payments/create-order", {
+        pickupId: newPickup._id,
+      });
+
+      if (!orderRes.data.success) {
+        toast.error("Failed to create payment order");
+        setOpenPaymentModal(false);
+        setOpenModal(true);
+        return;
+      }
+
+      const { id, amount, currency } = orderRes.data.order;
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID || "rzp_test_dummy",
+        amount: amount.toString(),
+        currency: currency,
+        name: "Scrapify",
+        description: `Payment for Pickup ${newPickup.pickupId}`,
+        order_id: id,
+        handler: async function (response) {
+          try {
+            await API.post("/payments/verify", {
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              pickupId: newPickup._id,
+            });
+            toast.success("Payment successful!");
+            setOpenPaymentModal(false);
+            setOpenModal(true);
+          } catch (err) {
+            console.error(err);
+            toast.error("Payment verification failed");
+            setOpenPaymentModal(false);
+            setOpenModal(true);
+          }
+        },
+        prefill: {
+          name: user?.name,
+          email: user?.email,
+          contact: user?.phone || "",
+        },
+        theme: {
+          color: "#00c853",
+        },
+      };
+
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+
+      paymentObject.on('payment.failed', function (response){
+        toast.error(`Payment failed: ${response.error.description}`);
+        setOpenPaymentModal(false);
+        setOpenModal(true); // Still show success for pickup creation
+      });
+
     } catch (error) {
       console.log(error);
+      toast.error("Failed to create pickup");
     }
   };
 
@@ -205,49 +300,7 @@ const SchedulePickup = () => {
               </div>
             </motion.div>
 
-            {/* PAYMENT METHOD */}
-            <motion.div 
-              className="payment-method-section"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              style={{ marginTop: "30px" }}
-            >
-              <span className="schedule-small-tag">03 / PAYMENT METHOD</span>
-              <div className="payment-methods" style={{ display: "flex", gap: "16px", marginTop: "16px" }}>
-                {["UPI", "Cash", "Bank Transfer"].map((method) => {
-                  const isSelected = paymentMethod === method;
-                  let icon = "🪙";
-                  if (method === "UPI") icon = "📱";
-                  if (method === "Cash") icon = "💵";
-                  if (method === "Bank Transfer") icon = "🏦";
 
-                  return (
-                    <motion.button
-                      key={method}
-                      type="button"
-                      className={`slot-btn neo-btn-tactile ${isSelected ? "active-slot" : ""}`}
-                      style={{
-                        flex: 1,
-                        padding: "16px",
-                        borderRadius: "14px",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        gap: "8px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => setPaymentMethod(method)}
-                      whileHover={{ y: -2 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <span style={{ fontSize: "24px" }}>{icon}</span>
-                      <span style={{ fontSize: "14px", fontWeight: "600" }}>{method}</span>
-                    </motion.button>
-                  );
-                })}
-              </div>
-            </motion.div>
           </div>
 
           {/* RIGHT SUMMARY */}
@@ -271,10 +324,7 @@ const SchedulePickup = () => {
               <strong>{selectedSlot}</strong>
             </div>
 
-            <div className="summary-row">
-              <span>Payment Method</span>
-              <strong>{paymentMethod}</strong>
-            </div>
+
 
             <div className="summary-row">
               <span>Collector fee</span>
@@ -308,6 +358,51 @@ const SchedulePickup = () => {
           <div className="pickup-success">
             <h3>Request Submitted 🎉</h3>
             <p>Your scrap pickup has been scheduled successfully. An eco-collector will accept the request shortly.</p>
+          </div>
+        </Modal>
+
+        {/* PAYMENT METHOD MODAL */}
+        <Modal
+          isOpen={openPaymentModal}
+          onClose={() => setOpenPaymentModal(false)}
+          title="Choose Payment Method"
+        >
+          <div className="payment-method-modal">
+            <p style={{ marginBottom: "20px", color: "var(--text-light)" }}>Select how you want to be paid or pay for the service:</p>
+            <div className="payment-methods" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {["UPI", "Bank Transfer", "Cash"].map((method) => {
+                let icon = "🪙";
+                if (method === "UPI") icon = "📱";
+                if (method === "Cash") icon = "💵";
+                if (method === "Bank Transfer") icon = "🏦";
+
+                return (
+                  <motion.button
+                    key={method}
+                    type="button"
+                    className="slot-btn neo-btn-tactile"
+                    style={{
+                      padding: "16px",
+                      borderRadius: "14px",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "12px",
+                      cursor: "pointer",
+                      textAlign: "left",
+                      justifyContent: "flex-start",
+                      border: "1px solid var(--border-color)",
+                      background: "white"
+                    }}
+                    onClick={() => submitPickup(method)}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <span style={{ fontSize: "24px" }}>{icon}</span>
+                    <span style={{ fontSize: "16px", fontWeight: "600", color: "var(--text-color)" }}>{method}</span>
+                  </motion.button>
+                );
+              })}
+            </div>
           </div>
         </Modal>
       </div>

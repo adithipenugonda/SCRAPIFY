@@ -47,7 +47,7 @@ const Sidebar = () => {
     },
     {
       name: "Payments",
-      path: "/user/payment-history",
+      path: "/user/payments",
       icon: <FaIndianRupeeSign />,
     },
     {
@@ -170,12 +170,17 @@ const Sidebar = () => {
       {/* FOOTER */}
       {/* ================================= */}
       <div className="sidebar-footer">
-        <div className="sidebar-profile">
-          <div className="profile-avatar">
-            {user?.name?.charAt(0)?.toUpperCase() || "U"}
-          </div>
-          <div className="profile-info">
-            <h4>{user?.name || "User Profile"}</h4>
+        <div className="sidebar-profile" style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
+          <Link to={`/${user?.role || "user"}/profile`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="profile-avatar">
+              {user?.name?.charAt(0)?.toUpperCase() || "U"}
+            </div>
+            <div className="profile-info">
+              <h4>{user?.name || "User Profile"}</h4>
+              <span style={{ fontSize: '12px', color: '#88929b' }}>View Profile</span>
+            </div>
+          </Link>
+          <div className="profile-info" style={{ marginTop: '4px' }}>
             <button onClick={logout} className="exit-console-btn">
               <FaArrowRightFromBracket className="logout-icon" /> Exit console
             </button>

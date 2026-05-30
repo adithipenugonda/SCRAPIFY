@@ -200,6 +200,40 @@ const AdminDashboard = () => {
                   )}
                 </div>
               </div>
+
+              {/* ================================= */}
+              {/* RECENT TRANSACTIONS */}
+              {/* ================================= */}
+              <div className="card" style={{ marginTop: '24px' }}>
+                <div className="section-header-admin">
+                  <h2>Recent Transactions</h2>
+                </div>
+
+                <div className="activity-list">
+                  {analytics && analytics.recentTransactions && analytics.recentTransactions.length > 0 ? (
+                    analytics.recentTransactions.map((txn) => (
+                      <div key={txn._id} className="activity-item">
+                        <div>
+                          <h4>
+                            {txn.transactionId} - ₹{txn.amount}
+                          </h4>
+                          <p>
+                            User: {txn.user?.name || "Unknown"} | Method: {txn.paymentMethod}
+                          </p>
+                        </div>
+                        <span className="activity-time">
+                          <span className="status-badge success" style={{ marginRight: '10px' }}>{txn.paymentStatus}</span>
+                          {new Date(txn.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    <p style={{ color: "var(--text-light)", fontSize: "14px" }}>
+                      No recent transactions found.
+                    </p>
+                  )}
+                </div>
+              </div>
             </div>
 
             {/* ================================= */}

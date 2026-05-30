@@ -95,9 +95,9 @@ const Navbar = () => {
 
           {isAuthenticated ? (
             <>
-              <span className="navbar-user">
+              <Link to={`/${user?.role || "user"}/profile`} className="navbar-user" style={{ textDecoration: 'none' }}>
                 Hi, {user?.name || "User"}
-              </span>
+              </Link>
 
               <button
                 className="logout-btn"

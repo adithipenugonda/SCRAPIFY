@@ -13,6 +13,7 @@ const scrapRoutes = require("./routes/scrapRoutes");
 const rewardRoutes = require("./routes/rewardRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const userRoutes = require("./routes/userRoutes");
+const paymentRoutes = require("./routes/paymentRoutes");
 
 // Initialize Express App
 const app = express();

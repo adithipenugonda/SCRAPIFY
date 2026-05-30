@@ -239,7 +239,9 @@ const completePickup = async (req, res) => {
 
     pickup.status = "Completed";
 
-    pickup.paymentStatus = "Paid";
+    if (pickup.paymentMethod === "Cash") {
+      pickup.paymentStatus = "Paid";
+    }
 
     await pickup.save();
 

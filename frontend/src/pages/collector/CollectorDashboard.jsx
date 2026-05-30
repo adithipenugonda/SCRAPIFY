@@ -126,18 +126,9 @@ const CollectorDashboard = () => {
       await API.put(`/pickups/accept/${job._id}`);
       toast.success("Pickup accepted!");
 
-      // Update stats
-      setStats((prev) => ({
-        ...prev,
-        todayEarnings: prev.todayEarnings + (job.totalAmount || 0),
-        thisWeekEarnings: prev.thisWeekEarnings + (job.totalAmount || 0),
-        todayPickups: prev.todayPickups + 1,
-        thisWeekPickups: prev.thisWeekPickups + 1,
-        acceptanceRate: Math.min(100, prev.acceptanceRate + 1),
-      }));
-
       // Refresh dashboard immediately
       fetchPendingPickups();
+      fetchDashboardStats();
     } catch (error) {
       console.log(error);
       toast.error("Failed to accept pickup");
@@ -186,6 +177,9 @@ const CollectorDashboard = () => {
 
       // Refresh dashboard
       fetchPendingPickups();
+      if (newStatus === "Completed") {
+        fetchDashboardStats();
+      }
     } catch (error) {
       console.log(error);
       toast.error("Failed to update status");
@@ -256,14 +250,12 @@ const CollectorDashboard = () => {
   const fetchPendingPickups = async () => {
     try {
       const response = await API.get("/pickups/pending");
-      if (response.data && response.data.pickups && response.data.pickups.length > 0) {
+      if (response.data && response.data.pickups) {
         const jobsWithCoords = response.data.pickups.map((job, index) => ({
           ...job,
           coords: nodeCoords[index % nodeCoords.length],
         }));
         setAvailableJobs(jobsWithCoords);
-      } else {
-        setAvailableJobs(mockJobs);
       }
     } catch (error) {
       console.log(error);
@@ -296,6 +288,7 @@ const CollectorDashboard = () => {
 
     const interval = setInterval(() => {
       fetchPendingPickups();
+      fetchDashboardStats();
     }, 5000);
 
     return () => clearInterval(interval);

@@ -68,6 +68,14 @@ const updateUserProfile = async (
         req.body.pincode || user.pincode;
     }
 
+    if (user.role === "collector") {
+      user.vehicleType = req.body.vehicleType || user.vehicleType;
+      user.vehicleNumber = req.body.vehicleNumber || user.vehicleNumber;
+      if (req.body.availabilityStatus) {
+        user.availabilityStatus = req.body.availabilityStatus;
+      }
+    }
+
     // Profile Image Upload
     if (req.file) {
       user.profileImage =
@@ -159,9 +167,48 @@ const deleteUserAccount = async (
 };
 
 
+// ==========================================
+// CHANGE PASSWORD
+// ==========================================
+const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const user = req.user;
+
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ success: false, message: "Please provide both current and new password" });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: "New password must be at least 6 characters" });
+    }
+
+    const bcrypt = require("bcryptjs");
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ success: false, message: "Incorrect current password" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+
+    res.status(200).json({ success: true, message: "Password updated successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   getUserPickupHistory,
   deleteUserAccount,
+  changePassword,
 };

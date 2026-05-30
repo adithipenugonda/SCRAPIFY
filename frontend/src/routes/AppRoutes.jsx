@@ -22,18 +22,22 @@ import SchedulePickup from "../pages/user/SchedulePickup";
 import TrackPickup from "../pages/user/TrackPickup";
 import PickupHistoryPage from "../pages/user/PickupHistoryPage";
 import GreenPoints from "../pages/user/GreenPoints";
+import Payments from "../pages/user/Payments";
 import LiveRates from "../pages/user/LiveRates";
 import PaymentHistory from "../pages/user/PaymentHistory";
+import UserProfile from "../pages/user/UserProfile";
 
 import CollectorDashboard from "../pages/collector/CollectorDashboard";
 import AvailableJobs from "../pages/collector/AvailableJobs";
 import Earnings from "../pages/collector/Earnings";
+import CollectorProfile from "../pages/collector/CollectorProfile";
 
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageCollectors from "../pages/Admin/ManageCollectors";
 import ManagePrices from "../pages/Admin/ManagePrices";
 import ManagePickups from "../pages/Admin/ManagePickups";
+import AdminProfile from "../pages/Admin/AdminProfile";
 
 
 // ==========================================
@@ -177,6 +181,15 @@ const AppRoutes = () => {
       />
 
       <Route
+        path="/user/profile"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
         path="/schedule-pickup"
         element={
           <ProtectedRoute allowedRoles={["user"]}>
@@ -222,6 +235,15 @@ const AppRoutes = () => {
       />
 
       <Route
+        path="/user/payments"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <Payments />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
   path="/live-rates"
   element={<LiveRates />}
 />
@@ -236,6 +258,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["collector"]}>
             <CollectorDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/collector/profile"
+        element={
+          <ProtectedRoute allowedRoles={["collector"]}>
+            <CollectorProfile />
           </ProtectedRoute>
         }
       />
@@ -268,6 +299,15 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute allowedRoles={["admin"]}>
             <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/admin/profile"
+        element={
+          <ProtectedRoute allowedRoles={["admin"]}>
+            <AdminProfile />
           </ProtectedRoute>
         }
       />
