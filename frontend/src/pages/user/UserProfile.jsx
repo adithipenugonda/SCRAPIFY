@@ -113,7 +113,7 @@ const UserProfile = () => {
           <div className="profile-card">
             <div className="profile-avatar-large">
               {user?.profileImage ? (
-                <img src={user.profileImage} alt="Profile" />
+                <img src={user.profileImage.startsWith('http') ? user.profileImage : `http://localhost:5000${user.profileImage}`} alt="Profile" />
               ) : (
                 <span>{user?.name?.charAt(0)?.toUpperCase() || "U"}</span>
               )}

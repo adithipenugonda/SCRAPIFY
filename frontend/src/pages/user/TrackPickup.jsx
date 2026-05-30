@@ -64,10 +64,9 @@ const TrackPickup = () => {
   }, []);
 
   // Format ID for UI
-  const displayId = activePickup ? `SCR-${activePickup._id.slice(-4).toUpperCase()}` : "SCR-8821";
+  const displayId = activePickup ? `SCR-${activePickup._id.slice(-4).toUpperCase()}` : "";
   
-  // Dummy ETA
-  const etaMinutes = activePickup?.tracking?.estimatedTimeMinutes || 4;
+  const etaMinutes = activePickup?.tracking?.estimatedTimeMinutes || "--";
 
   const currentStatus = activePickup?.status || "Pending";
   
@@ -93,7 +92,7 @@ const TrackPickup = () => {
   
   const totalAmount = activePickup?.totalAmount || 0;
   const totalWeight = activePickup?.totalWeight || 0;
-  const materialType = activePickup?.materials?.[0]?.materialType || "Mixed Items";
+  const materialType = activePickup?.materials?.map(m => m.materialType).join(", ") || "Items pending";
 
   return (
     <UserLayout>
@@ -101,7 +100,11 @@ const TrackPickup = () => {
         {/* HEADER */}
         <div className="track-header">
           <h1>Track pickup</h1>
-          <p>Pickup #{displayId} • ETA {etaMinutes} minutes</p>
+          {activePickup ? (
+            <p>Pickup #{displayId} • ETA {etaMinutes} {etaMinutes !== "--" ? "minutes" : ""}</p>
+          ) : (
+            <p>View the live status of your active pickups.</p>
+          )}
         </div>
 
         {activePickup ? (
@@ -134,11 +137,11 @@ const TrackPickup = () => {
                 <div className="collector-details-box">
                   <div className="collector-info-left">
                     <div className="collector-avatar">
-                      {activePickup?.collector?.name?.substring(0, 2).toUpperCase() || "RK"}
+                      {activePickup?.collector?.name?.substring(0, 2).toUpperCase() || "..."}
                     </div>
                     <div className="collector-text">
-                      <h4>{activePickup?.collector?.name || "Rajesh Kumar"}</h4>
-                      <p>Gold Partner • 4.9 ★ • Vehicle KA01-AB-1234</p>
+                      <h4>{activePickup?.collector?.name || "Assigning Collector..."}</h4>
+                      <p>{activePickup?.collector ? "Verified Partner" : "Waiting for a collector to accept"}</p>
                     </div>
                   </div>
                   <div className="collector-actions">
@@ -173,9 +176,9 @@ const TrackPickup = () => {
               {/* PAYOUT CARD */}
               <div className="payout-card">
                 <span className="payout-label">ESTIMATED PAYOUT</span>
-                <div className="payout-amount">₹{totalAmount > 0 ? totalAmount : 420}</div>
+                <div className="payout-amount">₹{totalAmount > 0 ? totalAmount : "---"}</div>
                 <div className="payout-details">
-                  {totalWeight > 0 ? totalWeight : 12.5} kg • {materialType === "Mixed Items" ? "Paper + Cardboard" : materialType}
+                  {totalWeight > 0 ? `${totalWeight} kg` : "Weight pending"} • {materialType}
                 </div>
                 <button className="cancel-pickup-btn" onClick={handleCancelPickup}>CANCEL PICKUP</button>
               </div>

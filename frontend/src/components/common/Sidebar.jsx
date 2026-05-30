@@ -104,41 +104,25 @@ const Sidebar = () => {
     },
   ];
 
-  // =====================================
-  // ROLE LINKS
-  // =====================================
   let links = userLinks;
-
-  if (user?.role === "collector") {
-    links = collectorLinks;
-  }
-
-  if (user?.role === "admin") {
-    links = adminLinks;
-  }
+  if (user?.role === "collector") links = collectorLinks;
+  if (user?.role === "admin") links = adminLinks;
 
   return (
     <aside className="sidebar">
-      {/* ================================= */}
-      {/* TOP */}
-      {/* ================================= */}
+      {/* TOP SECTION */}
       <div>
-        {/* BRAND */}
         <div className="sidebar-top">
-          <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div className="brand-circle">
-              ♻️
-            </div>
-            <div>
+          <Link to="/" className="sidebar-brand">
+            <div className="brand-logo-s">S</div>
+            <div className="brand-text-container">
               <h2>SCRAPIFY</h2>
               <p>{user?.role || "USER"} CONSOLE</p>
             </div>
           </Link>
         </div>
 
-        {/* ================================= */}
         {/* NAVIGATION */}
-        {/* ================================= */}
         <div className="sidebar-links">
           {links.map((link) => (
             <Link
@@ -150,37 +134,30 @@ const Sidebar = () => {
                   : "sidebar-link"
               }
             >
-              <span className="sidebar-icon">
-                {link.icon}
-              </span>
-              <span className="sidebar-text">
-                {link.name}
-              </span>
+              <span className="sidebar-icon">{link.icon}</span>
+              <span className="sidebar-text">{link.name}</span>
             </Link>
           ))}
         </div>
       </div>
 
-      {/* ================================= */}
-      {/* FOOTER */}
-      {/* ================================= */}
+      {/* FOOTER SECTION */}
       <div className="sidebar-footer">
-        <div className="sidebar-profile" style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'flex-start' }}>
-          <Link to={`/${user?.role || "user"}/profile`} style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div className="profile-avatar">
-              {user?.name?.charAt(0)?.toUpperCase() || "U"}
-            </div>
-            <div className="profile-info">
-              <h4>{user?.name || "User Profile"}</h4>
-              <span style={{ fontSize: '12px', color: '#88929b' }}>View Profile</span>
-            </div>
-          </Link>
-          <div className="profile-info" style={{ marginTop: '4px' }}>
-            <button onClick={logout} className="exit-console-btn">
-              <FaArrowRightFromBracket className="logout-icon" /> Exit console
+        <Link to={`/${user?.role || "user"}/profile`} className="sidebar-profile-link">
+          <div className="profile-avatar-small">
+            {user?.profileImage ? (
+              <img src={user.profileImage.startsWith('http') ? user.profileImage : `http://localhost:5000${user.profileImage}`} alt="User" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
+            ) : (
+              user?.name?.charAt(0)?.toUpperCase() || "U"
+            )}
+          </div>
+          <div className="profile-info-compact">
+            <h4>{user?.name || "User"}</h4>
+            <button onClick={(e) => { e.preventDefault(); logout(); }} className="exit-console-text">
+              <FaArrowRightFromBracket /> Exit console
             </button>
           </div>
-        </div>
+        </Link>
       </div>
     </aside>
   );

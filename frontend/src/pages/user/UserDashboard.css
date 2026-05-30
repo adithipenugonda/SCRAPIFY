@@ -6,158 +6,276 @@
 }
 
 /* =========================================
-   HEADER
+   HEADER SECTION
 ========================================= */
-.dashboard-header {
-  margin-bottom: 36px;
-}
-
-.dashboard-header h1 {
-  font-size: 32px;
-  font-weight: var(--weight-bold);
-  color: var(--secondary-color);
-  letter-spacing: -0.8px;
-  margin-bottom: 8px;
-}
-
-.dashboard-header p {
-  color: var(--text-light);
-  font-size: 16px;
-}
-
-/* =========================================
-   STATS GRID
-========================================= */
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 24px;
-  margin-bottom: 36px;
-}
-
-/* =========================================
-   DASHBOARD SECTIONS
-========================================= */
-.dashboard-section {
-  margin-bottom: 32px;
-}
-
-.dashboard-section h2 {
-  font-size: 20px;
-  font-weight: var(--weight-bold);
-  color: var(--secondary-color);
-  margin-bottom: 24px;
-  letter-spacing: -0.3px;
-}
-
-/* =========================================
-   ACTIVITY LIST
-========================================= */
-.activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  margin-top: 20px;
-}
-
-.activity-item {
+.dash-header-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
-  border-radius: var(--radius-md);
-  background: var(--bg-color, rgba(128, 128, 128, 0.05));
-  border: 1px solid var(--border-color);
-  transition: var(--transition);
+  margin-bottom: 40px;
 }
 
-[data-theme="dark"] .activity-item {
-  background: rgba(255, 255, 255, 0.03);
+.dash-date {
+  font-size: 10px;
+  font-weight: 800;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  display: block;
 }
 
-.activity-item:hover {
-  transform: scale(1.005);
-  box-shadow: var(--shadow-sm);
-  border-color: rgba(0, 200, 83, 0.3);
-  background: var(--bg-color, rgba(128, 128, 128, 0.08));
-}
-
-[data-theme="dark"] .activity-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.activity-item h4 {
-  font-size: 16px;
-  font-weight: var(--weight-semibold);
+.dash-header-content h1 {
+  font-size: 36px;
+  font-weight: 900;
   color: var(--text-color);
+  letter-spacing: -1px;
+  margin-bottom: 6px;
+}
+
+.dash-header-content p {
+  color: var(--text-light);
+  font-size: 15px;
+}
+
+.new-pickup-btn {
+  background: black;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.new-pickup-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+[data-theme="dark"] .new-pickup-btn {
+  background: white;
+  color: black;
+}
+
+/* =========================================
+   STATS ROW
+========================================= */
+.dash-stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.stat-card {
+  border-radius: 24px;
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.green-points-card {
+  background: #0ea262; /* Solid primary green */
+  color: white;
+}
+
+.white-card {
+  background: white;
+  border: 1px solid rgba(0,0,0,0.04);
+}
+
+[data-theme="dark"] .white-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.stat-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 16px;
+}
+
+.stat-label-dark {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+}
+
+.stat-value-group {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.stat-value-group h2 {
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -1.5px;
+  color: white;
+}
+
+.stat-value-group h2.dark-val {
+  color: var(--text-color);
+}
+
+.growth-pill {
+  background: rgba(255,255,255,0.2);
+  padding: 4px 8px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 700;
+  color: white;
   margin-bottom: 4px;
 }
 
-.activity-item p {
+.growth-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0ea262;
+  margin-bottom: 4px;
+}
+
+.stat-card p {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+}
+
+.stat-card p.dark-sub {
   color: var(--text-light);
-  font-size: 13px;
 }
 
 /* =========================================
-   REWARDS CARD REDESIGN
+   BOTTOM GRID (Active Pickup + Rates)
 ========================================= */
-.rewards-card {
-  text-align: center;
-  background: #050807 !important;
-  color: white !important;
-  border: 1px solid rgba(255, 255, 255, 0.08) !important;
-  border-radius: var(--radius-lg) !important;
-  padding: 36px 24px !important;
-  box-shadow: var(--shadow-md) !important;
+.dash-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
 }
 
-.rewards-card h2 {
-  font-size: 24px;
-  font-weight: var(--weight-bold);
-  color: var(--primary-color) !important;
-  margin-bottom: 12px;
-  letter-spacing: -0.5px;
+@media (max-width: 992px) {
+  .dash-stats-row {
+    grid-template-columns: 1fr;
+  }
+  .dash-bottom-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.rewards-card p {
+.dash-active-pickup,
+.dash-top-rates {
+  background: white;
+  border-radius: 24px;
+  padding: 32px;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+}
+
+[data-theme="dark"] .dash-active-pickup,
+[data-theme="dark"] .dash-top-rates {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.section-label {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
   margin-bottom: 24px;
-  color: #cbd5e1 !important;
-  font-size: 15px;
-  line-height: 1.6;
-  max-width: 480px;
-  margin-left: auto;
-  margin-right: auto;
+  display: block;
 }
 
-.rewards-card strong {
-  color: white !important;
-  font-weight: var(--weight-bold);
+/* ACTIVE PICKUP MAP */
+.active-pickup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
-.rewards-card .primary-btn {
-  background: var(--primary-color) !important;
-  color: #000000 !important;
-  border-radius: var(--radius-md) !important;
-  font-weight: var(--weight-bold) !important;
-  box-shadow: var(--shadow-glow) !important;
+.active-pickup-header .section-label {
+  margin-bottom: 0;
 }
 
-.rewards-card .primary-btn:hover {
-  background-color: var(--primary-dark) !important;
+.eta-badge {
+  background: #dcfce7;
+  color: #0ea262;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
 }
 
-/* =========================================
-   RESPONSIVE DESIGN
-========================================= */
-@media (max-width: 768px) {
-  .dashboard-header h1 {
-    font-size: 28px;
-  }
+.active-pickup-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 24px;
+}
 
-  .activity-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    padding: 16px;
-  }
+.dash-map-container {
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f0f7f3;
+}
+
+.dash-map {
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.empty-active-pickup {
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 14px;
+}
+
+/* TODAY'S TOP RATES */
+.rates-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.rate-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rate-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.rate-icon {
+  font-size: 18px;
+}
+
+.rate-price {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--text-color);
 }

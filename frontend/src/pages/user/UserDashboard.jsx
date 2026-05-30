@@ -1,27 +1,46 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import UserLayout from "../../layouts/UserLayout";
-import Card from "../../components/common/Card";
-import { FaTruck, FaGift, FaIndianRupeeSign, FaLeaf } from "react-icons/fa6";
 import API from "../../services/api";
+import useAuth from "../../hooks/useAuth";
+import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import "./UserDashboard.css";
 
+const ChangeMapView = ({ center }) => {
+  const map = useMap();
+  useEffect(() => {
+    if (center && center[0] && center[1]) {
+      map.setView(center, map.getZoom());
+    }
+  }, [center, map]);
+  return null;
+};
+
 const UserDashboard = () => {
+  const { user } = useAuth();
   const [completedPickups, setCompletedPickups] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [activePickup, setActivePickup] = useState(null);
+  const [scrapRates, setScrapRates] = useState([]);
 
   const fetchDashboardData = async () => {
     try {
-      const response = await API.get("/pickups/my-pickups");
-      if (response.data && response.data.pickups) {
-        const completed = response.data.pickups.filter(
-          (pickup) => pickup.status === "Completed"
-        );
+      const [pickupsRes, ratesRes] = await Promise.all([
+        API.get("/pickups/my-pickups").catch(() => ({ data: { pickups: [] } })),
+        API.get("/scrap-prices").catch(() => ({ data: { data: [] } }))
+      ]);
+      
+      if (pickupsRes.data?.pickups) {
+        const completed = pickupsRes.data.pickups.filter(p => p.status === "Completed");
+        const active = pickupsRes.data.pickups.find(p => p.status !== "Completed" && p.status !== "Cancelled");
         setCompletedPickups(completed);
+        setActivePickup(active);
+      }
+
+      if (ratesRes.data?.data) {
+        setScrapRates(ratesRes.data.data.slice(0, 5));
       }
     } catch (error) {
-      console.error("Error fetching completed pickups:", error);
-    } finally {
-      setLoading(false);
+      console.error("Error fetching dashboard data:", error);
     }
   };
 
@@ -29,116 +48,138 @@ const UserDashboard = () => {
     fetchDashboardData();
   }, []);
 
-  // Calculate dynamic stats
-  const totalPickups = completedPickups.length;
-  const totalEarnings = completedPickups.reduce((acc, curr) => acc + (curr.totalAmount || 0), 0);
-  const greenPoints = completedPickups.reduce((acc, curr) => acc + (curr.greenPointsEarned || 0), 0);
-  const totalWeight = completedPickups.reduce((acc, curr) => acc + (curr.totalWeight || 0), 0);
-  const co2Saved = Math.round(totalWeight * 1.2);
+  // Date formatting
+  const today = new Date();
+  const dateOptions = { weekday: 'long', day: 'numeric', month: 'long' };
+  const formattedDate = today.toLocaleDateString('en-US', dateOptions).toUpperCase();
 
-  const stats = [
-    {
-      title: "Total Pickups",
-      value: totalPickups.toString(),
-      icon: <FaTruck />,
-    },
-    {
-      title: "Green Points",
-      value: greenPoints.toLocaleString(),
-      icon: <FaGift />,
-    },
-    {
-      title: "Total Earnings",
-      value: `₹${totalEarnings.toLocaleString()}`,
-      icon: <FaIndianRupeeSign />,
-    },
-    {
-      title: "CO₂ Saved",
-      value: `${co2Saved.toLocaleString()}kg`,
-      icon: <FaLeaf />,
-    },
-  ];
+  // Dynamic Stats calculation
+  const totalEarnings = user?.totalEarnings || completedPickups.reduce((acc, curr) => acc + (curr.totalAmount || 0), 0);
+  const greenPoints = user?.greenPoints || 0;
+  const totalWeight = user?.totalRecycledWeight || completedPickups.reduce((acc, curr) => acc + (curr.totalWeight || 0), 0);
+  const co2Saved = (totalWeight * 1.2).toFixed(1);
+  const treesSaved = (totalWeight * 1.2 / 21).toFixed(1);
+
+  // Current month stats
+  const currentMonth = today.getMonth();
+  const currentYear = today.getFullYear();
+  const currentMonthPickups = completedPickups.filter(p => {
+    const d = new Date(p.pickupDate || p.createdAt);
+    return d.getMonth() === currentMonth && d.getFullYear() === currentYear;
+  });
+  
+  const currentMonthEarnings = currentMonthPickups.reduce((acc, curr) => acc + (curr.totalAmount || 0), 0);
+  const currentMonthCO2 = (currentMonthPickups.reduce((acc, curr) => acc + (curr.totalWeight || 0), 0) * 1.2).toFixed(1);
+  const currentMonthPoints = currentMonthPickups.reduce((acc, curr) => acc + (curr.greenPointsEarned || 0), 0);
+  const userLevel = Math.floor(greenPoints / 100) + 1;
+
+  const collectorPosition = activePickup ? [
+    activePickup.tracking?.currentLatitude || 17.4474,
+    activePickup.tracking?.currentLongitude || 78.3762,
+  ] : null;
 
   return (
     <UserLayout>
       <div className="user-dashboard">
-        {/* ================================= */}
         {/* HEADER */}
-        {/* ================================= */}
-        <div className="dashboard-header">
-          <div>
-            <h1>User Dashboard</h1>
-            <p>Track your recycling activity and rewards.</p>
+        <div className="dash-header-section">
+          <div className="dash-header-content">
+            <span className="dash-date">{formattedDate}</span>
+            <h1>Welcome back, {user?.name?.split(' ')[0] || "User"}</h1>
+            <p>Here's what's happening with your recycling today.</p>
+          </div>
+          <Link to="/schedule-pickup" className="new-pickup-btn">
+            + New Pickup
+          </Link>
+        </div>
+
+        {/* STATS ROW */}
+        <div className="dash-stats-row">
+          <div className="stat-card green-points-card" style={{ background: '#0ea262', color: 'white' }}>
+            <span className="stat-label" style={{ color: 'rgba(255,255,255,0.8)' }}>GREEN POINTS</span>
+            <div className="stat-value-group">
+              <h2 style={{ color: 'white' }}>{greenPoints.toLocaleString()}</h2>
+              {currentMonthPoints > 0 && <span className="growth-pill" style={{ background: 'rgba(255,255,255,0.2)', color: 'white' }}>+{currentMonthPoints} This Month</span>}
+            </div>
+            <p style={{ color: 'rgba(255,255,255,0.9)' }}>Level {userLevel} Recycler</p>
+          </div>
+
+          <div className="stat-card white-card">
+            <span className="stat-label-dark">CO₂ OFFSET</span>
+            <div className="stat-value-group">
+              <h2 className="dark-val">{co2Saved} kg</h2>
+              {currentMonthCO2 > 0 && <span className="growth-text">+{currentMonthCO2}kg This Month</span>}
+            </div>
+            <p className="dark-sub">≈ {treesSaved} trees saved</p>
+          </div>
+
+          <div className="stat-card white-card">
+            <span className="stat-label-dark">EARNINGS</span>
+            <div className="stat-value-group">
+              <h2 className="dark-val">₹{totalEarnings.toLocaleString()}</h2>
+              {currentMonthEarnings > 0 && <span className="growth-text">+₹{currentMonthEarnings} This Month</span>}
+            </div>
+            <p className="dark-sub">Lifetime Earnings</p>
           </div>
         </div>
 
-        {/* ================================= */}
-        {/* STATS GRID */}
-        {/* ================================= */}
-        <div className="dashboard-grid">
-          {stats.map((item, index) => (
-            <Card
-              key={index}
-              title={item.title}
-              value={item.value}
-              icon={item.icon}
-            />
-          ))}
-        </div>
-
-        {/* ================================= */}
-        {/* RECENT ACTIVITY */}
-        {/* ================================= */}
-        <div className="dashboard-section">
-          <div className="card">
-            <h2>Recent Completed Pickups</h2>
-
-            {loading ? (
-              <p style={{ color: "var(--text-light)", fontSize: "14px" }}>Loading data...</p>
-            ) : completedPickups.length > 0 ? (
-              <div className="activity-list">
-                {completedPickups.slice(0, 5).map((pickup) => (
-                  <div key={pickup._id} className="activity-item">
-                    <div>
-                      <h4>
-                        {pickup.materials?.[0]?.materialType || "General Scrap"}
-                        {pickup.materials?.length > 1 && ` + ${pickup.materials.length - 1} more`}
-                      </h4>
-                      <p style={{ display: "flex", flexWrap: "wrap", gap: "16px", marginTop: "4px" }}>
-                        <span>📅 {new Date(pickup.pickupDate).toLocaleDateString()}</span>
-                        <span>⚖️ {pickup.totalWeight} kg</span>
-                        <span>💰 ₹{pickup.totalAmount}</span>
-                        <span>💳 {pickup.paymentMethod || "UPI"} • <strong style={{ color: pickup.paymentStatus === "Paid" ? "#00c853" : "#eab308" }}>{pickup.paymentStatus || "Pending"}</strong></span>
-                        {pickup.collector && <span>🚚 {pickup.collector.name}</span>}
-                      </p>
-                    </div>
-
-                    <span className="status completed">
-                      {pickup.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
+        {/* BOTTOM GRID */}
+        <div className="dash-bottom-grid">
+          {/* ACTIVE PICKUP CARD */}
+          <div className="dash-active-pickup">
+            <div className="active-pickup-header">
+              <span className="section-label">ACTIVE PICKUP</span>
+              {activePickup ? (
+                <span className="eta-badge">ETA 4 MIN</span>
+              ) : null}
+            </div>
+            
+            {activePickup ? (
+              <>
+                <h3 className="active-pickup-title">{activePickup.collector?.name || "Collector"} is on the way</h3>
+                <div className="dash-map-container">
+                  <MapContainer
+                    center={collectorPosition}
+                    zoom={13}
+                    scrollWheelZoom={false}
+                    zoomControl={false}
+                    className="dash-map"
+                  >
+                    <ChangeMapView center={collectorPosition} />
+                    <TileLayer
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <Marker position={collectorPosition} />
+                  </MapContainer>
+                </div>
+              </>
             ) : (
-              <div style={{ textAlign: "center", padding: "20px 0", color: "var(--text-light)" }}>
-                <p>No completed pickups yet. Schedule a pickup to get started!</p>
+              <div className="empty-active-pickup">
+                <p>No active pickups right now.<br/>Schedule one to start earning!</p>
               </div>
             )}
           </div>
-        </div>
 
-        {/* ================================= */}
-        {/* REWARDS SECTION */}
-        {/* ================================= */}
-        <div className="dashboard-section">
-          <div className="card rewards-card">
-            <h2>Green Rewards 🌱</h2>
-            <p>
-              You have accumulated <strong>{greenPoints} Green Points</strong>. Keep recycling to earn more rewards and badges!
-            </p>
-            <button className="primary-btn">
-              Redeem Rewards
-            </button>
+          {/* TOP RATES CARD */}
+          <div className="dash-top-rates">
+            <span className="section-label">TODAY'S TOP RATES</span>
+            <div className="rates-list">
+              {scrapRates.length > 0 ? (
+                scrapRates.map((rate, index) => (
+                  <div key={index} className="rate-item">
+                    <div className="rate-name">
+                      <span className="rate-icon">🏷️</span>
+                      {rate.item}
+                    </div>
+                    <div className="rate-price">₹{(rate.price).toFixed(2)}</div>
+                  </div>
+                ))
+              ) : (
+                <div className="empty-active-pickup">
+                  <p>No live rates available today.</p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
