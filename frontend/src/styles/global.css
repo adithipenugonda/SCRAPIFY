@@ -473,3 +473,57 @@ html {
   background: rgba(255, 255, 255, 0.9);
   border-color: rgba(0, 200, 83, 0.1);
 }
+
+/* =========================================
+   GLOBAL DARK MODE OVERRIDES (FIXES HARDCODED WHITE BACKGROUNDS)
+========================================= */
+[data-theme="dark"] .activity-item,
+[data-theme="dark"] .stat-box,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .pickup-card,
+[data-theme="dark"] .reward-card,
+[data-theme="dark"] .scrap-card,
+[data-theme="dark"] .prices-card,
+[data-theme="dark"] .dashboard-card,
+[data-theme="dark"] .analytics-card,
+[data-theme="dark"] .prices-manager,
+[data-theme="dark"] .collector-table,
+[data-theme="dark"] .user-table,
+[data-theme="dark"] .collector-stats,
+[data-theme="dark"] .tracking-map,
+[data-theme="dark"] table,
+[data-theme="dark"] th,
+[data-theme="dark"] td {
+  background-color: var(--card-background) !important;
+  background: var(--glass-bg) !important;
+  color: var(--text-color) !important;
+  border-color: var(--border-color) !important;
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] strong {
+  color: var(--text-color) !important;
+}
+
+[data-theme="dark"] .secondary-btn {
+  background: transparent !important;
+  color: var(--text-color) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+[data-theme="dark"] .secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--primary-color) !important;
+  color: var(--primary-color) !important;
+}
+
+[data-theme="dark"] .activity-item:hover,
+[data-theme="dark"] .stat-box:hover,
+[data-theme="dark"] .pickup-card:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}

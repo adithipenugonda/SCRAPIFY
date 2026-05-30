@@ -14,6 +14,14 @@
   transition: var(--transition);
 }
 
+[data-theme="dark"] .navbar {
+  background-color: rgba(2, 3, 8, 0.6); /* Deep sleek cyberpunk dark */
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+}
+
 /* =========================================
    NAVBAR CONTAINER
 ========================================= */
