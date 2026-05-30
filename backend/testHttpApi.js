@@ -22,9 +22,9 @@ const runTest = async () => {
     console.log("Admin token generated:", token.substring(0, 20) + "...");
     
     const API = axios.create({
-      baseURL: "http://localhost:5000/api",
-      headers: { Authorization: `Bearer ${token}` }
-    });
+  baseURL: import.meta.env.VITE_API_URL,
+  headers: { Authorization: `Bearer ${token}` }
+});
     
     try {
       console.log("Calling /admin/collectors...");

@@ -146,7 +146,7 @@ const Sidebar = () => {
         <Link to={`/${user?.role || "user"}/profile`} className="sidebar-profile-link">
           <div className="profile-avatar-small">
             {user?.profileImage ? (
-              <img src={user.profileImage.startsWith('http') ? user.profileImage : `http://localhost:5000${user.profileImage}`} alt="User" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
+              <img src={user.profileImage.startsWith('http') ? user.profileImage : `${import.meta.env.VITE_API_URL.replace('/api', '')}${user.profileImage}`} alt="User" style={{width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover'}} />
             ) : (
               user?.name?.charAt(0)?.toUpperCase() || "U"
             )}
