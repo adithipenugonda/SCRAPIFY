@@ -16,7 +16,7 @@
    ========================================= */
 .auth-container {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1000px;
   background: var(--card-background);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-xl);
@@ -132,7 +132,7 @@
 /* Fix cutting-off by using margin: auto 0 */
 .auth-card {
   width: 100%;
-  max-width: 440px;
+  max-width: 380px;
   margin: auto 0;
 }
 
@@ -147,11 +147,11 @@
 }
 
 .auth-card h2 {
-  font-size: 36px;
+  font-size: 28px;
   font-weight: var(--weight-bold);
   color: var(--text-color);
   margin-bottom: 8px;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 
 .auth-card p.auth-subtitle {
@@ -191,10 +191,10 @@
 .auth-input-group textarea,
 .auth-input-group select {
   width: 100%;
-  padding: 14px 20px;
+  padding: 12px 16px;
   border-radius: 99px;
   border: 1px solid var(--border-color);
-  font-size: 15px;
+  font-size: 14px;
   background-color: var(--card-background);
   color: var(--text-color);
   transition: var(--transition);
@@ -252,9 +252,9 @@
 /* Submit button */
 .auth-submit-btn {
   width: 100%;
-  padding: 16px !important;
+  padding: 14px !important;
   border-radius: 99px !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   font-weight: var(--weight-bold) !important;
   background-color: var(--secondary-color) !important;
   color: white !important;
@@ -391,6 +391,6 @@
     padding: 40px 24px;
   }
   .auth-card h2 {
-    font-size: 28px;
+    font-size: 24px;
   }
 }

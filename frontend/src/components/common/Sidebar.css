@@ -2,7 +2,7 @@
    PREMIUM SIDEBAR (Console layout)
 ========================================= */
 .sidebar {
-  width: 260px;
+  width: var(--sidebar-width);
   min-height: 100vh;
   background: var(--sidebar-bg);
   color: white;
@@ -12,7 +12,7 @@
   border-right: 1px solid rgba(255, 255, 255, 0.05);
   position: sticky;
   top: 0;
-  padding: 28px 0;
+  padding: 20px 0;
   overflow: hidden;
   box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
   transition: var(--transition);
@@ -29,8 +29,8 @@
 .sidebar-brand {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding-bottom: 28px;
+  gap: 12px;
+  padding-bottom: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 
@@ -78,21 +78,21 @@
 .sidebar-links {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 32px;
-  padding: 0 16px;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 0 12px;
 }
 
 /* LINK ELEMENT */
 .sidebar-link {
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 12px 20px;
+  gap: 12px;
+  padding: 10px 16px;
   border-radius: var(--radius-md);
   color: var(--text-muted);
   font-weight: var(--weight-medium);
-  font-size: 14px;
+  font-size: var(--font-sm);
   transition: var(--transition);
   position: relative;
 }
@@ -137,7 +137,7 @@
    FOOTER PROFILE SECTION
 ========================================= */
 .sidebar-footer {
-  padding: 24px 20px 0;
+  padding: 20px 16px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 

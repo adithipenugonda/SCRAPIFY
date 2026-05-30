@@ -1,122 +1,355 @@
+/* =========================================
+   PAGE & HEADER
+========================================= */
 .track-page {
-
   width: 100%;
-
 }
 
 .track-header {
-
   margin-bottom: 30px;
-
 }
 
 .track-header h1 {
-
-  font-size: 42px;
-
-  margin-bottom: 12px;
-
-  color: #0f172a;
-
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--text-color);
+  margin-bottom: 6px;
+  letter-spacing: -1px;
 }
 
 .track-header p {
-
-  color: #64748b;
-
-  font-size: 17px;
-
+  color: var(--text-light);
+  font-size: 15px;
 }
 
+/* =========================================
+   GRID LAYOUT
+========================================= */
+.track-grid {
+  display: grid;
+  grid-template-columns: 1.8fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .track-grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* =========================================
-   MAP CARD
+   LEFT AREA (MAP & COLLECTOR)
 ========================================= */
-
-.track-map-card {
-
+.track-map-wrapper {
   background: white;
-
-  border-radius: 28px;
-
-  padding: 20px;
-
-  overflow: hidden;
-
-  box-shadow:
-    0 8px 24px rgba(0,0,0,0.05);
-
-  margin-bottom: 30px;
-
+  border-radius: 20px;
+  padding: 16px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.02);
 }
 
+[data-theme="dark"] .track-map-wrapper {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
 
-/* =========================================
-   LIVE MAP
-========================================= */
+.map-container-box {
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  background: #f0f7f3; /* Matching the grid bg from screenshot if map doesn't load */
+}
 
 .live-map {
-
   width: 100%;
-
-  height: 550px;
-
-  border-radius: 22px;
-
+  height: 400px;
+  border-radius: 16px;
+  z-index: 1; /* Fix for leaflet overlapping */
 }
 
-
-/* =========================================
-   TRACKING INFO GRID
-========================================= */
-
-.tracking-info-grid {
-
-  display: grid;
-
-  grid-template-columns:
-    repeat(auto-fit, minmax(220px, 1fr));
-
-  gap: 24px;
-
+/* COLLECTOR DETAILS BOX */
+.collector-details-box {
+  background: #eef5f0;
+  border-radius: 16px;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
+[data-theme="dark"] .collector-details-box {
+  background: rgba(0, 200, 83, 0.1);
+}
 
-/* =========================================
-   INFO CARD
-========================================= */
+.collector-info-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
-.tracking-info-card {
+.collector-avatar {
+  width: 48px;
+  height: 48px;
+  background: #0ea262;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 800;
+  font-size: 18px;
+}
 
+.collector-text h4 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.collector-text p {
+  font-size: 12px;
+  color: var(--text-light);
+}
+
+.collector-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.call-btn {
+  background: black;
+  color: white;
+}
+
+.call-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.chat-btn {
   background: white;
-
-  border-radius: 24px;
-
-  padding: 28px;
-
-  box-shadow:
-    0 6px 18px rgba(0,0,0,0.04);
-
+  color: var(--text-light);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-.tracking-info-card span {
+.chat-btn:hover {
+  transform: scale(1.05);
+  color: black;
+}
 
-  display: block;
+[data-theme="dark"] .chat-btn {
+  background: var(--card-background);
+}
 
-  color: #64748b;
+/* =========================================
+   RIGHT AREA (TIMELINE & PAYOUT)
+========================================= */
+.timeline-card {
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid rgba(0,0,0,0.06);
+  margin-bottom: 24px;
+}
 
+[data-theme="dark"] .timeline-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.timeline-card h3 {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+.timeline-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 16px;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  margin-top: 4px;
+  z-index: 2;
+}
+
+.step-line {
+  width: 2px;
+  background: #e2e8f0;
+  flex: 1;
+  min-height: 40px;
+}
+
+[data-theme="dark"] .step-dot,
+[data-theme="dark"] .step-line {
+  background: var(--border-color);
+}
+
+.step-content {
+  padding-bottom: 24px;
+}
+
+.timeline-step:last-child .step-content {
+  padding-bottom: 0;
+}
+
+.step-content h4 {
   font-size: 14px;
-
-  margin-bottom: 12px;
-
+  font-weight: 700;
+  color: var(--text-light);
+  margin-bottom: 2px;
 }
 
-.tracking-info-card h3 {
+.step-content p {
+  font-size: 11px;
+  color: var(--text-light);
+  opacity: 0.8;
+}
 
-  font-size: 26px;
+/* Active and Current Step Styling */
+.timeline-step.active .step-dot {
+  background: #0ea262;
+}
+.timeline-step.active .step-line {
+  background: #0ea262;
+}
+.timeline-step.active .step-content h4 {
+  color: var(--text-color);
+}
+.timeline-step.active .step-content p {
+  color: #0ea262;
+}
 
-  color: #00c853;
+.timeline-step.current .step-dot {
+  background: #dcfce7;
+  border: 3px solid #0ea262;
+  width: 16px;
+  height: 16px;
+  margin-left: -2px; /* Center with line */
+  margin-top: 2px;
+}
+.timeline-step.current .step-line {
+  background: #e2e8f0;
+}
+[data-theme="dark"] .timeline-step.current .step-line {
+  background: var(--border-color);
+}
 
-  font-weight: 700;
+/* =========================================
+   PAYOUT CARD
+========================================= */
+.payout-card {
+  background: #0a0e17; /* Very dark blue/black */
+  border-radius: 20px;
+  padding: 24px;
+  color: white;
+}
 
+.payout-label {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: rgba(255,255,255,0.4);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.payout-amount {
+  font-size: 48px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+  letter-spacing: -2px;
+}
+
+.payout-details {
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 24px;
+}
+
+.cancel-pickup-btn {
+  width: 100%;
+  background: #1e293b;
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.cancel-pickup-btn:hover {
+  background: #334155;
+}
+
+/* =========================================
+   EMPTY STATE
+========================================= */
+.no-pickup-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+  background: white;
+  border-radius: 20px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+[data-theme="dark"] .no-pickup-state {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+
+.empty-box {
+  text-align: center;
+}
+
+.empty-box h3 {
+  font-size: 20px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.empty-box p {
+  color: var(--text-light);
 }

@@ -26,7 +26,7 @@ const Sidebar = () => {
   // =====================================
   const userLinks = [
     {
-      name: "Dashboard",
+      name: "Overview",
       path: "/user/dashboard",
       icon: <FaHouse />,
     },
@@ -46,12 +46,7 @@ const Sidebar = () => {
       icon: <FaClockRotateLeft />,
     },
     {
-      name: "Payments",
-      path: "/user/payments",
-      icon: <FaIndianRupeeSign />,
-    },
-    {
-      name: "Rewards",
+      name: "Green Points",
       path: "/green-points",
       icon: <FaGift />,
     },

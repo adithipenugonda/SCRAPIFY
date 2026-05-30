@@ -51,6 +51,16 @@ useEffect(() => {
 
 }, []);
 
+  const totalPickups = pickupHistory.length;
+  const totalEarnings = pickupHistory.reduce((acc, curr) => acc + curr.totalAmount, 0);
+  const totalKg = pickupHistory.reduce((acc, curr) => acc + curr.totalWeight, 0);
+  const avgPayout = totalKg > 0 ? (totalEarnings / totalKg).toFixed(0) : 0;
+
+  const getFormattedDate = () => {
+    const options = { weekday: 'long', day: 'numeric', month: 'long' };
+    return new Date().toLocaleDateString('en-US', options).toUpperCase();
+  };
+
   return (
     <UserLayout>
 
@@ -61,17 +71,9 @@ useEffect(() => {
         {/* ================================= */}
 
         <div className="history-header">
-
-          <h1>
-            Pickup History 🧾
-          </h1>
-
-          <p>
-            View all your completed
-            scrap pickup records and
-            earnings history.
-          </p>
-
+          <span className="history-date">{getFormattedDate()}</span>
+          <h1>Pickup history</h1>
+          <p>Your full recycling ledger.</p>
         </div>
 
 
@@ -82,98 +84,63 @@ useEffect(() => {
         <div className="history-summary">
 
           <div className="summary-card">
-
-            <h3>
-              Total Pickups
-            </h3>
-
-            <h2>
-              {pickupHistory.length}
-            </h2>
-
+            <h3>TOTAL PICKUPS</h3>
+            <h2>{totalPickups}</h2>
           </div>
 
-
           <div className="summary-card">
-
-            <h3>
-              Total Earnings
-            </h3>
-
-            <h2>
-              ₹{
-  pickupHistory.reduce(
-    (acc, curr) =>
-      acc + curr.totalAmount,
-    0
-  )
-}
-            </h2>
-
+            <h3>TOTAL KG RECYCLED</h3>
+            <h2>{totalKg.toFixed(1)}</h2>
           </div>
 
+          <div className="summary-card">
+            <h3>LIFETIME EARNINGS</h3>
+            <h2>₹{totalEarnings.toLocaleString()}</h2>
+          </div>
 
           <div className="summary-card">
-
-            <h3>
-              Green Points
-            </h3>
-
-            <h2>
-              {
-  pickupHistory.reduce(
-    (acc, curr) =>
-      acc +
-      curr.greenPointsEarned,
-    0
-  )
-}
-            </h2>
-
+            <h3>AVG PAYOUT / KG</h3>
+            <h2>₹{avgPayout}</h2>
           </div>
 
         </div>
 
 
         {/* ================================= */}
-        {/* HISTORY LIST */}
+        {/* HISTORY LIST / TABLE */}
         {/* ================================= */}
 
-        <div className="history-list">
-
-          {pickupHistory.map((pickup) => (
-
-            <PickupCard
-              key={pickup._id}
-
-              materialType={
-                pickup.materials?.[0]
-  ?.materialType
-              }
-
-              weight={pickup.totalWeight}
-
-              amount={pickup.totalAmount}
-
-              status={pickup.status}
-
-              pickupDate={
-                new Date(
-  pickup.pickupDate
-).toLocaleDateString()
-              }
-
-              collector={
-                pickup.collector?.name
-              }
-
-              paymentMethod={pickup.paymentMethod}
-
-              paymentStatus={pickup.paymentStatus}
-            />
-
-          ))}
-
+        <div className="history-table-container">
+          <table className="history-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>DATE</th>
+                <th>ITEMS</th>
+                <th>WEIGHT</th>
+                <th>COLLECTOR</th>
+                <th>STATUS</th>
+                <th>PAYOUT</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pickupHistory.map((pickup) => (
+                <tr key={pickup._id}>
+                  <td className="id-col">SCR-{pickup._id.slice(-4).toUpperCase()}</td>
+                  <td>{new Date(pickup.pickupDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' })}</td>
+                  <td className="items-col">{pickup.materials?.[0]?.materialType || "Mixed Items"}</td>
+                  <td>{pickup.totalWeight} kg</td>
+                  <td>{pickup.collector?.name || "Unassigned"}</td>
+                  <td>
+                    <span className={`status-badge ${pickup.status.toLowerCase()}`}>
+                      {pickup.status.toUpperCase()}
+                    </span>
+                  </td>
+                  <td className="payout-col">+₹{pickup.totalAmount}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
       </div>

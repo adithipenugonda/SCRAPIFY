@@ -51,12 +51,12 @@
 }
 
 .hero-content h1 {
-  font-size: 56px;
+  font-size: 48px;
   font-weight: var(--weight-bold);
   line-height: 1.15;
   margin-bottom: 24px;
   color: var(--secondary-color);
-  letter-spacing: -1.5px;
+  letter-spacing: -1px;
 }
 
 .hero-content h1 span {
@@ -67,7 +67,7 @@
 }
 
 .hero-content p {
-  font-size: 18px;
+  font-size: 16px;
   color: var(--text-light);
   line-height: 1.7;
   margin-bottom: 40px;
@@ -162,11 +162,11 @@
 }
 
 .section-header h2 {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: var(--weight-bold);
   color: var(--secondary-color);
   margin-bottom: 16px;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 
 .section-header p {
@@ -227,11 +227,11 @@
 }
 
 .rates-heading-left h2 {
-  font-size: 40px;
+  font-size: 32px;
   font-weight: var(--weight-bold);
   color: var(--secondary-color);
   margin-bottom: 16px;
-  letter-spacing: -1px;
+  letter-spacing: -0.5px;
 }
 
 .rates-heading-left p {
@@ -394,19 +394,19 @@
 }
 
 .impact-main-card h2 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: var(--weight-bold);
   line-height: 1.2;
   margin-top: 16px;
 }
 
 .impact-big-number {
-  font-size: 64px;
+  font-size: 48px;
   font-weight: var(--weight-bold);
   color: var(--primary-color);
   line-height: 1;
-  margin: 32px 0 16px;
-  letter-spacing: -1.5px;
+  margin: 24px 0 16px;
+  letter-spacing: -1px;
 }
 
 .impact-big-number span {
@@ -585,7 +585,7 @@
 }
 
 .cta-container h2 {
-  font-size: 44px;
+  font-size: 36px;
   font-weight: var(--weight-bold);
   margin-bottom: 20px;
   letter-spacing: -1px;

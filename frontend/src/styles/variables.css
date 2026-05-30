@@ -52,19 +52,20 @@
   --shadow-glow: 0 0 25px rgba(0, 200, 83, 0.18);
 
   /* Border Radius */
-  --radius-sm: 8px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
-  --radius-xl: 32px;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 
   /* Typography */
   --font-family: "Plus Jakarta Sans", "Poppins", system-ui, -apple-system, sans-serif;
 
-  --font-sm: 14px;
-  --font-md: 16px;
-  --font-lg: 20px;
-  --font-xl: 28px;
-  --font-xxl: 40px;
+  --font-xs: 11px;
+  --font-sm: 12px;
+  --font-md: 13px;
+  --font-lg: 15px;
+  --font-xl: 18px;
+  --font-xxl: 24px;
 
   /* Font Weight */
   --weight-light: 300;
@@ -77,15 +78,15 @@
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 40px;
+  --spacing-lg: 20px;
+  --spacing-xl: 32px;
 
   /* Transition */
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Navigation Heights & Widths */
-  --navbar-height: 80px;
-  --sidebar-width: 320px;
+  --navbar-height: 64px;
+  --sidebar-width: 260px;
 }
 
 /* =========================================
