@@ -163,3 +163,19 @@
   }
 
 }
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .collectors-table-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .collectors-row {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .collectors-head {
+  background: rgba(0, 200, 83, 0.15);
+}

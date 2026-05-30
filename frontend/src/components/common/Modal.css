@@ -140,3 +140,21 @@
   }
 
 }
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .modal-container {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .modal-close-btn {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] .modal-close-btn:hover {
+  background: var(--danger-color);
+  color: white;
+}

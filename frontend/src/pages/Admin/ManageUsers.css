@@ -41,6 +41,11 @@
   overflow-x: auto;
 }
 
+[data-theme="dark"] .users-table-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
 
 /* =========================================
    TABLE HEADER
@@ -91,12 +96,20 @@
   border-radius: 16px;
 }
 
+[data-theme="dark"] .users-row {
+  background: rgba(255, 255, 255, 0.03);
+}
+
 .users-head {
   background: #dcfce7;
 
   font-weight: 700;
 
   color: var(--primary-color);
+}
+
+[data-theme="dark"] .users-head {
+  background: rgba(0, 200, 83, 0.15);
 }
 
 

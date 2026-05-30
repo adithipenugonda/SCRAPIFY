@@ -378,3 +378,58 @@
     font-size: 30px;
   }
 }
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .pickups-table-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .pickups-row {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .pickups-head {
+  background: rgba(0, 200, 83, 0.15);
+}
+
+[data-theme="dark"] .admin-search-input,
+[data-theme="dark"] .admin-filter-select,
+[data-theme="dark"] .modal-status-select-field {
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .modal-materials-table {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .materials-row-item {
+  color: #e2e8f0;
+}
+
+[data-theme="dark"] .details-col-admin h3,
+[data-theme="dark"] .modal-materials-section h3 {
+  color: var(--text-color);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .details-col-admin p {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .materials-row-head {
+  color: #94a3b8;
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .materials-row-total {
+  border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .modal-actions-section {
+  border-top-color: var(--border-color);
+}
