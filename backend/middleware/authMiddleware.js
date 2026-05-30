@@ -24,6 +24,20 @@ const protect = async (req, res, next) => {
       // Get User From Database directly
       let user = await User.findById(decoded.id).select("-password");
 
+      if (!user) {
+        return res.status(401).json({
+          success: false,
+          message: "User no longer exists",
+        });
+      }
+
+      if (user.isBlocked) {
+        return res.status(403).json({
+          success: false,
+          message: "Your account has been blocked. Access denied.",
+        });
+      }
+
       req.user = user;
       next();
     } else {

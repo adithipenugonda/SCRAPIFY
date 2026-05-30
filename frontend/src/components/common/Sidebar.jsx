@@ -130,7 +130,7 @@ const Sidebar = () => {
       <div>
         {/* BRAND */}
         <div className="sidebar-top">
-          <div className="sidebar-brand">
+          <Link to="/" className="sidebar-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
             <div className="brand-circle">
               ♻️
             </div>
@@ -138,7 +138,7 @@ const Sidebar = () => {
               <h2>SCRAPIFY</h2>
               <p>{user?.role || "USER"} CONSOLE</p>
             </div>
-          </div>
+          </Link>
         </div>
 
         {/* ================================= */}

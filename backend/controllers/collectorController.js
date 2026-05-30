@@ -239,8 +239,32 @@ const completePickup = async (req, res) => {
 
     pickup.status = "Completed";
 
-    if (pickup.paymentMethod === "Cash") {
+    if (pickup.paymentMethod === "Cash" || pickup.paymentMethod === "Cash on Pickup" || pickup.paymentMethod === "Pay Later") {
       pickup.paymentStatus = "Paid";
+      
+      const Transaction = require("../models/Transaction");
+      const Notification = require("../models/Notification");
+      
+      // Log Transaction for Offline Payment
+      await Transaction.create({
+        user: pickup.user,
+        pickup: pickup._id,
+        transactionId: `TXN-${Date.now()}`,
+        amount: pickup.totalAmount,
+        paymentMethod: pickup.paymentMethod,
+        paymentStatus: "Success",
+        transactionType: "Pickup Payment",
+        notes: `Paid via ${pickup.paymentMethod} upon pickup`,
+      });
+
+      // Send Notification to User
+      await Notification.create({
+        user: pickup.user,
+        userModel: "User",
+        title: "Payment Successful",
+        message: `Your pickup ${pickup.pickupId} was marked as completed. Payment of ₹${pickup.totalAmount} via ${pickup.paymentMethod} recorded.`,
+        notificationType: "Payment",
+      });
     }
 
     await pickup.save();

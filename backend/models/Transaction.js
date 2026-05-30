@@ -49,9 +49,11 @@ const transactionSchema =
           "Cash",
           "Bank Transfer",
           "Razorpay",
+          "Cash on Pickup",
+          "Pay Later"
         ],
 
-        default: "Razorpay",
+        default: "Cash on Pickup",
       },
 
       // Payment Status

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import UserLayout from "../../layouts/UserLayout";
 import Modal from "../../components/common/Modal";
 import API from "../../services/api";
+import { useAuthContext } from "../../context/AuthContext";
+import toast from "react-hot-toast";
 import "./SchedulePickup.css";
 
 const scrapItemsData = [
@@ -44,6 +47,7 @@ const SchedulePickup = () => {
   const [openPaymentModal, setOpenPaymentModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchLiveRates = async () => {
@@ -109,7 +113,7 @@ const SchedulePickup = () => {
   const submitPickup = async (method) => {
     try {
       setPaymentMethod(method);
-      const res = await API.post("/pickups/create", {
+      await API.post("/pickups/create", {
         materials: scrapItems
           .filter((item) => selectedItems[item.id] > 0)
           .map((item) => ({
@@ -128,82 +132,14 @@ const SchedulePickup = () => {
         paymentMethod: method,
       });
 
-      const newPickup = res.data.pickup;
-
-      if (method === "Cash") {
-        setOpenPaymentModal(false);
-        setOpenModal(true);
-        return;
-      }
-
-      // Handle Razorpay if UPI/Bank
-      const scriptLoaded = await loadRazorpayScript();
-      if (!scriptLoaded) {
-        toast.error("Razorpay SDK failed to load.");
-        setOpenPaymentModal(false);
-        setOpenModal(true); // Still created as Pending
-        return;
-      }
-
-      const orderRes = await API.post("/payments/create-order", {
-        pickupId: newPickup._id,
-      });
-
-      if (!orderRes.data.success) {
-        toast.error("Failed to create payment order");
-        setOpenPaymentModal(false);
-        setOpenModal(true);
-        return;
-      }
-
-      const { id, amount, currency } = orderRes.data.order;
-      const options = {
-        key: process.env.REACT_APP_RAZORPAY_KEY_ID || "rzp_test_dummy",
-        amount: amount.toString(),
-        currency: currency,
-        name: "Scrapify",
-        description: `Payment for Pickup ${newPickup.pickupId}`,
-        order_id: id,
-        handler: async function (response) {
-          try {
-            await API.post("/payments/verify", {
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              pickupId: newPickup._id,
-            });
-            toast.success("Payment successful!");
-            setOpenPaymentModal(false);
-            setOpenModal(true);
-          } catch (err) {
-            console.error(err);
-            toast.error("Payment verification failed");
-            setOpenPaymentModal(false);
-            setOpenModal(true);
-          }
-        },
-        prefill: {
-          name: user?.name,
-          email: user?.email,
-          contact: user?.phone || "",
-        },
-        theme: {
-          color: "#00c853",
-        },
-      };
-
-      const paymentObject = new window.Razorpay(options);
-      paymentObject.open();
-
-      paymentObject.on('payment.failed', function (response){
-        toast.error(`Payment failed: ${response.error.description}`);
-        setOpenPaymentModal(false);
-        setOpenModal(true); // Still show success for pickup creation
-      });
+      setOpenPaymentModal(false);
+      setOpenModal(true);
 
     } catch (error) {
-      console.log(error);
-      toast.error("Failed to create pickup");
+      console.error("Pickup submission error:", error);
+      const errorMsg = error.response?.data?.error || error.response?.data?.message || "Failed to process request";
+      toast.error(`Error: ${errorMsg}`);
+      setOpenPaymentModal(false);
     }
   };
 
@@ -370,11 +306,9 @@ const SchedulePickup = () => {
           <div className="payment-method-modal">
             <p style={{ marginBottom: "20px", color: "var(--text-light)" }}>Select how you want to be paid or pay for the service:</p>
             <div className="payment-methods" style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-              {["UPI", "Bank Transfer", "Cash"].map((method) => {
-                let icon = "🪙";
-                if (method === "UPI") icon = "📱";
-                if (method === "Cash") icon = "💵";
-                if (method === "Bank Transfer") icon = "🏦";
+              {["Cash on Pickup", "Pay Later"].map((method) => {
+                let icon = "💵";
+                if (method === "Pay Later") icon = "⏳";
 
                 return (
                   <motion.button

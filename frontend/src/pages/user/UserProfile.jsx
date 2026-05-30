@@ -3,20 +3,7 @@ import toast from "react-hot-toast";
 import UserLayout from "../../layouts/UserLayout";
 import { useAuthContext } from "../../context/AuthContext";
 import API from "../../services/api";
-import { 
-  FaEnvelope, 
-  FaPhone, 
-  FaMapMarkerAlt, 
-  FaCity, 
-  FaMapPin, 
-  FaCamera, 
-  FaEdit, 
-  FaKey,
-  FaGift,
-  FaRupeeSign,
-  FaWeightHanging,
-  FaTruck
-} from "react-icons/fa";
+import { FaCamera, FaGift, FaWeightHanging, FaTruck } from "react-icons/fa";
 import { FaIndianRupeeSign } from "react-icons/fa6";
 import "./UserProfile.css";
 
@@ -115,225 +102,157 @@ const UserProfile = () => {
 
   return (
     <UserLayout>
-      <div className="premium-profile-page">
-        {/* HERO BANNER SECTION */}
-        <div className="profile-hero">
-          <div className="hero-banner"></div>
-          
-          <div className="hero-content">
-            <div className="hero-avatar-wrapper">
-              <div className="hero-avatar">
-                {user?.profileImage ? (
-                  <img src={user.profileImage} alt="Profile" />
-                ) : (
-                  <span>{user?.name?.charAt(0)?.toUpperCase() || "U"}</span>
-                )}
-                <button className="avatar-edit-btn" onClick={triggerFileInput} title="Upload Picture">
-                  <FaCamera />
-                </button>
-                <input 
-                  type="file" 
-                  ref={fileInputRef} 
-                  onChange={handleImageUpload} 
-                  accept="image/*"
-                  style={{ display: "none" }}
-                />
-              </div>
-            </div>
-
-            <div className="hero-info">
-              <div className="hero-title-group">
-                <h1>{user?.name || "User"}</h1>
-                <span className="role-badge">{user?.role || "User"}</span>
-              </div>
-              <p className="hero-email"><FaEnvelope className="inline-icon" /> {user?.email}</p>
-            </div>
-
-            <div className="hero-actions">
-              <button className="neo-btn primary" onClick={() => setIsEditing(true)}>
-                <FaEdit /> Edit Profile
-              </button>
-              <button className="neo-btn secondary" onClick={() => setIsChangingPassword(true)}>
-                <FaKey /> Change Password
-              </button>
-            </div>
-          </div>
+      <div className="profile-page">
+        <div className="profile-header">
+          <h1>User Profile</h1>
+          <p>Manage your account details and track your eco-impact</p>
         </div>
 
-        <div className="premium-profile-grid">
-          {/* LEFT: INFO CARDS */}
-          <div className="profile-details-column">
-            <div className="glass-card info-card">
-              <h3>Contact Details</h3>
-              <div className="info-list">
-                <div className="info-item">
-                  <div className="info-icon"><FaPhone /></div>
-                  <div className="info-text">
-                    <label>Phone Number</label>
-                    <p>{user?.phone || "Not provided"}</p>
-                  </div>
-                </div>
-                <div className="info-item">
-                  <div className="info-icon"><FaEnvelope /></div>
-                  <div className="info-text">
-                    <label>Email Address</label>
-                    <p>{user?.email}</p>
-                  </div>
-                </div>
-              </div>
+        <div className="profile-content">
+          {/* LEFT: INFO */}
+          <div className="profile-card">
+            <div className="profile-avatar-large">
+              {user?.profileImage ? (
+                <img src={user.profileImage} alt="Profile" />
+              ) : (
+                <span>{user?.name?.charAt(0)?.toUpperCase() || "U"}</span>
+              )}
+              <button className="avatar-edit-btn" onClick={triggerFileInput} title="Upload Picture">
+                <FaCamera />
+              </button>
+              <input 
+                type="file" 
+                ref={fileInputRef} 
+                onChange={handleImageUpload} 
+                accept="image/*"
+                style={{ display: "none" }}
+              />
             </div>
-
-            <div className="glass-card info-card">
-              <h3>Location Details</h3>
-              <div className="info-list">
-                <div className="info-item">
-                  <div className="info-icon"><FaMapMarkerAlt /></div>
-                  <div className="info-text">
-                    <label>Address</label>
-                    <p>{user?.address || "Not provided"}</p>
-                  </div>
+            
+            <div className="profile-details">
+              <h2>{user?.name}</h2>
+              <p className="profile-role">Registered User</p>
+              
+              <div className="profile-info-grid">
+                <div className="info-group">
+                  <label>Email</label>
+                  <p>{user?.email}</p>
                 </div>
-                <div className="info-item">
-                  <div className="info-icon"><FaCity /></div>
-                  <div className="info-text">
-                    <label>City & State</label>
-                    <p>{[user?.city, user?.state].filter(Boolean).join(", ") || "Not provided"}</p>
-                  </div>
+                <div className="info-group">
+                  <label>Phone</label>
+                  <p>{user?.phone || "Not provided"}</p>
                 </div>
-                <div className="info-item">
-                  <div className="info-icon"><FaMapPin /></div>
-                  <div className="info-text">
-                    <label>Pincode</label>
-                    <p>{user?.pincode || "Not provided"}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT: STATS GRID */}
-          <div className="profile-stats-column">
-            <div className="stats-2x2">
-              <div className="glass-card stat-card neo-hover">
-                <div className="stat-icon-wrapper green">
-                  <FaGift />
-                </div>
-                <div className="stat-data">
-                  <p className="stat-label">Green Points</p>
-                  <h4 className="stat-value">{user?.greenPoints || 0}</h4>
-                </div>
-              </div>
-
-              <div className="glass-card stat-card neo-hover">
-                <div className="stat-icon-wrapper blue">
-                  <FaRupeeSign />
-                </div>
-                <div className="stat-data">
-                  <p className="stat-label">Total Earnings</p>
-                  <h4 className="stat-value">₹{user?.totalEarnings || 0}</h4>
-                </div>
-              </div>
-
-              <div className="glass-card stat-card neo-hover">
-                <div className="stat-icon-wrapper orange">
-                  <FaWeightHanging />
-                </div>
-                <div className="stat-data">
-                  <p className="stat-label">Recycled Weight</p>
-                  <h4 className="stat-value">{user?.totalRecycledWeight || 0} kg</h4>
-                </div>
-              </div>
-
-              <div className="glass-card stat-card neo-hover">
-                <div className="stat-icon-wrapper purple">
-                  <FaTruck />
-                </div>
-                <div className="stat-data">
-                  <p className="stat-label">Total Pickups</p>
-                  <h4 className="stat-value">{user?.pickupHistory?.length || 0}</h4>
-                </div>
-              </div>
-
-              <div className="glass-card stat-card neo-hover" style={{ gridColumn: "span 2" }}>
-                <div className="stat-icon-wrapper" style={{ background: "rgba(239, 68, 68, 0.1)", color: "#ef4444" }}>
-                  <FaIndianRupeeSign />
-                </div>
-                <div className="stat-data">
-                  <p className="stat-label">Total Paid</p>
-                  <h4 className="stat-value">₹{user?.totalPaid || 0}</h4>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Modals */}
-        {isEditing && (
-          <div className="neo-modal-overlay" onClick={() => setIsEditing(false)}>
-            <div className="neo-modal-content" onClick={e => e.stopPropagation()}>
-              <div className="neo-modal-header">
-                <h3>Edit Profile</h3>
-                <button className="neo-close-btn" onClick={() => setIsEditing(false)}>&times;</button>
-              </div>
-              <form onSubmit={submitProfileUpdate} className="neo-form">
-                <div className="neo-form-group">
-                  <label>Full Name</label>
-                  <input type="text" name="name" value={formData.name} onChange={handleProfileChange} required className="neo-input" />
-                </div>
-                <div className="neo-form-group">
-                  <label>Phone Number</label>
-                  <input type="text" name="phone" value={formData.phone} onChange={handleProfileChange} required className="neo-input" />
-                </div>
-                <div className="neo-form-group">
+                <div className="info-group">
                   <label>Address</label>
-                  <input type="text" name="address" value={formData.address} onChange={handleProfileChange} className="neo-input" />
+                  <p>{user?.address || "Not provided"}</p>
                 </div>
-                <div className="neo-form-row">
-                  <div className="neo-form-group">
+                <div className="info-group">
+                  <label>City & State</label>
+                  <p>{[user?.city, user?.state].filter(Boolean).join(", ") || "Not provided"}</p>
+                </div>
+                <div className="info-group">
+                  <label>Pincode</label>
+                  <p>{user?.pincode || "Not provided"}</p>
+                </div>
+              </div>
+
+              <div className="profile-actions">
+                <button className="btn-primary" onClick={() => setIsEditing(true)}>Edit Profile</button>
+                <button className="btn-secondary" onClick={() => setIsChangingPassword(true)}>Change Password</button>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT: STATS */}
+          <div className="profile-stats-card">
+            <h3>Your Impact</h3>
+            <div className="stats-grid">
+              <div className="stat-box">
+                <span className="stat-icon"><FaGift /></span>
+                <span className="stat-val">{user?.greenPoints || 0}</span>
+                <span className="stat-label">Green Points</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-icon"><FaIndianRupeeSign /></span>
+                <span className="stat-val">₹{user?.totalEarnings || 0}</span>
+                <span className="stat-label">Total Earnings</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-icon"><FaWeightHanging /></span>
+                <span className="stat-val">{user?.totalRecycledWeight || 0} kg</span>
+                <span className="stat-label">Recycled Weight</span>
+              </div>
+              <div className="stat-box">
+                <span className="stat-icon"><FaTruck /></span>
+                <span className="stat-val">{user?.pickupHistory?.length || 0}</span>
+                <span className="stat-label">Total Pickups</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Edit Profile Modal */}
+        {isEditing && (
+          <div className="modal-overlay" onClick={() => setIsEditing(false)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <h3>Edit Profile</h3>
+              <form onSubmit={submitProfileUpdate}>
+                <div className="form-group">
+                  <label>Full Name</label>
+                  <input type="text" name="name" value={formData.name} onChange={handleProfileChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Phone Number</label>
+                  <input type="text" name="phone" value={formData.phone} onChange={handleProfileChange} required />
+                </div>
+                <div className="form-group">
+                  <label>Address</label>
+                  <input type="text" name="address" value={formData.address} onChange={handleProfileChange} />
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
                     <label>City</label>
-                    <input type="text" name="city" value={formData.city} onChange={handleProfileChange} className="neo-input" />
+                    <input type="text" name="city" value={formData.city} onChange={handleProfileChange} />
                   </div>
-                  <div className="neo-form-group">
+                  <div className="form-group">
                     <label>State</label>
-                    <input type="text" name="state" value={formData.state} onChange={handleProfileChange} className="neo-input" />
+                    <input type="text" name="state" value={formData.state} onChange={handleProfileChange} />
                   </div>
-                  <div className="neo-form-group">
+                  <div className="form-group">
                     <label>Pincode</label>
-                    <input type="text" name="pincode" value={formData.pincode} onChange={handleProfileChange} className="neo-input" />
+                    <input type="text" name="pincode" value={formData.pincode} onChange={handleProfileChange} />
                   </div>
                 </div>
-                <div className="neo-modal-actions">
-                  <button type="button" className="neo-btn secondary" onClick={() => setIsEditing(false)}>Cancel</button>
-                  <button type="submit" className="neo-btn primary">Save Changes</button>
+                <div className="modal-actions">
+                  <button type="button" className="btn-secondary" onClick={() => setIsEditing(false)}>Cancel</button>
+                  <button type="submit" className="btn-primary">Save Changes</button>
                 </div>
               </form>
             </div>
           </div>
         )}
 
+        {/* Change Password Modal */}
         {isChangingPassword && (
-          <div className="neo-modal-overlay" onClick={() => setIsChangingPassword(false)}>
-            <div className="neo-modal-content" onClick={e => e.stopPropagation()}>
-              <div className="neo-modal-header">
-                <h3>Change Password</h3>
-                <button className="neo-close-btn" onClick={() => setIsChangingPassword(false)}>&times;</button>
-              </div>
-              <form onSubmit={submitPasswordUpdate} className="neo-form">
-                <div className="neo-form-group">
+          <div className="modal-overlay" onClick={() => setIsChangingPassword(false)}>
+            <div className="modal-content" onClick={e => e.stopPropagation()}>
+              <h3>Change Password</h3>
+              <form onSubmit={submitPasswordUpdate}>
+                <div className="form-group">
                   <label>Current Password</label>
-                  <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} required className="neo-input" />
+                  <input type="password" name="currentPassword" value={passwordData.currentPassword} onChange={handlePasswordChange} required />
                 </div>
-                <div className="neo-form-group">
+                <div className="form-group">
                   <label>New Password</label>
-                  <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} required minLength="6" className="neo-input" />
+                  <input type="password" name="newPassword" value={passwordData.newPassword} onChange={handlePasswordChange} required minLength="6" />
                 </div>
-                <div className="neo-form-group">
+                <div className="form-group">
                   <label>Confirm New Password</label>
-                  <input type="password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} required minLength="6" className="neo-input" />
+                  <input type="password" name="confirmPassword" value={passwordData.confirmPassword} onChange={handlePasswordChange} required minLength="6" />
                 </div>
-                <div className="neo-modal-actions">
-                  <button type="button" className="neo-btn secondary" onClick={() => setIsChangingPassword(false)}>Cancel</button>
-                  <button type="submit" className="neo-btn primary">Update Password</button>
+                <div className="modal-actions">
+                  <button type="button" className="btn-secondary" onClick={() => setIsChangingPassword(false)}>Cancel</button>
+                  <button type="submit" className="btn-primary">Update Password</button>
                 </div>
               </form>
             </div>

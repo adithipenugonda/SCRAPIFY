@@ -1,0 +1,159 @@
+.payment-status-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.payment-card {
+  background: var(--card-bg);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Success Styles */
+.success-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #00c853, #69f0ae);
+}
+
+.success-icon .icon {
+  width: 80px;
+  height: 80px;
+  color: #00c853;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(0, 200, 83, 0.4));
+}
+
+/* Failure Styles */
+.failure-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #ff1744, #ff5252);
+}
+
+.failure-icon .icon {
+  width: 80px;
+  height: 80px;
+  color: #ff1744;
+  margin: 0 auto 1.5rem;
+  filter: drop-shadow(0 0 20px rgba(255, 23, 68, 0.4));
+}
+
+.payment-card h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-color);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-light);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+}
+
+.receipt {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  text-align: left;
+}
+
+.receipt-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.receipt-row:last-child {
+  border-bottom: none;
+}
+
+.receipt-row span {
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+.receipt-row strong {
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.receipt-row .amount {
+  font-size: 1.25rem;
+  color: #00c853;
+}
+
+.receipt-row .error-text {
+  color: #ff1744;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.action-buttons button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: var(--primary-color);
+  color: black;
+  border: none;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(212, 255, 0, 0.3);
+}
+
+.retry-btn {
+  background: #ff1744;
+  color: white;
+}
+
+.retry-btn:hover {
+  background: #d50000;
+  box-shadow: 0 4px 15px rgba(255, 23, 68, 0.3);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+}

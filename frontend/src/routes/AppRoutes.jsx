@@ -26,6 +26,8 @@ import Payments from "../pages/user/Payments";
 import LiveRates from "../pages/user/LiveRates";
 import PaymentHistory from "../pages/user/PaymentHistory";
 import UserProfile from "../pages/user/UserProfile";
+import PaymentSuccess from "../pages/user/PaymentSuccess";
+import PaymentFailure from "../pages/user/PaymentFailure";
 
 import CollectorDashboard from "../pages/collector/CollectorDashboard";
 import AvailableJobs from "../pages/collector/AvailableJobs";
@@ -244,9 +246,27 @@ const AppRoutes = () => {
       />
 
       <Route
-  path="/live-rates"
-  element={<LiveRates />}
-/>
+        path="/live-rates"
+        element={<LiveRates />}
+      />
+
+      <Route
+        path="/payment/success"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <PaymentSuccess />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/payment/failed"
+        element={
+          <ProtectedRoute allowedRoles={["user"]}>
+            <PaymentFailure />
+          </ProtectedRoute>
+        }
+      />
 
 
       {/* ===================================== */}

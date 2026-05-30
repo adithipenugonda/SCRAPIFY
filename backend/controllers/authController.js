@@ -112,6 +112,14 @@ const loginUser = async (req, res) => {
       });
     }
 
+    // Check if blocked
+    if (foundUser.isBlocked) {
+      return res.status(403).json({
+        success: false,
+        message: "Your account has been blocked by the admin. Please contact support.",
+      });
+    }
+
     const role = foundUser.role || "user";
 
     // Compare Password

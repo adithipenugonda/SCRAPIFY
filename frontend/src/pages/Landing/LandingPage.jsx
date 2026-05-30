@@ -129,17 +129,26 @@ const LandingPage = () => {
             </motion.p>
 
             <motion.div className="hero-buttons" variants={fadeInUp}>
-              <Link to="/register">
-                <button className="primary-btn neo-btn-tactile">
-                  Get Started
-                </button>
-              </Link>
-
-              <Link to="/login">
-                <button className="secondary-btn neo-btn-tactile">
-                  Login
-                </button>
-              </Link>
+              {isAuthenticated ? (
+                <Link to={`/${user?.role || "user"}/dashboard`}>
+                  <button className="primary-btn neo-btn-tactile">
+                    Go to Dashboard
+                  </button>
+                </Link>
+              ) : (
+                <>
+                  <Link to="/register">
+                    <button className="primary-btn neo-btn-tactile">
+                      Get Started
+                    </button>
+                  </Link>
+                  <Link to="/login">
+                    <button className="secondary-btn neo-btn-tactile">
+                      Login
+                    </button>
+                  </Link>
+                </>
+              )}
             </motion.div>
           </motion.div>
 
@@ -414,9 +423,9 @@ const LandingPage = () => {
                 <span>Equivalent to planting <strong>{treesEquivalent}</strong> trees absorption per year!</span>
               </div>
 
-              <Link to="/register">
+              <Link to={isAuthenticated ? `/${user?.role || "user"}/dashboard` : "/register"}>
                 <button className="confirm-btn neo-btn-tactile calc-cta-btn">
-                  Book A Pickup Now
+                  {isAuthenticated ? "Go to Dashboard" : "Book A Pickup Now"}
                 </button>
               </Link>
             </motion.div>
@@ -540,11 +549,19 @@ const LandingPage = () => {
         >
           <h2>Join The Green Revolution 🌍</h2>
           <p>Start recycling smarter with Scrapify today. Earn green points, reduce landfill footprint, and claim cash.</p>
-          <Link to="/register">
-            <button className="primary-btn neo-btn-tactile glowing-neon-border">
-              Start Recycling
-            </button>
-          </Link>
+          {isAuthenticated ? (
+            <Link to={`/${user?.role || "user"}/dashboard`}>
+              <button className="primary-btn neo-btn-tactile glowing-neon-border">
+                Go to Dashboard
+              </button>
+            </Link>
+          ) : (
+            <Link to="/register">
+              <button className="primary-btn neo-btn-tactile glowing-neon-border">
+                Start Recycling
+              </button>
+            </Link>
+          )}
         </motion.div>
       </section>
     </>

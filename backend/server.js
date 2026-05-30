@@ -43,6 +43,7 @@ app.use("/api/scrap-prices", scrapRoutes);
 app.use("/api/rewards", rewardRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/payments", paymentRoutes);
 // PORT
 const PORT = process.env.PORT || 5000;
 

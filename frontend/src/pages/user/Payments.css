@@ -142,6 +142,53 @@
   color: #00c853;
 }
 
+.status-badge.failed {
+  background: rgba(255, 23, 68, 0.1);
+  color: #ff1744;
+}
+
+.payment-filters {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.filter-btn {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--text-light);
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.filter-btn.active {
+  background: var(--primary-color);
+  color: black;
+  border-color: var(--primary-color);
+}
+
+.filter-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btn-retry {
+  background: #ff1744;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-retry:hover {
+  background: #d50000;
+}
+
 @media (max-width: 768px) {
   .payment-card {
     flex-direction: column;

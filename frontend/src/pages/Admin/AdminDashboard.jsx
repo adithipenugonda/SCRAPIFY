@@ -18,6 +18,7 @@ import "./AdminDashboard.css";
 const AdminDashboard = () => {
   const [analytics, setAnalytics] = useState(null);
   const [recentPickups, setRecentPickups] = useState([]);
+  const [recentTransactions, setRecentTransactions] = useState([]);
   const [chartData, setChartData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,6 +28,7 @@ const AdminDashboard = () => {
       if (response.data && response.data.dashboard) {
         setAnalytics(response.data.dashboard.analytics);
         setRecentPickups(response.data.dashboard.recentPickups);
+        setRecentTransactions(response.data.dashboard.recentTransactions || []);
         setChartData(response.data.dashboard.chartData || []);
       }
     } catch (error) {
@@ -43,6 +45,26 @@ const AdminDashboard = () => {
   const stats = analytics
     ? [
         {
+          title: "Total Transactions",
+          value: analytics.totalTransactionsCount?.toLocaleString() || "0",
+          icon: "💳",
+        },
+        {
+          title: "Successful Payments",
+          value: analytics.successfulPaymentsCount?.toLocaleString() || "0",
+          icon: "✅",
+        },
+        {
+          title: "Failed Payments",
+          value: analytics.failedPaymentsCount?.toLocaleString() || "0",
+          icon: "❌",
+        },
+        {
+          title: "Total Revenue",
+          value: `₹${(analytics.totalRevenue || 0).toLocaleString()}`,
+          icon: "💰",
+        },
+        {
           title: "Total Users",
           value: analytics.totalUsers.toLocaleString(),
           icon: "👥",
@@ -56,26 +78,6 @@ const AdminDashboard = () => {
           title: "Total Pickups",
           value: analytics.totalPickups.toLocaleString(),
           icon: "♻️",
-        },
-        {
-          title: "Pending Pickups",
-          value: analytics.pendingPickups.toLocaleString(),
-          icon: "⏳",
-        },
-        {
-          title: "Accepted Pickups",
-          value: analytics.acceptedPickups.toLocaleString(),
-          icon: "✅",
-        },
-        {
-          title: "Completed Pickups",
-          value: analytics.completedPickups.toLocaleString(),
-          icon: "📦",
-        },
-        {
-          title: "Total Revenue",
-          value: `₹${analytics.totalRevenue.toLocaleString()}`,
-          icon: "💰",
         },
         {
           title: "Green Points",
@@ -210,8 +212,8 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="activity-list">
-                  {analytics && analytics.recentTransactions && analytics.recentTransactions.length > 0 ? (
-                    analytics.recentTransactions.map((txn) => (
+                  {recentTransactions && recentTransactions.length > 0 ? (
+                    recentTransactions.map((txn) => (
                       <div key={txn._id} className="activity-item">
                         <div>
                           <h4>
@@ -222,7 +224,7 @@ const AdminDashboard = () => {
                           </p>
                         </div>
                         <span className="activity-time">
-                          <span className="status-badge success" style={{ marginRight: '10px' }}>{txn.paymentStatus}</span>
+                          <span className={`status-badge ${txn.paymentStatus.toLowerCase()}`} style={{ marginRight: '10px' }}>{txn.paymentStatus}</span>
                           {new Date(txn.createdAt).toLocaleDateString()}
                         </span>
                       </div>

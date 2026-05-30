@@ -1,82 +1,79 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import CollectorLayout from "../../layouts/CollectorLayout";
+import API from "../../services/api";
 import "./AvailableJobs.css";
 
+const formatWeight = (weight) => {
+  if (!weight) return "";
+  let w = String(weight);
+  if (!w.startsWith("~")) w = "~" + w;
+  if (!w.endsWith("kg") && !w.endsWith("kg ")) w = w + "kg";
+  return w;
+};
+
+const formatDistance = (distance) => {
+  if (!distance) return "";
+  let d = String(distance);
+  if (!d.endsWith("km") && !d.endsWith("km ")) d = d + " km";
+  return d;
+};
+
 const AvailableJobs = () => {
-  const [jobs, setJobs] = useState([
-    {
-      id: 1,
-      material: "Paper + Plastic",
-      payout: "145",
-      address: "HSR Sector 2",
-      weight: "9kg",
-      timeDistance: "Now • 1.2 km",
-    },
-    {
-      id: 2,
-      material: "E-Waste",
-      payout: "332",
-      address: "Koramangala 5th Block",
-      weight: "3.5kg",
-      timeDistance: "Now • 2.4 km",
-    },
-    {
-      id: 3,
-      material: "Iron Scrap",
-      payout: "616",
-      address: "BTM Layout",
-      weight: "22kg",
-      timeDistance: "30 min • 0.8 km",
-    },
-    {
-      id: 4,
-      material: "Paper + Plastic",
-      payout: "145",
-      address: "HSR Sector 2",
-      weight: "9kg",
-      timeDistance: "Now • 1.2 km",
-    },
-    {
-      id: 5,
-      material: "E-Waste",
-      payout: "332",
-      address: "Koramangala 5th Block",
-      weight: "3.5kg",
-      timeDistance: "Now • 2.4 km",
-    },
-    {
-      id: 6,
-      material: "Iron Scrap",
-      payout: "616",
-      address: "BTM Layout",
-      weight: "22kg",
-      timeDistance: "30 min • 0.8 km",
-    },
-  ]);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleAcceptJob = (job) => {
-    toast.success(`Job accepted: Pickup at ${job.address}`, {
-      icon: "🚚",
-      style: {
-        borderRadius: "12px",
-        background: "#060b08",
-        color: "#fff",
-      },
-    });
+  const fetchPendingPickups = async () => {
+    try {
+      const response = await API.get("/pickups/pending");
+      if (response.data && response.data.pickups) {
+        setJobs(response.data.pickups);
+      }
+    } catch (error) {
+      console.log("Failed to fetch jobs:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-    setJobs((prev) => prev.filter((j) => j.id !== job.id));
+  useEffect(() => {
+    fetchPendingPickups();
+    const interval = setInterval(() => {
+      fetchPendingPickups();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleAcceptJob = async (job) => {
+    try {
+      if (String(job._id || job.id).startsWith("mock-")) {
+        setJobs((prev) => prev.filter((j) => j.id !== job.id));
+        toast.success("Job accepted!");
+        return;
+      }
+      
+      await API.put(`/pickups/accept/${job._id}`);
+      toast.success(`Job accepted: Pickup at ${job.address}`, {
+        icon: "🚚",
+        style: {
+          borderRadius: "12px",
+          background: "#060b08",
+          color: "#fff",
+        },
+      });
+
+      fetchPendingPickups();
+    } catch (error) {
+      console.log(error);
+      toast.error("Failed to accept pickup");
+    }
   };
 
   const handleNavigate = (job) => {
-    toast.success(`Opening directions to ${job.address}...`, {
-      icon: "📍",
-      style: {
-        borderRadius: "12px",
-        background: "#060b08",
-        color: "#fff",
-      },
-    });
+    const destination = `${(typeof job.location === "string" ? job.location : job.address) || job.city}, Hyderabad`;
+    const googleMapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`;
+    window.location.href = googleMapsUrl;
   };
 
   const getFormattedDate = () => {
@@ -106,27 +103,31 @@ const AvailableJobs = () => {
         {/* JOBS GRID */}
         {/* ================================= */}
         <section className="jobs-grid-section">
-          {jobs.length > 0 ? (
+          {loading && jobs.length === 0 ? (
+            <div className="empty-jobs-view">
+              <p>Loading available jobs...</p>
+            </div>
+          ) : jobs.length > 0 ? (
             <div className="jobs-grid">
               {jobs.map((job) => (
-                <div key={job.id} className="job-grid-card">
+                <div key={job._id || job.id} className="job-grid-card">
                   <div className="job-card-top">
-                    <h3 className="job-material">{job.material}</h3>
-                    <span className="job-payout">₹{job.payout}</span>
+                    <h3 className="job-material">{job.material || job.materials?.[0]?.materialType || "General Scrap"}</h3>
+                    <span className="job-payout">₹{job.payout || job.totalAmount || 0}</span>
                   </div>
 
                   <div className="job-card-middle">
                     <div className="job-row">
                       <span className="job-label">Address</span>
-                      <span className="job-value">{job.address}</span>
+                      <span className="job-value">{(typeof job.location === "string" ? job.location : job.address) || job.city || "Nearby"}</span>
                     </div>
                     <div className="job-row">
                       <span className="job-label">Weight</span>
-                      <span className="job-value">{job.weight}</span>
+                      <span className="job-value">{formatWeight(job.weight || job.totalWeight)}</span>
                     </div>
                     <div className="job-row">
                       <span className="job-label">Time & Dist</span>
-                      <span className="job-value highlighted">{job.timeDistance}</span>
+                      <span className="job-value highlighted">{job.time || "Now"} • {formatDistance(job.distance || "1.0 km")}</span>
                     </div>
                   </div>
 

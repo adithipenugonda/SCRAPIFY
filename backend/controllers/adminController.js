@@ -6,6 +6,8 @@ const Collector = require("../models/User");
 const Pickup = require("../models/Pickup");
 const ScrapPrice = require("../models/ScrapPrice");
 const Reward = require("../models/Reward");
+const Transaction = require("../models/Transaction");
+const Notification = require("../models/Notification");
 
 const generateToken = require("../utils/generateToken");
 
@@ -180,6 +182,11 @@ const getAdminDashboard = async (
         status: "Completed",
       });
 
+    // Fetch Transaction Analytics
+    const totalTransactionsCount = await Transaction.countDocuments();
+    const successfulPaymentsCount = await Transaction.countDocuments({ paymentStatus: "Success" });
+    const failedPaymentsCount = await Transaction.countDocuments({ paymentStatus: "Failed" });
+
     // Revenue & Green Points Generated
     const completedPickupData =
       await Pickup.find({
@@ -202,8 +209,7 @@ const getAdminDashboard = async (
       .populate("collector", "name");
 
     // Scrap Prices
-    const scrapPrices =
-      await ScrapPrice.find();
+    const scrapPrices = await ScrapPrice.find();
 
     // Fetch last 7 days of pickup data
     const sevenDaysAgo = new Date();
@@ -243,7 +249,6 @@ const getAdminDashboard = async (
 
     const chartData = Object.values(dailyStats);
 
-    const Transaction = require("../models/Transaction");
     const recentTransactions = await Transaction.find()
       .sort({ createdAt: -1 })
       .limit(5)
@@ -264,6 +269,9 @@ const getAdminDashboard = async (
           completedPickups,
           totalRevenue,
           totalGreenPointsGenerated,
+          totalTransactionsCount,
+          successfulPaymentsCount,
+          failedPaymentsCount,
         },
 
         chartData,
@@ -482,8 +490,29 @@ const updatePickupStatusAdmin = async (req, res) => {
     pickup.status = status;
 
     if (status === "Completed") {
-      if (pickup.paymentMethod === "Cash") {
+      if (pickup.paymentMethod === "Cash" || pickup.paymentMethod === "Cash on Pickup" || pickup.paymentMethod === "Pay Later") {
         pickup.paymentStatus = "Paid";
+        
+        // Log Transaction for Offline Payment
+        await Transaction.create({
+          user: pickup.user,
+          pickup: pickup._id,
+          transactionId: `TXN-${Date.now()}`,
+          amount: pickup.totalAmount,
+          paymentMethod: pickup.paymentMethod,
+          paymentStatus: "Success",
+          transactionType: "Pickup Payment",
+          notes: `Paid via ${pickup.paymentMethod} upon pickup (Admin Action)`,
+        });
+
+        // Send Notification to User
+        await Notification.create({
+          user: pickup.user,
+          userModel: "User",
+          title: "Payment Successful",
+          message: `Your pickup ${pickup.pickupId} was marked as completed by Admin. Payment of ₹${pickup.totalAmount} via ${pickup.paymentMethod} recorded.`,
+          notificationType: "Payment",
+        });
       }
       if (pickup.collector) {
         await Collector.findByIdAndUpdate(pickup.collector, {

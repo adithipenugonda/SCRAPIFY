@@ -391,6 +391,11 @@ const ManagePickups = () => {
                     onClick={handleDeletePickup}
                     disabled={deleting}
                   />
+                  <Button
+                    text="Close Details"
+                    variant="secondary"
+                    onClick={handleCloseModal}
+                  />
                 </div>
               </div>
             </div>
