@@ -185,7 +185,22 @@
 
     align-items: flex-start;
 
-    gap: 12px;
   }
 
+}
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .activity-item {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .admin-chart-card {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .admin-chart-card h3 {
+  color: var(--text-color);
 }

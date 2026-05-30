@@ -11,16 +11,64 @@
 }
 
 :root {
+  /* Fonts */
   font-family: 'Plus Jakarta Sans', 'Poppins', sans-serif;
-  background-color: #f4f8f6;
-  color: #111827;
+  
+  /* Core Colors */
+  --primary-color: #00c853;
+  --primary-dark: #009624;
+  --primary-light: #5efc82;
+  --secondary-color: #050807;
+  --danger-color: #ef4444;
+  
+  /* Light Theme Colors */
+  --background-color: #f4f8f6;
+  --card-background: #ffffff;
+  --text-color: #111827;
+  --text-light: #6b7280;
+  --text-muted: #9ca3af;
+  --border-color: #e5e7eb;
+  
+  /* Radii & Shadows */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-glow: 0 0 15px rgba(0, 200, 83, 0.3);
+  
+  /* Utils */
+  --transition: all 0.3s ease;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-blur: blur(12px);
+  --navbar-height: 72px;
+  
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+[data-theme="dark"] {
+  --background-color: #050807;
+  --card-background: #0a0f0c;
+  --text-color: #f9fafb;
+  --text-light: #9ca3af;
+  --text-muted: #6b7280;
+  --border-color: #1f2937;
+  --glass-bg: rgba(5, 8, 7, 0.8);
+  
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
 body {
   margin: 0;
   padding: 0;
-  background-color: #f4f8f6;
+  background-color: var(--background-color);
+  color: var(--text-color);
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 #root {

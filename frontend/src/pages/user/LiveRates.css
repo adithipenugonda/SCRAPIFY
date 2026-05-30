@@ -175,9 +175,28 @@
 
 
 .rate-card h2 span {
-
   font-size: 22px;
-
   color: #5f6b66;
+}
 
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .live-rates-page {
+  background: var(--background-color);
+}
+[data-theme="dark"] .rates-header span,
+[data-theme="dark"] .rates-header p,
+[data-theme="dark"] .last-updated,
+[data-theme="dark"] .rate-card h3,
+[data-theme="dark"] .rate-card h2 span {
+  color: var(--text-light);
+}
+[data-theme="dark"] .rates-header h1,
+[data-theme="dark"] .rate-card h2 {
+  color: var(--text-color);
+}
+[data-theme="dark"] .rate-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
 }

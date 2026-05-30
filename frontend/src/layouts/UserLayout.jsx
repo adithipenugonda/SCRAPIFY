@@ -86,6 +86,20 @@ const UserLayout = ({
     return () => clearInterval(interval);
   }, []);
 
+  // Lock body scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (isSidebarOpen && window.innerWidth <= 992) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    
+    // Cleanup on unmount or state change
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isSidebarOpen]);
+
   return (
     <div className="user-layout">
 

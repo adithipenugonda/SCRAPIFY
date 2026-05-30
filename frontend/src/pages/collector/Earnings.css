@@ -198,3 +198,28 @@
     font-size: 11px;
   }
 }
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .earnings-header h1,
+[data-theme="dark"] .daily-earnings-card .card-header h3,
+[data-theme="dark"] .bar-value-label {
+  color: var(--text-color);
+}
+[data-theme="dark"] .header-date,
+[data-theme="dark"] .header-subtext,
+[data-theme="dark"] .filter-label,
+[data-theme="dark"] .bar-day-label {
+  color: var(--text-light);
+}
+[data-theme="dark"] .daily-earnings-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .custom-bar-chart {
+  border-bottom-color: var(--border-color);
+}
+[data-theme="dark"] .bar-value-label.zero {
+  color: var(--text-muted);
+}

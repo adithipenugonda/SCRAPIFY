@@ -33,7 +33,7 @@
 }
 
 .payment-card {
-  background: white;
+  background: var(--card-background);
   border-radius: var(--radius-md);
   padding: 24px;
   display: flex;
@@ -86,7 +86,7 @@
 }
 
 .empty-state {
-  background: white;
+  background: var(--card-background);
   padding: 40px;
   border-radius: var(--radius-md);
   text-align: center;
@@ -95,7 +95,7 @@
 }
 
 .history-table-wrapper {
-  background: white;
+  background: var(--card-background);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-color);
   overflow-x: auto;
@@ -113,7 +113,7 @@
 }
 
 .history-table th {
-  background: var(--bg-color);
+  background: var(--background-color);
   font-weight: 600;
   font-size: 13px;
   color: var(--text-light);
@@ -199,4 +199,17 @@
     width: 100%;
     justify-content: space-between;
   }
+}
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .payment-card,
+[data-theme="dark"] .empty-state,
+[data-theme="dark"] .history-table-wrapper {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .history-table th {
+  background: var(--background-color);
 }

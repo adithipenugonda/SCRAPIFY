@@ -231,3 +231,37 @@
     order: 1;
   }
 }
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .jobs-header h1,
+[data-theme="dark"] .job-material,
+[data-theme="dark"] .job-payout,
+[data-theme="dark"] .job-value,
+[data-theme="dark"] .empty-jobs-view h3 {
+  color: var(--text-color);
+}
+[data-theme="dark"] .header-date,
+[data-theme="dark"] .header-subtext,
+[data-theme="dark"] .job-label,
+[data-theme="dark"] .empty-jobs-view p {
+  color: var(--text-light);
+}
+[data-theme="dark"] .job-grid-card,
+[data-theme="dark"] .empty-jobs-view {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .job-card-top {
+  border-bottom-color: var(--border-color);
+}
+[data-theme="dark"] .btn-accept {
+  background: var(--text-color);
+  color: var(--background-color);
+}
+[data-theme="dark"] .btn-navigate {
+  background: var(--card-background);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}

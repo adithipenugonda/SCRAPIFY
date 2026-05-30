@@ -181,7 +181,7 @@
     position: fixed;
     left: 0;
     top: 0;
-    width: 280px;
+    width: min(75%, 280px);
     height: 100vh;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);

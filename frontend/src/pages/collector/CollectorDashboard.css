@@ -110,8 +110,8 @@
 }
 
 .stat-card {
-  background: #ffffff;
-  border: 1px solid #f3f4f6;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 24px;
   display: flex;
@@ -133,7 +133,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: #6b7280;
+  color: var(--text-light);
 }
 
 .stat-card.today .stat-title {
@@ -143,7 +143,7 @@
 .stat-value {
   font-size: 28px;
   font-weight: 800;
-  color: #111827;
+  color: var(--text-color);
   margin: 0;
   line-height: 1.1;
   display: flex;
@@ -164,7 +164,7 @@
 
 .stat-subtext {
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-light);
   margin: 0;
   font-weight: 500;
 }
@@ -198,7 +198,7 @@
 .column-header h3 {
   font-size: 16px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-color);
   margin: 0;
   letter-spacing: -0.01em;
 }
@@ -220,8 +220,8 @@
    PICKUPS CONTAINER CARD
 ========================================= */
 .pickups-container-card {
-  background: #ffffff;
-  border: 1px solid #f3f4f6;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
   border-radius: 20px;
   padding: 24px;
   display: flex;
@@ -240,8 +240,8 @@
 }
 
 .pickup-card {
-  background: #ffffff;
-  border: 1px solid #f3f4f6;
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
   border-radius: 16px;
   padding: 20px;
   display: flex;
@@ -568,4 +568,51 @@
   .btn-accept {
     order: 1;
   }
+}
+
+/* =========================================
+   DARK MODE OVERRIDES
+========================================= */
+[data-theme="dark"] .stat-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .stat-card.today {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #000000;
+}
+[data-theme="dark"] .stat-card.today .stat-title,
+[data-theme="dark"] .stat-card.today .stat-value,
+[data-theme="dark"] .stat-card.today .stat-subtext,
+[data-theme="dark"] .stat-card.today .star-icon {
+  color: #000000;
+}
+[data-theme="dark"] .stat-value,
+[data-theme="dark"] .column-header h3,
+[data-theme="dark"] .pickup-client h4,
+[data-theme="dark"] .pickup-details p,
+[data-theme="dark"] .location-details h4 {
+  color: var(--text-color);
+}
+[data-theme="dark"] .stat-title,
+[data-theme="dark"] .stat-subtext,
+[data-theme="dark"] .pickup-id span,
+[data-theme="dark"] .pickup-distance {
+  color: var(--text-light);
+}
+[data-theme="dark"] .pickups-container-card,
+[data-theme="dark"] .pickup-card,
+[data-theme="dark"] .route-map-card,
+[data-theme="dark"] .empty-pickups-card {
+  background: var(--card-background);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .status-btn.secondary {
+  background: transparent;
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+[data-theme="dark"] .map-container-col {
+  background: var(--background-color);
 }
