@@ -76,27 +76,11 @@
 ========================================= */
 
 @media (max-width: 992px) {
-
-  .sidebar {
-
-    position: relative;
-
-    width: 100%;
-
-    height: auto;
-
-  }
-
   .user-layout-main {
-
     margin-left: 0;
-
   }
 
   .user-layout-content {
-
-    padding: 20px;
-
+    padding: 16px;
   }
-
 }

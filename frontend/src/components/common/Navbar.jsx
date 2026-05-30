@@ -9,12 +9,11 @@ import {
 
 import useAuth from "../../hooks/useAuth";
 import { useTheme } from "../../context/ThemeContext";
-import { FaSun, FaMoon } from "react-icons/fa6";
+import { FaSun, FaMoon, FaBars } from "react-icons/fa6";
 
 import "./Navbar.css";
 
-
-const Navbar = () => {
+const Navbar = ({ onMenuClick }) => {
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
 
@@ -49,12 +48,16 @@ const Navbar = () => {
         {/* LOGO */}
         {/* ================================= */}
 
-        <Link
-          to="/"
-          className="navbar-logo"
-        >
-          ♻️ Scrapify
-        </Link>
+        <div className="navbar-brand-section" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {onMenuClick && (
+            <button className="mobile-menu-btn" onClick={onMenuClick} aria-label="Open menu">
+              <FaBars />
+            </button>
+          )}
+          <Link to="/" className="navbar-logo">
+            ♻️ Scrapify
+          </Link>
+        </div>
 
 
         {/* ================================= */}

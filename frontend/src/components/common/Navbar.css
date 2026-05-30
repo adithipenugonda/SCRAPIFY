@@ -225,8 +225,38 @@
 }
 
 /* =========================================
+   MOBILE MENU BUTTON
+========================================= */
+.mobile-menu-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-color);
+  font-size: 20px;
+  cursor: pointer;
+  padding: 4px;
+  transition: var(--transition);
+}
+
+.mobile-menu-btn:hover {
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .mobile-menu-btn {
+  color: white;
+}
+
+/* =========================================
    RESPONSIVE
 ========================================= */
+@media (max-width: 992px) {
+  .mobile-menu-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .navbar-links {
     display: none;
@@ -237,10 +267,27 @@
   }
 
   .navbar-container {
-    height: 68px;
+    height: 60px;
   }
 
   .navbar-logo {
-    font-size: 20px;
+    font-size: 18px;
+  }
+  
+  .login-btn,
+  .register-btn,
+  .logout-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .navbar-auth {
+    gap: 8px;
+  }
+  
+  .theme-toggle-btn {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
   }
 }

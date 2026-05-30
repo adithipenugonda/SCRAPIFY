@@ -172,6 +172,14 @@
   }
 }
 
+@media (max-width: 768px) {
+  .dash-header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
+
 .dash-active-pickup,
 .dash-top-rates {
   background: white;

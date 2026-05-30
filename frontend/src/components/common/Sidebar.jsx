@@ -17,7 +17,7 @@ import {
 } from "react-icons/fa6";
 import "./Sidebar.css";
 
-const Sidebar = () => {
+const Sidebar = ({ isOpen, onClose }) => {
   const location = useLocation();
   const { user, logout } = useAuth();
 
@@ -109,7 +109,9 @@ const Sidebar = () => {
   if (user?.role === "admin") links = adminLinks;
 
   return (
-    <aside className="sidebar">
+    <>
+      {isOpen && <div className="sidebar-overlay" onClick={onClose}></div>}
+      <aside className={`sidebar ${isOpen ? "open" : ""}`}>
       {/* TOP SECTION */}
       <div>
         <div className="sidebar-top">
@@ -128,6 +130,7 @@ const Sidebar = () => {
             <Link
               key={link.path}
               to={link.path}
+              onClick={onClose}
               className={
                 location.pathname === link.path
                   ? "sidebar-link active"
@@ -160,6 +163,7 @@ const Sidebar = () => {
         </Link>
       </div>
     </aside>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Navbar from "../components/common/Navbar";
 import Sidebar from "../components/common/Sidebar";
@@ -10,6 +10,7 @@ import "./AdminLayout.css";
 const AdminLayout = ({
   children,
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <div className="admin-layout">
@@ -18,7 +19,7 @@ const AdminLayout = ({
       {/* SIDEBAR */}
       {/* ================================= */}
 
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
 
       {/* ================================= */}
@@ -28,7 +29,7 @@ const AdminLayout = ({
       <div className="admin-layout-main">
 
         {/* NAVBAR */}
-        <Navbar />
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
 
 
         {/* CONTENT */}

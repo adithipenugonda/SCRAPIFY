@@ -143,17 +143,9 @@
    RESPONSIVE
 ========================================= */
 @media (max-width: 992px) {
-
   .collectors-row {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
+    min-width: 800px; /* Force horizontal scroll */
   }
-
-  .collector-actions {
-    flex-direction: column;
-  }
-
 }
 
 @media (max-width: 768px) {

@@ -156,17 +156,9 @@
    RESPONSIVE
 ========================================= */
 @media (max-width: 992px) {
-
   .users-row {
-    grid-template-columns: 1fr;
-
-    gap: 12px;
+    min-width: 800px; /* Force horizontal scroll for responsive table */
   }
-
-  .user-actions {
-    flex-direction: column;
-  }
-
 }
 
 @media (max-width: 768px) {

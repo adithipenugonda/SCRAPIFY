@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import Navbar from "../components/common/Navbar";
 import Sidebar from "../components/common/Sidebar";
@@ -9,6 +9,7 @@ import "./UserLayout.css";
 const UserLayout = ({
   children,
 }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const statusMapRef = useRef({});
 
   const trackPickupStatuses = async () => {
@@ -92,7 +93,7 @@ const UserLayout = ({
       {/* SIDEBAR */}
       {/* ===================================== */}
 
-      <Sidebar />
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
 
 
       {/* ===================================== */}
@@ -102,7 +103,7 @@ const UserLayout = ({
       <div className="user-layout-main">
 
         {/* NAVBAR */}
-        <Navbar />
+        <Navbar onMenuClick={() => setIsSidebarOpen(true)} />
 
 
         {/* PAGE CONTENT */}
