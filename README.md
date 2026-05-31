@@ -22,7 +22,7 @@ Connecting Users, Collectors, and Administrators through a Smart Digital Recycli
 
 <p align="center">
 
-<a href="scrapify-gold.vercel.app">
+<a href="https://scrapify-gold.vercel.app/">
 <img src="https://img.shields.io/badge/🚀_Live_Demo-Visit-success?style=for-the-badge">
 </a>
 
