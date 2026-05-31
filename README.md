@@ -22,11 +22,11 @@ Connecting Users, Collectors, and Administrators through a Smart Digital Recycli
 
 <p align="center">
 
-<a href="YOUR_LIVE_LINK">
+<a href="scrapify-gold.vercel.app">
 <img src="https://img.shields.io/badge/🚀_Live_Demo-Visit-success?style=for-the-badge">
 </a>
 
-<a href="YOUR_GITHUB_LINK">
+<a href="https://github.com/adithipenugonda/SCRAPIFY">
 <img src="https://img.shields.io/badge/📂_Source_Code-GitHub-black?style=for-the-badge">
 </a>
 
