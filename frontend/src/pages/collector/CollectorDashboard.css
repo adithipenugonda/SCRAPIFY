@@ -33,11 +33,11 @@
 }
 
 .dashboard-header h1 {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 24px;
+  font-weight: 700;
   color: #111827;
   margin: 0;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.01em;
 }
 
 .header-subtext {
@@ -588,15 +588,27 @@
 [data-theme="dark"] .stat-card.today .star-icon {
   color: #000000;
 }
+[data-theme="dark"] .dashboard-header h1,
 [data-theme="dark"] .stat-value,
 [data-theme="dark"] .column-header h3,
+[data-theme="dark"] .pickup-material,
+[data-theme="dark"] .pickup-payout,
 [data-theme="dark"] .pickup-client h4,
 [data-theme="dark"] .pickup-details p,
-[data-theme="dark"] .location-details h4 {
+[data-theme="dark"] .location-details h4,
+[data-theme="dark"] .route-summary-text h4,
+[data-theme="dark"] .empty-pickups-card h4 {
   color: var(--text-color);
 }
+[data-theme="dark"] .header-date,
+[data-theme="dark"] .header-subtext,
 [data-theme="dark"] .stat-title,
 [data-theme="dark"] .stat-subtext,
+[data-theme="dark"] .pickup-details,
+[data-theme="dark"] .pickup-weight,
+[data-theme="dark"] .route-summary-text p,
+[data-theme="dark"] .empty-pickups-card p,
+[data-theme="dark"] .route-map-card h3,
 [data-theme="dark"] .pickup-id span,
 [data-theme="dark"] .pickup-distance {
   color: var(--text-light);

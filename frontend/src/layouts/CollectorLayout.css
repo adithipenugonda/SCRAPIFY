@@ -7,7 +7,7 @@
 
   min-height: 100vh;
 
-  background: #f4f7f5;
+  background: var(--background-color);
 
   font-family: 'Poppins', sans-serif;
 
@@ -18,53 +18,37 @@
    MAIN
 ========================================= */
 .collector-main {
-
   flex: 1;
-
   margin-left: 250px;
-
-  padding: 40px;
-
+  padding: 0;
   overflow-y: auto;
-
   height: 100vh;
-
   box-sizing: border-box;
-
 }
-
 
 /* =========================================
    CONTENT
 ========================================= */
 .collector-page-content {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 32px;
-
   max-width: 1400px;
-
   margin: 0 auto;
-
   width: 100%;
-
+  padding: 40px;
+  box-sizing: border-box;
 }
-
 
 /* =========================================
    RESPONSIVE
 ========================================= */
 @media (max-width: 992px) {
-
   .collector-main {
-
     margin-left: 0;
-
-    padding: 24px;
-
+    padding: 0;
   }
-
+  .collector-page-content {
+    padding: 24px;
+  }
 }
